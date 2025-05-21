@@ -82,7 +82,7 @@ export const Header = () => {
             color="blue.500"
             borderRadius={12}
           >
-            Girişss
+            Giriş
           </Button>
           <Button colorScheme="blue" fontWeight="bold" borderRadius={12}>
             Yeni Elan
