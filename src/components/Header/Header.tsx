@@ -85,7 +85,7 @@ export const Header = () => {
             Giriş
           </Button>
           <Button colorScheme="blue" fontWeight="bold" borderRadius={12}>
-            Yeni Elannn
+            Yeni Elan
           </Button>
         </HStack>
       </Box>
