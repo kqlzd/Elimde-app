@@ -45,7 +45,7 @@ export const CreateAd = () => {
       onSubmit={handleSubmit}
       className="max-w-md mx-auto mt-10 space-y-4 p-4 bg-white shadow rounded"
     >
-      <h2 className="text-xl font-semibold">Yeni İlan Ekle</h2>
+      <h2 className="text-xl font-semibold">Yeni İlann Ekle</h2>
       <input
         type="text"
         placeholder="Başlık"
