@@ -5,9 +5,6 @@ import {
   Box,
   Flex,
   HStack,
-  Input,
-  InputGroup,
-  InputLeftElement,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -19,7 +16,7 @@ export const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
   const handleClickLogin = () => navigate("/login");
-  const handleClickCreateAd = () => navigate("/create");
+  // const handleClickCreateAd = () => navigate("/create");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -44,63 +41,23 @@ export const Header = () => {
       width="100%"
       py={4}
       px={6}
-      justifyContent="space-between"
+      justifyContent="space-evenly"
       alignItems="center"
       boxShadow="sm"
+      bg="#F3F1EB"
     >
       <Box>
         <HStack spacing={9}>
           <Text
-            color="#4428D2"
-            fontSize={"23px"}
+            color="#1C3A38"
+            fontSize={"43px"}
             fontWeight="bold"
             _hover={{ cursor: "pointer" }}
             onClick={() => navigate("/")}
           >
-            Kiraye.az
+            PetCare.az
           </Text>
-          <Button
-            fontWeight="Bold"
-            color="#D23651"
-            borderRadius="12px"
-            fontSize={20}
-            border={"1px solid #D23651"}
-            bgColor="white"
-            colorScheme="none"
-            ml="20px"
-          >
-            Kataloq
-          </Button>
         </HStack>
-      </Box>
-
-      <Box width="40%">
-        <InputGroup size="md">
-          <InputLeftElement pointerEvents="none">
-            <Text color="gray.400"></Text>
-          </InputLeftElement>
-          <Input
-            placeholder="Axtarış..."
-            borderRadius="12px"
-            borderColor="#4428D2"
-            colorScheme="none"
-          />
-
-          {/* <InputRightElement width="4.5rem">
-            <Button
-              h="2.25rem"
-              size="sm"
-              bgColor="#D23651"
-              colorScheme="none"
-              color="white"
-              borderRadius="12px"
-              border="none"
-              p={3}
-            >
-              Əldə et
-            </Button>
-          </InputRightElement> */}
-        </InputGroup>
       </Box>
 
       <Box>
@@ -109,10 +66,9 @@ export const Header = () => {
             <Button
               _hover={{ color: "gray.300" }}
               colorScheme="none"
-              fontWeight="medium"
-              fontSize={14}
-              color="white"
-              bgColor="#4428D2"
+              fontWeight="bold"
+              fontSize={20}
+              color="#1C3A38"
               borderRadius={12}
               onClick={handleClickLogin}
             >
@@ -132,7 +88,7 @@ export const Header = () => {
             </Button>
           )}
 
-          <Button
+          {/* <Button
             _hover={{ color: "gray.200" }}
             bgColor="#D23651"
             colorScheme="none"
@@ -141,7 +97,7 @@ export const Header = () => {
             onClick={handleClickCreateAd}
           >
             Yeni Elan
-          </Button>
+          </Button> */}
         </HStack>
       </Box>
     </Flex>
