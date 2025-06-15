@@ -7,10 +7,26 @@ import {
   CardBody,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { cardData } from "../../consts/consts";
+import { useNavigate } from "react-router-dom";
+import { Loading } from "../Loading/Loading";
 
 export const PetCards = () => {
+  const navigate = useNavigate();
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const handleClickCardServices = (slug: string) => {
+    setIsNavigating(true);
+    setTimeout(() => {
+      navigate(`/services/${slug}`);
+    }, 500);
+  };
+
+  if (isNavigating) {
+    return <Loading />;
+  }
+
   return (
     <Box py={16} px={8} bg="gray.50">
       <Container maxW="6xl" centerContent>
@@ -20,8 +36,14 @@ export const PetCards = () => {
           justifyItems="center"
           w="full"
         >
-          {cardData.map((item) => (
-            <Card key={item.id} shadow="lg" borderRadius={12} cursor="pointer">
+          {cardData.map((item: any) => (
+            <Card
+              key={item.id}
+              shadow="lg"
+              borderRadius={12}
+              cursor="pointer"
+              onClick={() => handleClickCardServices(item.slug)}
+            >
               <Image
                 borderRadius={12}
                 src={item.image}

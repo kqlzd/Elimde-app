@@ -1,5 +1,5 @@
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebaseConfig";
+import { db } from "../lib/firebaseConfig";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
