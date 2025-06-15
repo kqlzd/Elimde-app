@@ -12,12 +12,11 @@ import {
 } from "@chakra-ui/react";
 import { PopularServicesHeading } from "../../components/PopularServicesHeading/PopularServicesHeading";
 import { PetCards } from "../../components/PetCards/PetCards";
-import { Footer } from "../../components/Footer/Footer";
 
 export const MainPage = () => {
   return (
     <>
-      <Box minH="120vh" bg="gray.50">
+      <Box bg="gray.50">
         {/* Hero Section */}
         <Box bg="#f4f1ec" py={24} px={8}>
           <Container maxW="6xl" centerContent>
@@ -222,8 +221,6 @@ export const MainPage = () => {
 
       <PopularServicesHeading />
       <PetCards />
-
-      <Footer />
     </>
   );
 };

@@ -46,10 +46,11 @@ export const categories: Categories[] = [
   },
 ];
 
-export const cardData = [
+export const cardData: any = [
   {
     id: 1,
     title: "Pişik otelleri",
+    slug: "hotels",
     description:
       "Öz evinizin rahatlığında ev heyvanlarınıza qulluq edəcək etibarlı, yerli və peşəkar ev heyvanı baxıcısı ilə özünüzü rahat hiss edin.",
     price: "$450",
@@ -59,6 +60,7 @@ export const cardData = [
   {
     id: 2,
     title: "Tibbi Qulluq",
+    slug: "doctors",
     description:
       "Ev heyvanınızın yaxinliqdaki ən yaxşı qayğını almasını təmin etmək üçün ixtisaslı mütəxəssislərlə əlaqə saxlayın.",
     price: "$280",
@@ -68,6 +70,7 @@ export const cardData = [
   {
     id: 3,
     title: "Təlim Merkəzləri",
+    slug: "training",
     description:
       "Yeni ev dostunuzu tapmaq üçün peşəkar yetişdiricilərlə tanış olun. Onlar sevgi ilə böyüdür, siz isə sevinclə sahiblənirsiniz.",
     price: "$320",
@@ -78,6 +81,7 @@ export const cardData = [
   {
     id: 4,
     title: "Grooming",
+    slug: "grooming",
     description:
       "Pet Care ilə heyvanınıza peşəkar qulluq göstərin – baxım, görünüş və sağlamlıq bir arada!",
     price: "$650",

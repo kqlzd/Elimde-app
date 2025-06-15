@@ -2,17 +2,17 @@ import { Card, CardBody, Image, Text, Box, Link } from "@chakra-ui/react";
 import React from "react";
 // import { useNavigate } from "react-router-dom";
 
-interface CardProps {
-  title: string;
-  price: string;
-  imageUrl: string;
-  city: string;
-  id: string;
-  createdAt: string | null;
-  isDaily: boolean;
-}
+// interface CardProps {
+//   title: string;
+//   price: string;
+//   imageUrl: string;
+//   city: string;
+//   id: string;
+//   createdAt: string | null;
+//   isDaily: boolean;
+// }
 
-export const Cards: React.FC<CardProps> = ({
+export const Cards: React.FC<any> = ({
   title,
   price,
   imageUrl,

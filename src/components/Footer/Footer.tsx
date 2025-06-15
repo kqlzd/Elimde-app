@@ -14,7 +14,7 @@ export const Footer = () => {
   return (
     <Box
       as="footer"
-      bg="gray.50"
+      bgColor="#F3F1EB"
       borderTop="1px solid"
       borderColor="gray.200"
       py={8}
