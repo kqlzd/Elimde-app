@@ -10,10 +10,12 @@ import { DoctorsPage } from "./pages/DoctorsPage/DoctorsPage";
 import PetDetailPage from "./pages/PetDetailPage/PetDetailPage";
 import { PetTrainings } from "./pages/PetTrainings/PetTrainings";
 import { Footer } from "./components/Footer/Footer";
+import { ScrollToTop } from "./components/ScrollToTop/ScrollToTop";
 
 export const AppRouter: React.FC = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path="/" element={<MainPage />} />

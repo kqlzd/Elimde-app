@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Text, Button, Box, Flex, HStack } from "@chakra-ui/react";
+import React from "react";
+import { Text, Box, Flex, HStack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-// import { auth } from "../../firebaseConfig";
 
 export const Header = () => {
   const navigate = useNavigate();
-
-  // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
   return (
     <Flex
