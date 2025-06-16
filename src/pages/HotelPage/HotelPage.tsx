@@ -12,12 +12,24 @@ import {
 import { HotelCards } from "../../components/HotelCards/HotelCards";
 import { useGetHotelsData } from "../../hooks/useGetHotelsData";
 import { SearchIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useDebounce } from "use-debounce";
 
 export const HotelPage = () => {
   const { hotels } = useGetHotelsData();
+  const { register, watch } = useForm();
+
+  const area = watch("area-search");
+  const [debouncedArea] = useDebounce(area, 500);
+
+  const filteredCards = hotels.filter((item) => {
+    const address = item.address?.toLowerCase() ?? "";
+    const searchValue = debouncedArea?.toLowerCase() ?? "";
+    return address.includes(searchValue);
+  });
 
   return (
-    <Box bg="gray.50" minH="100vh" py={8}>
+    <Box bg="gray.50" minH="100vh" py={8} as="form">
       <Container maxW="container.xl">
         <VStack spacing={8}>
           <Box w="100%" display="flex" justifyContent="center">
@@ -26,6 +38,7 @@ export const HotelPage = () => {
                 <Icon as={SearchIcon} color="gray.400" />
               </InputLeftElement>
               <Input
+                {...register("area-search")}
                 placeholder="Ərazi üzrə axtar..."
                 bg="#F7FAFC"
                 border="2px solid"
@@ -57,7 +70,7 @@ export const HotelPage = () => {
             ></Heading>
 
             <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={6}>
-              {hotels.map((hotel) => (
+              {filteredCards.map((hotel: any) => (
                 <HotelCards key={hotel.id} hotel={hotel} />
               ))}
             </SimpleGrid>

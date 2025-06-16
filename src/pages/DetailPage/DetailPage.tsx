@@ -90,7 +90,6 @@ export const DetailPage = () => {
     setShowPhoneNumber(true);
   };
 
-  // Sadece geçerli koordinatlar varsa position oluştur
   const validPosition: [number, number] | null = data.locations
     ? [data.locations.latitude, data.locations.longitude]
     : null;
