@@ -3,12 +3,13 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebaseConfig";
 
 export const useGetTrainingsData = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [trainingCenters, setTrainingCenters] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchTrainingsData = async () => {
       try {
+        setIsLoading(true);
         const querySnapshot = await getDocs(collection(db, "trainingcenters"));
         const trainingCenters = querySnapshot.docs.map((doc) => ({
           id: doc.id,
