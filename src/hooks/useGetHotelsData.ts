@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebaseConfig";
+import { THotelData } from "../models/api";
 
 export const useGetHotelsData = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [hotels, setHotels] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [hotels, setHotels] = useState<THotelData[]>([]);
 
   useEffect(() => {
     const fetchHotels = async () => {
       try {
+        setIsLoading(true);
         const querySnapshot = await getDocs(collection(db, "hotels"));
         const hotelList = querySnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...(doc.data() as Omit<any, "id">),
+          ...(doc.data() as Omit<THotelData, "id">),
         }));
         setHotels(hotelList);
       } catch (error) {

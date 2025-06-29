@@ -10,6 +10,7 @@ export const useGetDatas = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const snapshot = await getDocs(collection(db, "listings"));
         const data = snapshot.docs.map((doc) => {
           const docData = doc.data();

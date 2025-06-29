@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebaseConfig";
+import { TGroomsData } from "../models/api";
 
 export const useGetGroomsData = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [grooms, setGrooms] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [grooms, setGrooms] = useState<TGroomsData[]>([]);
 
   useEffect(() => {
     const fetchGrooms = async () => {
       try {
+        setIsLoading(true);
         const querySnapshot = await getDocs(collection(db, "grooms"));
         const groomList = querySnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...(doc.data() as Omit<any, "id">),
+          ...(doc.data() as Omit<TGroomsData, "id">),
         }));
         setGrooms(groomList);
       } catch (error) {
