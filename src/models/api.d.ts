@@ -14,6 +14,8 @@ export type TGroomsData = {
   name: string;
   phone: string;
   image: string;
+  price: number;
+  averageTime: string;
 };
 
 interface IHotelLocations {
@@ -30,4 +32,17 @@ export type THotelData = {
   image: string;
   price: number;
   locations: IHotelLocations;
+  averageMarketPrice: number;
+};
+
+export type TTrainingData = {
+  id: string;
+  address: string;
+  desc: string;
+  name: string;
+  phone: string;
+  imageUrl: string;
+  monthlySubscription: number;
+  locations: IHotelLocations;
+  trainingDuration: string;
 };

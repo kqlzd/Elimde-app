@@ -10,6 +10,7 @@ interface HotelData {
   longitude: string;
   latitude: string;
   imageFile: FileList;
+  price: number;
 }
 
 export const usePostDataToDb = () => {
@@ -37,6 +38,7 @@ export const usePostDataToDb = () => {
       await addDoc(collection(db, "hotels"), {
         name: data.hotelName,
         address: data.address,
+        price: data.price,
         locations: {
           longitude: Number(data.longitude),
           latitude: Number(data.latitude),
