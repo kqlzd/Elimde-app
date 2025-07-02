@@ -23,6 +23,11 @@ export const AdminHotelPage = () => {
           </FormControl>
 
           <FormControl>
+            <FormLabel>Qiymet</FormLabel>
+            <Input type="text" {...register("price")} />
+          </FormControl>
+
+          <FormControl>
             <FormLabel>Longtitude</FormLabel>
             <Input type="text" {...register("longitude")} />
           </FormControl>

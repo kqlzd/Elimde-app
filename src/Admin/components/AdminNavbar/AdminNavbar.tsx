@@ -14,6 +14,7 @@ export const AdminNavbar = () => {
 
   return (
     <Flex
+      height={400}
       bg="#1C3A38"
       p="4"
       color="white"

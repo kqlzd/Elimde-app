@@ -46,14 +46,13 @@ export const categories: Categories[] = [
   },
 ];
 
-export const cardData: any = [
+export const cardData = [
   {
     id: 1,
-    title: "Pişik otelleri",
+    title: "Oteller",
     slug: "hotels",
     description:
-      "Öz evinizin rahatlığında ev heyvanlarınıza qulluq edəcək etibarlı, yerli və peşəkar ev heyvanı baxıcısı ilə özünüzü rahat hiss edin.",
-    price: "$450",
+      "Öz evinizin rahatlığında ev heyvanlarınıza qulluq edəcək peşəkar baxıcı ilə özünüzü rahat hiss edin.",
     image: "/assets/cat1.png",
     alt: "Green double couch with wooden legs",
   },
@@ -63,7 +62,6 @@ export const cardData: any = [
     slug: "doctors",
     description:
       "Ev heyvanınızın yaxinliqdaki ən yaxşı qayğını almasını təmin etmək üçün ixtisaslı mütəxəssislərlə əlaqə saxlayın.",
-    price: "$280",
     image: "/assets/cat2.png",
     alt: "Modern wooden coffee table",
   },
@@ -72,38 +70,17 @@ export const cardData: any = [
     title: "Təlim Merkəzləri",
     slug: "training",
     description:
-      "Yeni ev dostunuzu tapmaq üçün peşəkar yetişdiricilərlə tanış olun. Onlar sevgi ilə böyüdür, siz isə sevinclə sahiblənirsiniz.",
-    price: "$320",
-
+      "Yeni ev dostunuzu tapmaq üçün peşəkar yetişdiricilərlə tanış olun. Onlar sevgi ilə böyüdür",
     image: "/assets/cat4.png",
     alt: "Comfortable fabric armchair",
   },
   {
     id: 4,
-    title: "Grooming",
+    title: "Baxım",
     slug: "grooming",
     description:
       "Pet Care ilə heyvanınıza peşəkar qulluq göstərin – baxım, görünüş və sağlamlıq bir arada!",
-    price: "$650",
     image: "/assets/cat3.png",
     alt: "Wooden dining table set",
-  },
-  {
-    id: 5,
-    title: "Heyvan yetişdiriciləri",
-    description:
-      "Yeni ev dostunuzu tapmaq üçün peşəkar yetişdiricilərlə tanış olun. Onlar sevgi ilə böyüdür, siz isə sevinclə sahiblənirsiniz.",
-    price: "$180",
-    image: "/assets/dog2.png",
-    alt: "Modern bookshelf unit",
-  },
-  {
-    id: 6,
-    title: "Office Desk",
-    description:
-      "Minimalist office desk with built-in storage for productive workspaces.",
-    price: "$390",
-    image: "/assets/dog3.png",
-    alt: "Modern office desk",
   },
 ];
