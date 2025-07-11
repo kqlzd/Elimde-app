@@ -4,71 +4,54 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { db } from "../lib/firebaseConfig";
 import { useForm } from "react-hook-form";
 
-interface TrainingCenterData {
+interface HotelData {
+  hotelName: string;
+  averageMarketPrice: number;
   address: string;
   longitude: string;
   latitude: string;
   imageFile: FileList;
   phone: string;
+  price: number;
+  trainingCenterName: string;
   workHours: string;
   relevantPerson: string;
   relevantPersonPhone: string;
   desc: string;
-  monthlySubscription: number;
-  traningDuration: string;
-  name: string;
 }
 
-export const usePostDataToDbTrainingCenter = () => {
+export const usePostDataToDbHotels = () => {
   const toast = useToast();
 
-  const { register, handleSubmit, watch, reset } = useForm<TrainingCenterData>(
-    {}
-  );
+  const { register, handleSubmit, watch, reset } = useForm<HotelData>({});
 
   const watchedValues = watch();
 
   const uploadImage = async (file: File): Promise<string> => {
     const storage = getStorage();
-    const imageRef = ref(storage, `trainingcenters/${Date.now()}_${file.name}`);
+    const imageRef = ref(storage, `hotels/${Date.now()}_${file.name}`);
     await uploadBytes(imageRef, file);
     return await getDownloadURL(imageRef);
   };
 
-  const convertToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
-  const onSubmit = async (data: TrainingCenterData) => {
+  const onSubmit = async (data: HotelData) => {
     try {
       let imageUrl = "";
 
       if (data.imageFile && data.imageFile.length > 0) {
-        const file = data.imageFile[0];
         imageUrl = await uploadImage(data.imageFile[0]);
-
-        if (file.size > 1024 * 1024) {
-          throw new Error("Şəkil ölçüsü 1MB-dan böyük ola bilməz");
-        }
-
-        imageUrl = await convertToBase64(file);
       }
 
-      await addDoc(collection(db, "trainingcenters"), {
+      await addDoc(collection(db, "hotels"), {
+        name: data.hotelName,
         address: data.address,
         phone: data.phone,
-        workHours: data.workHours,
+        price: data.price,
+        desc: data.desc,
         relevantPerson: data.relevantPerson,
         relevantPersonPhone: data.relevantPersonPhone,
-        desc: data.desc,
-        monthlySubscription: data.monthlySubscription,
-        traningDuration: data.traningDuration,
-        name: data.name,
+        workHours: data.workHours,
+        averageMarketPrice: data.averageMarketPrice,
         locations: {
           longitude: Number(data.longitude),
           latitude: Number(data.latitude),

@@ -8,56 +8,17 @@ import {
   HStack,
   Icon,
   SimpleGrid,
-  Image,
   Card,
   CardBody,
   Badge,
   Flex,
 } from "@chakra-ui/react";
-import { Heart, Shield, Users, Award, Target, Eye } from "lucide-react";
+import { Target, Eye } from "lucide-react";
+import { aboutUsstats, values } from "../../utils/constants/constants";
 
 export const AboutUsPage = () => {
-  const values = [
-    {
-      icon: Heart,
-      title: "Sevgi və Qayğı",
-      description:
-        "Hər heyvan dostunuza maksimal sevgi və peşəkar qayğı göstəririk.",
-      color: "#E53E3E",
-    },
-    {
-      icon: Shield,
-      title: "Güvən",
-      description:
-        "Təhlükəsiz və etibarlı xidmətlərlə heyvanlarınızın təhlükəsizliyini təmin edirik.",
-      color: "#3182CE",
-    },
-    {
-      icon: Users,
-      title: "Komanda",
-      description:
-        "Təcrübəli və sertifikatlı mütəxəssislərimizdən ibarət güclü komanda.",
-      color: "#38A169",
-    },
-    {
-      icon: Award,
-      title: "Keyfiyyət",
-      description:
-        "Yüksək standartlarda xidmət göstərərək müştəri məmnuniyyətini əsas götürürük.",
-      color: "#D69E2E",
-    },
-  ];
-
-  const stats = [
-    { number: "5000+", label: "Xoşbəxt Müştəri" },
-    { number: "50+", label: "Peşəkar Mütəxəssis" },
-    { number: "24/7", label: "Dəstək Xidməti" },
-    { number: "100%", label: "Müştəri Məmnuniyyəti" },
-  ];
-
   return (
     <Box bg="gray.50" minH="100vh">
-      {/* Hero Section */}
       <Box bg="linear-gradient(135deg, #1C3A38 0%, #2F6B68 100%)" py={20}>
         <Container maxW="container.xl">
           <VStack spacing={6} textAlign="center" color="white">
@@ -69,7 +30,7 @@ export const AboutUsPage = () => {
               borderRadius="full"
               fontSize="sm"
             >
-              2020-ci ildən bəri xidmətinizdə
+              2025-ci İldən bərİ xİdmətİnİzdə
             </Badge>
             <Heading size="2xl" fontWeight="bold">
               Miyav.az - Heyvan Dostlarınızın Evi
@@ -82,7 +43,6 @@ export const AboutUsPage = () => {
         </Container>
       </Box>
 
-      {/* Mission & Vision */}
       <Container maxW="container.xl" py={16}>
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={12}>
           <Card>
@@ -119,7 +79,6 @@ export const AboutUsPage = () => {
         </SimpleGrid>
       </Container>
 
-      {/* Values Section */}
       <Box bg="white" py={16}>
         <Container maxW="container.xl">
           <VStack spacing={12}>
@@ -163,11 +122,10 @@ export const AboutUsPage = () => {
         </Container>
       </Box>
 
-      {/* Stats Section */}
       <Box bg="linear-gradient(135deg, #1C3A38 0%, #2F6B68 100%)" py={16}>
         <Container maxW="container.xl">
           <SimpleGrid columns={{ base: 2, md: 4 }} spacing={8}>
-            {stats.map((stat, index) => (
+            {aboutUsstats.map((stat, index) => (
               <VStack key={index} spacing={2} textAlign="center" color="white">
                 <Text fontSize="4xl" fontWeight="bold">
                   {stat.number}
@@ -180,59 +138,6 @@ export const AboutUsPage = () => {
           </SimpleGrid>
         </Container>
       </Box>
-
-      {/* Story Section */}
-      <Container maxW="container.xl" py={16}>
-        <SimpleGrid
-          columns={{ base: 1, lg: 2 }}
-          spacing={12}
-          alignItems="center"
-        >
-          <Box>
-            <Heading size="xl" color="#1C3A38" mb={6}>
-              Bizim Hekayəmiz
-            </Heading>
-            <VStack spacing={4} align="start">
-              <Text fontSize="lg" lineHeight="1.7" color="gray.700">
-                2020-ci ildə ev heyvanlarına olan sevgimizlə başlayan bu
-                yolculuq, bugün minlərlə heyvan sahibinin güvəndiyi platformaya
-                çevrildi.
-              </Text>
-              <Text fontSize="lg" lineHeight="1.7" color="gray.700">
-                İlk günlərdən bəri məqsədimiz sadədir: hər heyvanın ən yaxşı
-                qayğıya layiq olduğunu düşünür və bunun üçün peşəkar həllər
-                təqdim edirik.
-              </Text>
-              <Text fontSize="lg" lineHeight="1.7" color="gray.700">
-                Bu gün hotel, klinika, baxıcı və təlim xidmətləri ilə
-                Azərbaycanda heyvan sahəsinin rəqəmsal inkişafına önçülük
-                edirik.
-              </Text>
-            </VStack>
-          </Box>
-
-          <Box>
-            <Image
-              src="/assets/team-photo.jpg"
-              alt="Miyav.az team"
-              borderRadius="xl"
-              shadow="lg"
-              fallback={
-                <Box
-                  h="400px"
-                  bg="gray.200"
-                  borderRadius="xl"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Text color="gray.500">Komanda şəkli</Text>
-                </Box>
-              }
-            />
-          </Box>
-        </SimpleGrid>
-      </Container>
 
       <Box bg="gray.100" py={16}>
         <Container maxW="container.xl">
@@ -255,7 +160,7 @@ export const AboutUsPage = () => {
                 <Text fontWeight="bold" color="#1C3A38">
                   Telefon
                 </Text>
-                <Text color="gray.600">+994 50 123 45 67</Text>
+                <Text color="gray.600">+994 55 699 20 00</Text>
               </VStack>
               <VStack spacing={2}>
                 <Text fontWeight="bold" color="#1C3A38">

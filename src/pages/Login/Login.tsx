@@ -41,14 +41,12 @@ export const Login = () => {
     setError("");
 
     try {
-      // Sign in with Firebase Auth
       const userCredential = await signInWithEmailAndPassword(
         auth,
         data.email,
         data.password
       );
 
-      // Check if user is admin
       const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
       const userData = userDoc.data();
 
@@ -64,7 +62,6 @@ export const Login = () => {
         });
         navigate("/admin");
       } else {
-        // Sign out non-admin user
         await auth.signOut();
         setError("Bu hesabın admin icazəsi yoxdur.");
       }

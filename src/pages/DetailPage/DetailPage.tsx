@@ -53,7 +53,8 @@ interface Hotel {
   id?: string;
   name?: string;
   price?: string;
-  owner?: string;
+  relevantPerson?: string;
+  relevantPersonPhone?: string;
   image?: string;
   imageUrl?: string;
   phone?: string;
@@ -116,7 +117,8 @@ export const DetailPage = () => {
             id: docSnap.id,
             name: rawData.name ?? "",
             price: rawData.price ?? "",
-            owner: rawData.owner ?? "",
+            relevantPerson: rawData.relevantPerson ?? "",
+            relevantPersonPhone: rawData.relevantPersonPhone ?? "",
             image: rawData.image ?? rawData.imageUrl ?? "",
             phone: rawData.phone ?? "",
             desc: rawData.desc ?? "",
@@ -325,7 +327,6 @@ export const DetailPage = () => {
                   }
                 />
 
-                {/* Rating Badge Overlay */}
                 <Box
                   position="absolute"
                   top={4}
@@ -344,7 +345,6 @@ export const DetailPage = () => {
                   </HStack>
                 </Box>
 
-                {/* Status Badge */}
                 <Box
                   position="absolute"
                   top={4}
@@ -366,8 +366,7 @@ export const DetailPage = () => {
               </Box>
             </Card>
 
-            {/* Description and Details Card */}
-            {(data?.desc || data?.address) && (
+            {(data?.desc ?? data?.address) && (
               <Card
                 bg={cardBg}
                 borderRadius="2xl"
@@ -402,6 +401,22 @@ export const DetailPage = () => {
                             </Text>
                             <Text fontSize="sm" color={textColor}>
                               {data?.address ?? "Adres məlumatı yoxdur"}
+                            </Text>
+                          </VStack>
+                        </HStack>
+
+                        <HStack spacing={3}>
+                          <Phone size={18} color="#3A7E7B" />
+                          <VStack align="start" spacing={0}>
+                            <Text
+                              fontSize="sm"
+                              fontWeight="600"
+                              color="#1C3A38"
+                            >
+                              Əlaqə nömrəsi
+                            </Text>
+                            <Text fontSize="sm" color={textColor}>
+                              {data?.phone}
                             </Text>
                           </VStack>
                         </HStack>
@@ -444,7 +459,6 @@ export const DetailPage = () => {
                       </VStack>
                     </VStack>
 
-                    {/* Features/Benefits */}
                     <VStack align="start" spacing={3} w="full">
                       <Text fontSize="md" fontWeight="600" color="#1C3A38">
                         Xüsusiyyətlər
@@ -526,7 +540,6 @@ export const DetailPage = () => {
                     </Box>
                   )}
 
-                  {/* Contact Information */}
                   {showPhoneNumber ? (
                     <VStack spacing={4} w="full">
                       <Box
@@ -538,14 +551,18 @@ export const DetailPage = () => {
                         borderColor="gray.200"
                       >
                         <VStack spacing={3}>
-                          <Avatar name={data?.owner} size="md" bg="#3A7E7B" />
+                          <Avatar
+                            name={data?.relevantPerson}
+                            size="md"
+                            bg="#3A7E7B"
+                          />
                           <VStack spacing={1}>
                             <Text
                               fontSize="md"
                               fontWeight="600"
                               color="#1C3A38"
                             >
-                              {data?.owner || "Xidmət Təminatçısı"}
+                              {data?.relevantPerson ?? "Məsul şəxs"}
                             </Text>
                             <HStack spacing={2}>
                               <Phone size={16} color="#3A7E7B" />
@@ -554,14 +571,13 @@ export const DetailPage = () => {
                                 fontWeight="600"
                                 color="#1C3A38"
                               >
-                                {data?.phone}
+                                {data?.relevantPersonPhone}
                               </Text>
                             </HStack>
                           </VStack>
                         </VStack>
                       </Box>
 
-                      {/* Price Calculation for Hotels */}
                       {isHotelType && numberOfDays > 0 && (
                         <Box p={4} bg="gray.50" borderRadius="xl" w="full">
                           <VStack spacing={3}>
@@ -618,7 +634,6 @@ export const DetailPage = () => {
               </CardBody>
             </Card>
 
-            {/* Date Picker for Hotels */}
             {isHotelType && (
               <Card
                 bg={cardBg}
@@ -661,7 +676,6 @@ export const DetailPage = () => {
           </VStack>
         </Flex>
 
-        {/* Map Section */}
         {validPosition && (
           <Card
             bg={cardBg}

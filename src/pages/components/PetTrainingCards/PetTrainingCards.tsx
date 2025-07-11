@@ -208,7 +208,7 @@ export const PetTrainingCards: React.FC<PetTrainingCardsProps> = ({
         </VStack>
       </CardBody>
 
-      {Math.random() > 0.6 && (
+      {trainings?.isCertificated && (
         <Box
           position="absolute"
           top={4}

@@ -44,6 +44,7 @@ import { useForm } from "react-hook-form";
 import { useDebounce } from "use-debounce";
 import { Loading } from "../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import { medicalSpecialties } from "../../utils/constants/constants";
 
 export const DoctorsPage = () => {
   const navigate = useNavigate();
@@ -54,7 +55,6 @@ export const DoctorsPage = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState("name");
   const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>([]);
-  const [emergencyOnly, setEmergencyOnly] = useState(false);
 
   const area = watch("area-search");
   const [debouncedArea] = useDebounce(area, 500);
@@ -75,20 +75,36 @@ export const DoctorsPage = () => {
     })
     .sort((a, b) => {
       switch (sortBy) {
+        case "price-low":
+          const priceLowA = a?.consultation || 0;
+          const priceLowB = b?.consultation || 0;
+          return priceLowA - priceLowB;
+
+        case "price-high":
+          const priceHighA = a?.consultation || 0;
+          const priceHighB = b?.consultation || 0;
+          return priceHighB - priceHighA;
+
+        case "experience-low":
+          const experienceLowA = a?.experience || 0;
+          const experienceLowB = b?.experience || 0;
+          return experienceLowA - experienceLowB;
+
+        case "experience-high":
+          const experiencHighA = a?.experience || 0;
+          const experiencHighB = b?.experience || 0;
+          return experiencHighB - experiencHighA;
+
+        case "consultation":
+          const consultationA = a?.consultation || 0;
+          const consultationB = b?.consultation || 0;
+          return consultationA - consultationB;
+
         case "name":
         default:
           return (a.name || "").localeCompare(b.name || "");
       }
     });
-
-  const medicalSpecialties = [
-    { id: "general", name: "Ümumi Müayinə", icon: "🩺" },
-    { id: "surgery", name: "Cərrahi", icon: "🏥" },
-    { id: "dentistry", name: "Diş həkimliği", icon: "🦷" },
-    { id: "vaccination", name: "Peyvənd", icon: "💉" },
-    { id: "emergency", name: "Təcili yardım", icon: "🚑" },
-    { id: "dermatology", name: "Dəri xəstəlikləri", icon: "🔬" },
-  ];
 
   if (isLoading) return <Loading />;
 
@@ -210,10 +226,14 @@ export const DoctorsPage = () => {
                 onChange={(e) => setSortBy(e.target.value)}
                 bg={cardBg}
               >
-                <option value="name">Ada görə</option>
-                <option value="rating">Reytinqə görə</option>
-                <option value="distance">Məsafəyə görə</option>
-                <option value="availability">Mövcudluğa görə</option>
+                <option value="">Seçin</option>
+                <option value="price-low">Qiymət: Aşağıdan yuxarı</option>
+                <option value="price-high">Qiymət: Yuxarıdan aşağı</option>
+                <option value="experience-low">Təcrübə: Aşağıdan yuxarı</option>
+                <option value="experience-high">
+                  Təcrübə: Yuxarıdan aşağı
+                </option>
+                <option value="consultation">Konsultasiyaya görə</option>
               </Select>
 
               <HStack spacing={2}>
@@ -239,7 +259,6 @@ export const DoctorsPage = () => {
             </HStack>
           </Flex>
 
-          {/* Results Grid */}
           <Box w="100%">
             {filteredCards.length > 0 ? (
               <SimpleGrid
@@ -271,7 +290,6 @@ export const DoctorsPage = () => {
                   variant="outline"
                   onClick={() => {
                     setSelectedSpecialties([]);
-                    setEmergencyOnly(false);
                     setSortBy("name");
                   }}
                 >
@@ -283,7 +301,6 @@ export const DoctorsPage = () => {
         </VStack>
       </Container>
 
-      {/* Advanced Filters Drawer */}
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
         <DrawerOverlay />
         <DrawerContent>
@@ -297,7 +314,6 @@ export const DoctorsPage = () => {
 
           <DrawerBody>
             <VStack spacing={8} align="stretch" pt={6}>
-              {/* Specialty Filter */}
               <Box>
                 <Text fontSize="md" fontWeight="600" mb={4} color="#1C3A38">
                   İxtisas Sahələri
@@ -336,7 +352,6 @@ export const DoctorsPage = () => {
                 </SimpleGrid>
               </Box>
 
-              {/* Location Filter */}
               <Box>
                 <Text fontSize="md" fontWeight="600" mb={4} color="#1C3A38">
                   Rayon
@@ -366,7 +381,6 @@ export const DoctorsPage = () => {
                 </VStack>
               </Box>
 
-              {/* Availability Filter */}
               <Box>
                 <Text fontSize="md" fontWeight="600" mb={4} color="#1C3A38">
                   Mövcudluq
@@ -411,7 +425,6 @@ export const DoctorsPage = () => {
                 </VStack>
               </Box>
 
-              {/* Apply Filters Button */}
               <Button
                 colorScheme="blue"
                 size="lg"

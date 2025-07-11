@@ -10,8 +10,14 @@ interface GroomData {
   longitude: string;
   latitude: string;
   imageFile: FileList;
-  telephone: string;
+  phone: string;
   trainingCenterName: string;
+  desc: string;
+  price: number;
+  averageTime: string;
+  workHours: string;
+  relevantPerson: string;
+  relevantPersonPhone: string;
 }
 
 export const usePostDataToDbGrooms = () => {
@@ -39,6 +45,13 @@ export const usePostDataToDbGrooms = () => {
       await addDoc(collection(db, "grooms"), {
         name: data.groomName,
         address: data.address,
+        desc: data.desc,
+        price: data.price,
+        phone: data.phone,
+        averageTime: data.averageTime,
+        workHours: data.workHours,
+        relevantPerson: data.relevantPerson,
+        relevantPersonPhone: data.relevantPersonPhone,
         locations: {
           longitude: Number(data.longitude),
           latitude: Number(data.latitude),

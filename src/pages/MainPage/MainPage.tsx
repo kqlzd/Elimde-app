@@ -241,14 +241,12 @@ export const MainPage = () => {
 
   return (
     <Box bg="gray.50" overflow="hidden">
-      {/* Enhanced Hero Section */}
       <Box
         minH="100vh"
         bgGradient={bgGradient}
         position="relative"
         overflow="hidden"
       >
-        {/* Animated Background Elements */}
         <MotionBox
           position="absolute"
           top="-50%"
@@ -260,7 +258,6 @@ export const MainPage = () => {
           animate="animate"
         />
 
-        {/* Floating Decorative Elements */}
         <MotionBox
           position="absolute"
           top="20%"
@@ -306,7 +303,6 @@ export const MainPage = () => {
             minH="80vh"
             gap={12}
           >
-            {/* Left Content */}
             <VStack
               flex={1}
               align={{ base: "center", lg: "flex-start" }}
@@ -444,7 +440,6 @@ export const MainPage = () => {
               </MotionBox>
             </VStack>
 
-            {/* Right Content - Enhanced Pet Images Grid */}
             <Box flex={1} position="relative">
               <Grid
                 templateColumns="repeat(2, 1fr)"
@@ -574,7 +569,6 @@ export const MainPage = () => {
         </Container>
       </Box>
 
-      {/* Services Section */}
       <PopularServicesHeading />
       <PetCards />
     </Box>

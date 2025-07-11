@@ -55,7 +55,14 @@ export const GroomingPage = () => {
     })
     .sort((a, b) => {
       switch (sortBy) {
-        case "name":
+        case "price-low":
+          const priceLowA = a.price || 0;
+          const priceLowB = b.price || 0;
+          return priceLowA - priceLowB;
+        case "price-high":
+          const priceHighA = a.price || 0;
+          const priceHighB = b.price || 0;
+          return priceHighB - priceHighA;
         default:
           return (a.name || "").localeCompare(b.name || "");
       }
@@ -78,7 +85,6 @@ export const GroomingPage = () => {
             </BreadcrumbItem>
           </Breadcrumb>
 
-          {/* Header Section */}
           <VStack spacing={6} align="center" textAlign="center">
             <VStack spacing={3}>
               <HStack spacing={3} justify="center">
@@ -182,8 +188,9 @@ export const GroomingPage = () => {
                 onChange={(e) => setSortBy(e.target.value)}
                 bg={cardBg}
               >
-                <option value="name">Ada görə</option>
-                <option value="rating">Vaxta görə</option>
+                <option value="">Seçin</option>
+                <option value="price-low">Qiymətə görə:Aşağıdan yuxarı</option>
+                <option value="price-high">Qiymətə görə:Yuxarıdan aşağı</option>
               </Select>
 
               <HStack spacing={2}>

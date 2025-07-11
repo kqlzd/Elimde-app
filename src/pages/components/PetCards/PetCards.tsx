@@ -1,61 +1,3 @@
-// import {
-//   Box,
-//   Card,
-//   Container,
-//   SimpleGrid,
-//   Image,
-//   CardBody,
-//   Text,
-// } from "@chakra-ui/react";
-// import React from "react";
-// import { cardData } from "../../../consts/consts";
-// import { useNavigate } from "react-router-dom";
-
-// export const PetCards = () => {
-//   const navigate = useNavigate();
-
-//   const handleClickCardServices = (slug: string) => {
-//     navigate(`/services/${slug}`);
-//   };
-
-//   return (
-//     <Box py={16} px={8} bg="gray.50">
-//       <Container maxW="6xl" centerContent>
-//         <SimpleGrid
-//           columns={{ base: 1, md: 2, lg: 3 }}
-//           spacing={12}
-//           justifyItems="center"
-//           w="full"
-//         >
-//           {cardData.map((item: any) => (
-//             <Card
-//               key={item.id}
-//               shadow="lg"
-//               borderRadius={12}
-//               cursor="pointer"
-//               onClick={() => handleClickCardServices(item.slug)}
-//             >
-//               <Image
-//                 borderRadius={12}
-//                 src={item.image}
-//                 alt={item.alt}
-//                 h="200px"
-//                 objectFit="cover"
-//               />
-//               <CardBody>
-//                 <Text fontSize="28px" fontWeight="bold" color="gray.800">
-//                   {item.title}
-//                 </Text>
-//                 <Text color="gray.600">{item.description}</Text>
-//               </CardBody>
-//             </Card>
-//           ))}
-//         </SimpleGrid>
-//       </Container>
-//     </Box>
-//   );
-// };
-
 import {
   Box,
   Card,
@@ -72,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { cardData } from "../../../consts/consts";
+import { cardData, colorSchemes } from "../../../utils/constants/constants";
 
 export const PetCards = () => {
   const navigate = useNavigate();
@@ -83,29 +25,6 @@ export const PetCards = () => {
   const handleClickCardServices = (slug: string) => {
     navigate(`/services/${slug}`);
   };
-
-  const colorSchemes = [
-    {
-      gradient: "linear(135deg, #FF6B9D, #FF8E8E)",
-      accentColor: "#FF6B9D",
-      badgeScheme: "pink",
-    },
-    {
-      gradient: "linear(135deg, #4299E1, #63B3ED)",
-      accentColor: "#4299E1",
-      badgeScheme: "blue",
-    },
-    {
-      gradient: "linear(135deg, #9F7AEA, #B794F6)",
-      accentColor: "#9F7AEA",
-      badgeScheme: "purple",
-    },
-    {
-      gradient: "linear(135deg, #F6AD55, #FBB041)",
-      accentColor: "#F6AD55",
-      badgeScheme: "orange",
-    },
-  ];
 
   return (
     <Box py={20} px={8} bg="gray.50" position="relative" overflow="hidden">
@@ -161,7 +80,6 @@ export const PetCards = () => {
                   borderColor: colorScheme.accentColor,
                 }}
               >
-                {/* Gradient Top Border */}
                 <Box
                   position="absolute"
                   top={0}
@@ -171,7 +89,6 @@ export const PetCards = () => {
                   bgGradient={colorScheme.gradient}
                 />
 
-                {/* Image Section */}
                 <Box position="relative" overflow="hidden">
                   <Image
                     src={item.image}
@@ -186,7 +103,6 @@ export const PetCards = () => {
 
                 <CardBody p={6} pt={8}>
                   <VStack align="start" spacing={4}>
-                    {/* Title */}
                     <Text
                       fontSize="xl"
                       fontWeight="700"
@@ -196,7 +112,6 @@ export const PetCards = () => {
                       {item.title}
                     </Text>
 
-                    {/* Stats Row */}
                     <HStack spacing={4} w="full" justify="space-between">
                       <VStack spacing={1} align="start">
                         <HStack spacing={1}>
@@ -226,7 +141,6 @@ export const PetCards = () => {
                       </VStack>
                     </HStack>
 
-                    {/* Description */}
                     <Text
                       color="gray.600"
                       fontSize="sm"
@@ -236,7 +150,6 @@ export const PetCards = () => {
                       {item.description}
                     </Text>
 
-                    {/* Features */}
                     <VStack align="start" spacing={2} w="full">
                       <HStack spacing={2}>
                         <Box
@@ -262,7 +175,6 @@ export const PetCards = () => {
                       </HStack>
                     </VStack>
 
-                    {/* CTA Button */}
                     <Button
                       w="full"
                       size="md"

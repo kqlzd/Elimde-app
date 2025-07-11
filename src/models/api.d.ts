@@ -5,6 +5,12 @@ export type TDoctorData = {
   name: string;
   phone: string;
   image: string;
+  consultation: number;
+  desc: string;
+  experience: number;
+  relevantPerson: string;
+  relevantPersonPhone: string;
+  workHours: string;
 };
 
 export type TGroomsData = {
@@ -45,4 +51,5 @@ export type TTrainingData = {
   monthlySubscription: number;
   locations: IHotelLocations;
   trainingDuration: string;
+  isCertificated: boolean;
 };
