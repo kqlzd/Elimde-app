@@ -144,7 +144,6 @@ export const DoctorCards: React.FC<DoctorCardsProps> = ({ doctor }) => {
             </HStack>
           </Box>
 
-          {/* FİXED: Services section with proper alignment */}
           <HStack spacing={2} w="full" justify="space-around">
             {services.map((service, index) => (
               <VStack key={index} spacing={1} flex="1" align="center">
@@ -179,7 +178,7 @@ export const DoctorCards: React.FC<DoctorCardsProps> = ({ doctor }) => {
             <HStack justify="space-between" align="center" mb={3}>
               <VStack align="start" spacing={0}>
                 <Text fontSize="2xl" fontWeight="bold" color="#1C3A38">
-                  Pulsuz
+                  {doctor?.consultation} - azn
                 </Text>
                 <Text fontSize="sm" color="gray.600">
                   konsultasiya
@@ -191,7 +190,7 @@ export const DoctorCards: React.FC<DoctorCardsProps> = ({ doctor }) => {
                   Təcrübə
                 </Text>
                 <Text fontSize="xs" color="gray.500">
-                  {Math.floor(Math.random() * 15) + 5} il
+                  {doctor?.experience} il
                 </Text>
               </VStack>
             </HStack>

@@ -26,6 +26,7 @@ import {
   Mail,
   MessageCircle,
 } from "lucide-react";
+import { faqCategories, faqData } from "../../utils/constants/constants";
 
 interface FAQItem {
   id: string;
@@ -37,102 +38,6 @@ interface FAQItem {
 export const FAQPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("Ümumi");
-
-  const categories = [
-    "Ümumi",
-    "Hotel",
-    "Klinika",
-    "Grooming",
-    "Təlim",
-    "Ödəniş",
-  ];
-
-  const faqData: FAQItem[] = [
-    {
-      id: "1",
-      question: "Miyav.az nədir və necə işləyir?",
-      answer:
-        "Miyav.az Azərbaycanda ev heyvanları üçün müxtəlif xidmətləri bir platformada birləşdirən rəqəmsal həlldir. Siz burada hotel, klinika, grooming və təlim xidmətlərini tapa, müqayisə edə və rezerv edə bilərsiniz.",
-      category: "Ümumi",
-    },
-    {
-      id: "2",
-      question: "Qeydiyyat pulsuzmu?",
-      answer:
-        "Bəli, platformada qeydiyyat tamamilə pulsuz və sadədir. Yalnız e-mail ünvanınız və parol ilə daxil ola bilərsiniz.",
-      category: "Ümumi",
-    },
-    {
-      id: "3",
-      question: "Hotel rezervasiyasını necə edə bilərəm?",
-      answer:
-        "Hotel səhifəsindən seçdiyiniz otelin kartına klikləyin, tarixi seçin və 'Rezerv Et' düyməsinə basın. Sonra əlaqə məlumatlarınızı daxil edərək rezervasiyanızı tamamlayın.",
-      category: "Hotel",
-    },
-    {
-      id: "4",
-      question: "Hotel qiymətlərinə nə daxildir?",
-      answer:
-        "Hotel qiymətlərinə adətən günlük qalma, yemək və əsas baxım xidmətləri daxildir. Əlavə xidmətlər (grooming, oyun vaxtı və s.) ayrıca ödənilir.",
-      category: "Hotel",
-    },
-    {
-      id: "5",
-      question: "Təcili hallarda klinikaya necə müraciət edə bilərəm?",
-      answer:
-        "Təcili hallarda klinika səhifəsindən 24/7 xidmət göstərən klinika kartlarını seçin və dərhal əlaqə nömrəsinə zəng edin. Bəzi klinikalar təcili yardım üçün xüsusi xətt təqdim edir.",
-      category: "Klinika",
-    },
-    {
-      id: "6",
-      question: "Vaksinasiya qeydlərimi necə izləyə bilərəm?",
-      answer:
-        "Hər klinika ziyarətindən sonra vaksinasiya və müalicə qeydləri profilinizə əlavə olunur. Bu məlumatları profil bölməsindən izləyə bilərsiniz.",
-      category: "Klinika",
-    },
-    {
-      id: "7",
-      question: "Grooming xidməti nə qədər çəkir?",
-      answer:
-        "Grooming müddəti heyvanın növü və seçilən xidmətdən asılıdır. Orta hesabla: köpəklər üçün 1-3 saat, pişiklər üçün 30-90 dəqiqə.",
-      category: "Grooming",
-    },
-    {
-      id: "8",
-      question: "Grooming-dən əvvəl nələrə diqqət etməliyəm?",
-      answer:
-        "Heyvanınızın stressini azaltmaq üçün əvvəlcədən tanışlıq planlaşdırın. Xəstə və ya yeni vaksinasiya olunmuş heyvanları gətirməyin.",
-      category: "Grooming",
-    },
-    {
-      id: "9",
-      question: "Təlim proqramları neçə müddət davam edir?",
-      answer:
-        "Təlim proqramları növdən və səviyyədən asılı olaraq 2 həftədən 6 aya qədər davam edə bilər. Əsas itaət təlimi adətən 8-12 həftə çəkir.",
-      category: "Təlim",
-    },
-    {
-      id: "10",
-      question: "Fərdi təlim mövcuddurmu?",
-      answer:
-        "Bəli, əksər təlim mərkəzləri fərdi və qrup dərsləri təklif edir. Fərdi dərslər daha sürətli nəticə verir, amma daha bahalıdır.",
-      category: "Təlim",
-    },
-    {
-      id: "11",
-      question: "Hansı ödəniş üsulları mövcuddur?",
-      answer:
-        "Nağd, bank kartı, bank köçürməsi və bəzi hallarda mərhələli ödəniş imkanları mövcuddur. Hər xidmət göstərəni fərqli ödəniş üsulları təklif edə bilər.",
-      category: "Ödəniş",
-    },
-    {
-      id: "12",
-      question: "Rezervasiyanı ləğv edə bilərəmmi?",
-      answer:
-        "Bəli, rezervasiyanızı 24 saat əvvəlcədən ləğv edə bilərsiniz. Ləğvetmə qaydaları xidmət növündən asılı olaraq fərqli ola bilər.",
-      category: "Ödəniş",
-    },
-  ];
 
   const filteredFAQs = faqData.filter((item) => {
     const matchesSearch =
@@ -147,7 +52,6 @@ export const FAQPage = () => {
 
   return (
     <Box bg="gray.50" minH="100vh">
-      {/* Hero Section */}
       <Box bg="linear-gradient(135deg, #1C3A38 0%, #2F6B68 100%)" py={20}>
         <Container maxW="container.xl">
           <VStack spacing={6} textAlign="center" color="white">
@@ -163,7 +67,6 @@ export const FAQPage = () => {
       </Box>
 
       <Container maxW="container.xl" py={12}>
-        {/* Search */}
         <VStack spacing={8}>
           <Box w={{ base: "100%", md: "60%" }}>
             <InputGroup size="lg">
@@ -185,9 +88,8 @@ export const FAQPage = () => {
             </InputGroup>
           </Box>
 
-          {/* Categories */}
           <HStack spacing={4} flexWrap="wrap" justify="center">
-            {categories.map((category) => (
+            {faqCategories.map((category) => (
               <Badge
                 key={category}
                 variant={activeCategory === category ? "solid" : "outline"}
@@ -208,7 +110,6 @@ export const FAQPage = () => {
           </HStack>
         </VStack>
 
-        {/* FAQ Items */}
         <Box mt={12}>
           {filteredFAQs.length === 0 ? (
             <Card>
@@ -228,7 +129,6 @@ export const FAQPage = () => {
           )}
         </Box>
 
-        {/* Contact Support */}
         <Box mt={16}>
           <Card bg="white" border="2px solid" borderColor="#1C3A38">
             <CardBody p={8}>
@@ -247,7 +147,7 @@ export const FAQPage = () => {
                       Telefon Dəstəyi
                     </Text>
                     <Text color="gray.600" textAlign="center">
-                      +994 50 123 45 67
+                      +994 55 699 20 00
                       <br />
                       <Text fontSize="sm">Hər gün 09:00-18:00</Text>
                     </Text>
@@ -286,7 +186,7 @@ export const FAQPage = () => {
   );
 };
 
-const FAQItem: React.FC<{ faq: FAQItem }> = ({ faq }) => {
+const FAQItem = ({ faq }: any) => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (

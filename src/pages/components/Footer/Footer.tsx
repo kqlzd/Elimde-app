@@ -16,21 +16,13 @@ import {
   IconButton,
   Badge,
 } from "@chakra-ui/react";
+import { Heart, Mail, Phone, MapPin, Send } from "lucide-react";
 import {
-  Heart,
-  Mail,
-  Phone,
-  MapPin,
-  Send,
-  MessageCircle,
-  Star,
-  Award,
-  Users,
-  Clock,
-  Twitter,
-  Facebook,
-  Instagram,
-} from "lucide-react";
+  quickLinks,
+  services,
+  socialLinks,
+  stats,
+} from "../../../utils/constants/constants";
 
 export const Footer = () => {
   const bgColor = useColorModeValue("#F3F1EB", "gray.900");
@@ -38,61 +30,8 @@ export const Footer = () => {
   const textColor = useColorModeValue("gray.600", "gray.400");
   const headingColor = useColorModeValue("#1C3A38", "white");
 
-  const stats = [
-    { icon: Users, label: "Müştəri", value: "100+" },
-    { icon: Star, label: "Reytinq", value: "4.9" },
-    { icon: Award, label: "Xidmət", value: "5+" },
-    { icon: Clock, label: "İl Təcrübə", value: "3+" },
-  ];
-
-  const services = [
-    { name: "Pet Otelləri", link: "/services/hotels" },
-    { name: "Veterinar Klinikalar", link: "/services/doctors" },
-    { name: "Grooming Salonlar", link: "/services/grooming" },
-    { name: "Təlim Mərkəzləri", link: "/services/training" },
-  ];
-
-  const quickLinks = [
-    { name: "Haqqımızda", link: "/about" },
-    { name: "Əlaqə", link: "/contact" },
-    { name: "FAQ", link: "/faq" },
-  ];
-
-  const socialLinks = [
-    {
-      name: "WhatsApp",
-      icon: MessageCircle,
-      link: "https://wa.me/994551234567",
-      color: "#25D366",
-      hoverColor: "green.500",
-    },
-    {
-      name: "Instagram",
-      icon: Instagram,
-      link: "https://instagram.com/miyav.az",
-      color: "#E4405F",
-      hoverColor: "pink.500",
-    },
-    {
-      name: "Facebook",
-      icon: Facebook,
-      link: "https://facebook.com/miyav.az",
-      color: "#1877F2",
-      hoverColor: "blue.500",
-    },
-    {
-      name: "Twitter",
-      icon: Twitter,
-      link: "https://twitter.com/miyav_az",
-      color: "#1DA1F2",
-      hoverColor: "blue.400",
-    },
-  ];
-
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle newsletter subscription
-    console.log("Newsletter subscription");
   };
 
   return (
@@ -102,7 +41,6 @@ export const Footer = () => {
       borderTop="1px solid"
       borderColor={borderColor}
     >
-      {/* Stats Section */}
       <Box py={8} borderBottom="1px solid" borderColor={borderColor}>
         <Container maxW="7xl">
           <SimpleGrid columns={{ base: 2, md: 4 }} spacing={8}>
@@ -128,11 +66,9 @@ export const Footer = () => {
         </Container>
       </Box>
 
-      {/* Main Footer Content */}
       <Box py={12}>
         <Container maxW="7xl">
           <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
-            {/* Brand Section */}
             <VStack align="flex-start" spacing={6}>
               <Box>
                 <HStack spacing={2} mb={4}>
@@ -166,7 +102,6 @@ export const Footer = () => {
                 </Badge>
               </Box>
 
-              {/* Newsletter Subscription */}
               <Box w="full">
                 <Text
                   fontSize="sm"
@@ -206,7 +141,6 @@ export const Footer = () => {
               </Box>
             </VStack>
 
-            {/* Services Section */}
             <VStack align="flex-start" spacing={4}>
               <Heading size="md" color={headingColor} fontWeight="bold">
                 Xidmətlərimiz
@@ -231,7 +165,6 @@ export const Footer = () => {
               </VStack>
             </VStack>
 
-            {/* Quick Links Section */}
             <VStack align="flex-start" spacing={4}>
               <Heading size="md" color={headingColor} fontWeight="bold">
                 Sürətli Keçidlər
@@ -256,13 +189,11 @@ export const Footer = () => {
               </VStack>
             </VStack>
 
-            {/* Contact & Social Section */}
             <VStack align="flex-start" spacing={4}>
               <Heading size="md" color={headingColor} fontWeight="bold">
                 Əlaqə
               </Heading>
 
-              {/* Contact Info */}
               <VStack align="flex-start" spacing={3}>
                 <HStack spacing={3}>
                   <Box color="#3A7E7B">
@@ -304,7 +235,6 @@ export const Footer = () => {
                 </HStack>
               </VStack>
 
-              {/* Social Media */}
               <Box>
                 <Text
                   fontSize="sm"
@@ -343,7 +273,6 @@ export const Footer = () => {
         </Container>
       </Box>
 
-      {/* Bottom Section */}
       <Box py={6} borderTop="1px solid" borderColor={borderColor}>
         <Container maxW="7xl">
           <Flex
@@ -362,37 +291,6 @@ export const Footer = () => {
                 🐾 Made with ❤️ for pets
               </Text>
             </Text>
-
-            <HStack
-              spacing={6}
-              flexWrap="wrap"
-              justify={{ base: "center", md: "flex-end" }}
-            >
-              <Link
-                href="/privacy"
-                fontSize="sm"
-                color={textColor}
-                _hover={{ color: "#3A7E7B" }}
-              >
-                Məxfilik Siyasəti
-              </Link>
-              <Link
-                href="/terms"
-                fontSize="sm"
-                color={textColor}
-                _hover={{ color: "#3A7E7B" }}
-              >
-                İstifadə Şərtləri
-              </Link>
-              <Link
-                href="/sitemap"
-                fontSize="sm"
-                color={textColor}
-                _hover={{ color: "#3A7E7B" }}
-              >
-                Sayt Xəritəsi
-              </Link>
-            </HStack>
           </Flex>
         </Container>
       </Box>

@@ -45,7 +45,7 @@ export const HotelPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [priceRange, setPriceRange] = useState([0, 200]);
+  const [priceRange, setPriceRange] = useState([0, 500]);
   const [sortBy, setSortBy] = useState("name");
 
   const area = watch("area-search");

@@ -42,7 +42,6 @@ export const PetTrainings = () => {
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
 
-  // Filter and sort training centers
   const filteredCards = trainingCenters
     .filter((item) => {
       const address = item.address?.toLowerCase() ?? "";
@@ -56,9 +55,18 @@ export const PetTrainings = () => {
     })
     .sort((a, b) => {
       switch (sortBy) {
-        case "name":
+        case "price-low": {
+          const priceA = parseFloat(a.monthlySubscription?.toString() || "0");
+          const priceB = parseFloat(b.monthlySubscription?.toString() || "0");
+          return priceA - priceB;
+        }
+        case "price-high": {
+          const priceA = parseFloat(a.monthlySubscription?.toString() || "0");
+          const priceB = parseFloat(b.monthlySubscription?.toString() || "0");
+          return priceB - priceA;
+        }
         default:
-          return (a.name ?? "").localeCompare(b.name ?? "");
+          return (a.name || "").localeCompare(b.name || "");
       }
     });
 
@@ -182,13 +190,11 @@ export const PetTrainings = () => {
                 onChange={(e) => setSortBy(e.target.value)}
                 bg={cardBg}
               >
-                <option value="name">Ada görə</option>
-                <option value="rating">Reytinqə görə</option>
-                <option value="price">Qiymətə görə</option>
-                <option value="experience">Təcrübəyə görə</option>
+                <option value="price-low">Seçin</option>
+                <option value="price-low">Qiymət: Aşağıdan yuxarı</option>
+                <option value="price-high">Qiymət: Yuxarıdan aşağı</option>
               </Select>
 
-              {/* View Mode Toggle */}
               <HStack spacing={2}>
                 <Button
                   size="sm"

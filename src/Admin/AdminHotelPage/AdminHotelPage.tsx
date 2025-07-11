@@ -1,11 +1,17 @@
 import React from "react";
 import { AdminNavbar } from "../components/AdminNavbar/AdminNavbar";
-import { FormControl, FormLabel, Input, Box, Button } from "@chakra-ui/react";
-import { usePostDataToDb } from "../../hooks/usePostDataToDb";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Box,
+  Button,
+  Textarea,
+} from "@chakra-ui/react";
+import { usePostDataToDbHotels } from "../../hooks/usePostDataToDbHotels";
 
 export const AdminHotelPage = () => {
-  const { register, handleSubmit } = usePostDataToDb();
-
+  const { handleSubmit, register } = usePostDataToDbHotels();
   return (
     <Box>
       <AdminNavbar />
@@ -35,6 +41,31 @@ export const AdminHotelPage = () => {
           <FormControl>
             <FormLabel>Latitude</FormLabel>
             <Input type="text" {...register("latitude")} />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>ortalama qiymet</FormLabel>
+            <Input type="text" {...register("averageMarketPrice")} />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Is saatlari</FormLabel>
+            <Input type="text" {...register("workHours")} />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Mesul shexs</FormLabel>
+            <Input type="text" {...register("relevantPerson")} />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Mesul shexs tel no</FormLabel>
+            <Input type="text" {...register("relevantPersonPhone")} />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Desc</FormLabel>
+            <Textarea {...register("desc")} />
           </FormControl>
 
           <FormControl>

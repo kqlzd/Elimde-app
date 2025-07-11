@@ -6,7 +6,6 @@ import { Header } from "./pages/components/Header/Header";
 import { GroomingPage } from "./pages/GroomingPage/GroomingPage";
 import { HotelPage } from "./pages/HotelPage/HotelPage";
 import { DoctorsPage } from "./pages/DoctorsPage/DoctorsPage";
-import PetDetailPage from "./pages/PetDetailPage/PetDetailPage";
 import { PetTrainings } from "./pages/PetTrainings/PetTrainings";
 import { AdminPage } from "./Admin/AdminPage/AdminPage";
 import { Login } from "./pages/Login/Login";
@@ -30,7 +29,7 @@ export const AppRouter: React.FC = () => {
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/services/grooming" element={<GroomingPage />} />
-        <Route path="/detail/categories/:id" element={<PetDetailPage />} />
+        {/* <Route path="/detail/categories/:id" element={<PetDetailPage />} /> */}
         <Route path="/services/hotels" element={<HotelPage />} />
         <Route path="/services/doctors" element={<DoctorsPage />} />
         <Route path="/services/training" element={<PetTrainings />} />

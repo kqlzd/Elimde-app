@@ -18,7 +18,6 @@ export const useAdminAuth = () => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         try {
-          // Check if user has admin role in Firestore
           const userDoc = await getDoc(doc(db, "users", firebaseUser.uid));
           const userData = userDoc.data();
 

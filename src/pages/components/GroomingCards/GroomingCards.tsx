@@ -133,7 +133,6 @@ export const GroomingCards: React.FC<GroomingCardsProps> = ({ groom }) => {
             </HStack>
           </Box>
 
-          {/* FİXED: Services section with proper alignment */}
           <HStack spacing={2} w="full" justify="space-around">
             {services.map((service, index) => (
               <VStack key={index} spacing={1} flex="1" align="center">
