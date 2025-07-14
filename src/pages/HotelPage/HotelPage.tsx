@@ -28,6 +28,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
+  Badge,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { HotelCards } from "../components/HotelCards/HotelCards";
@@ -41,18 +42,36 @@ import { useNavigate } from "react-router-dom";
 export const HotelPage = () => {
   const navigate = useNavigate();
   const { hotels, isLoading } = useGetHotelsData();
+  console.log("🚀 ~ HotelPage ~ hotels:", hotels);
   const { register, watch } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [priceRange, setPriceRange] = useState([0, 500]);
   const [sortBy, setSortBy] = useState("name");
+  const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
 
   const area = watch("area-search");
   const [debouncedArea] = useDebounce(area, 500);
 
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
+
+  const districts = ["Nəsimi", "Yasamal", "Nərimanov", "Binəqədi", "Sabunçu"];
+
+  const toggleDistrict = (district: string) => {
+    setSelectedDistricts((prev) =>
+      prev.includes(district)
+        ? prev.filter((d) => d !== district)
+        : [...prev, district]
+    );
+  };
+
+  const clearFilters = () => {
+    setPriceRange([0, 500]);
+    setSortBy("name");
+    setSelectedDistricts([]);
+  };
 
   const filteredCards = hotels
     .filter((item) => {
@@ -65,7 +84,13 @@ export const HotelPage = () => {
         address.includes(searchValue) || name.includes(searchValue);
       const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
 
-      return matchesSearch && matchesPrice;
+      const matchesDistrict =
+        selectedDistricts.length === 0 ||
+        selectedDistricts.some((district) =>
+          address.includes(district.toLowerCase())
+        );
+
+      return matchesSearch && matchesPrice && matchesDistrict;
     })
     .sort((a, b) => {
       switch (sortBy) {
@@ -184,13 +209,44 @@ export const HotelPage = () => {
             flexWrap="wrap"
             gap={4}
           >
-            <HStack spacing={4}>
+            <HStack spacing={4} flexWrap="wrap">
               <HStack spacing={2}>
                 <MapPin size={16} color="#3A7E7B" />
                 <Text fontSize="md" fontWeight="600" color="#1C3A38">
                   {filteredCards.length} otel tapıldı
                 </Text>
               </HStack>
+
+              {selectedDistricts.length > 0 && (
+                <HStack spacing={2} flexWrap="wrap">
+                  {selectedDistricts.map((district) => (
+                    <Badge
+                      key={district}
+                      colorScheme="teal"
+                      variant="subtle"
+                      px={3}
+                      py={1}
+                      borderRadius="full"
+                      cursor="pointer"
+                      onClick={() => toggleDistrict(district)}
+                    >
+                      {district} ✕
+                    </Badge>
+                  ))}
+                </HStack>
+              )}
+
+              {debouncedArea && (
+                <Badge
+                  colorScheme="blue"
+                  variant="subtle"
+                  px={3}
+                  py={1}
+                  borderRadius="full"
+                >
+                  "{debouncedArea}" üçün nəticələr
+                </Badge>
+              )}
             </HStack>
 
             <HStack spacing={4}>
@@ -202,7 +258,7 @@ export const HotelPage = () => {
                 onChange={(e) => setSortBy(e.target.value)}
                 bg={cardBg}
               >
-                <option>Seçin</option>
+                <option value="name">Seçin</option>
                 <option value="price-low">Qiymət: Aşağıdan yuxarı</option>
                 <option value="price-high">Qiymət: Yuxarıdan aşağı</option>
               </Select>
@@ -259,10 +315,7 @@ export const HotelPage = () => {
                 <Button
                   colorScheme="teal"
                   variant="outline"
-                  onClick={() => {
-                    setPriceRange([0, 200]);
-                    setSortBy("name");
-                  }}
+                  onClick={clearFilters}
                 >
                   Filterləri Sıfırla
                 </Button>
@@ -316,39 +369,77 @@ export const HotelPage = () => {
               </Box>
 
               <Box>
-                <Text fontSize="md" fontWeight="600" mb={4} color="#1C3A38">
-                  Rayon
-                </Text>
+                <HStack justify="space-between" align="center" mb={4}>
+                  <Text fontSize="md" fontWeight="600" color="#1C3A38">
+                    Rayon ({selectedDistricts.length} seçildi)
+                  </Text>
+                  {selectedDistricts.length > 0 && (
+                    <Button
+                      size="xs"
+                      variant="ghost"
+                      colorScheme="red"
+                      onClick={() => setSelectedDistricts([])}
+                    >
+                      Təmizlə
+                    </Button>
+                  )}
+                </HStack>
                 <VStack spacing={2} align="stretch">
-                  {[
-                    "Nəsimi",
-                    "Yasamal",
-                    "Nərimanov",
-                    "Binəqədi",
-                    "Sabunçu",
-                  ].map((district) => (
+                  {districts.map((district) => (
                     <Button
                       key={district}
-                      variant="outline"
-                      justifyContent="flex-start"
+                      variant={
+                        selectedDistricts.includes(district)
+                          ? "solid"
+                          : "outline"
+                      }
+                      colorScheme={
+                        selectedDistricts.includes(district) ? "teal" : "gray"
+                      }
+                      justifyContent="space-between"
                       size="md"
                       borderRadius="lg"
-                      _hover={{ bg: "teal.50", borderColor: "teal.300" }}
+                      onClick={() => toggleDistrict(district)}
+                      _hover={{
+                        bg: selectedDistricts.includes(district)
+                          ? "teal.600"
+                          : "teal.50",
+                        borderColor: "teal.300",
+                      }}
                     >
-                      {district}
+                      <HStack>
+                        <MapPin size={16} />
+                        <Text>{district}</Text>
+                      </HStack>
+                      {selectedDistricts.includes(district) && (
+                        <Text fontSize="sm">✓</Text>
+                      )}
                     </Button>
                   ))}
                 </VStack>
               </Box>
 
-              <Button
-                colorScheme="teal"
-                size="lg"
-                borderRadius="xl"
-                onClick={onClose}
-              >
-                Filterləri Tətbiq Et
-              </Button>
+              <VStack spacing={4}>
+                <Button
+                  colorScheme="teal"
+                  size="lg"
+                  borderRadius="xl"
+                  onClick={onClose}
+                  w="full"
+                >
+                  Filterləri Tətbiq Et
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="md"
+                  borderRadius="xl"
+                  onClick={clearFilters}
+                  w="full"
+                >
+                  Bütün Filterləri Sıfırla
+                </Button>
+              </VStack>
             </VStack>
           </DrawerBody>
         </DrawerContent>

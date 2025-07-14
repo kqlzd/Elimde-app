@@ -202,9 +202,7 @@ export const DetailPage = () => {
   return (
     <Box bg="gray.50" minH="100vh" pt={20}>
       <Container maxW="7xl" py={8}>
-        {/* Breadcrumb and Header */}
         <VStack align="start" spacing={6} mb={8}>
-          {/* Breadcrumb */}
           <Breadcrumb fontSize="sm" color={textColor}>
             <BreadcrumbItem>
               <BreadcrumbLink onClick={() => navigate("/")}>
@@ -490,7 +488,6 @@ export const DetailPage = () => {
             )}
           </Box>
 
-          {/* Right Column - Booking/Contact Card */}
           <VStack
             flex="0 0 380px"
             spacing={6}
@@ -499,7 +496,6 @@ export const DetailPage = () => {
             top={{ lg: "100px" }}
             height="fit-content"
           >
-            {/* Main Booking/Contact Card */}
             <Card
               bg={cardBg}
               borderRadius="2xl"
