@@ -28,14 +28,14 @@ import {
 } from "lucide-react";
 import { faqCategories, faqData } from "../../utils/constants/constants";
 
-interface FAQItem {
-  id: string;
-  question: string;
-  answer: string;
-  category: string;
+interface IFAQItem {
+  id?: string;
+  question?: string;
+  answer?: string;
+  category?: string;
 }
 
-export const FAQPage = () => {
+export const FAQPage: React.FC<IFAQItem> = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("Ümumi");
 

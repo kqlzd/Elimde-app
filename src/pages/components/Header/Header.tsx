@@ -85,7 +85,6 @@ export const Header = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          {/* Logo Section */}
           <HStack spacing={3}>
             <MotionBox
               whileHover={{ scale: 1.05 }}
@@ -118,7 +117,6 @@ export const Header = () => {
             </MotionBox>
           </HStack>
 
-          {/* Desktop Navigation */}
           <HStack spacing={8} display={{ base: "none", lg: "flex" }}>
             {navItems.map((item) => (
               <Link
@@ -153,27 +151,6 @@ export const Header = () => {
           </HStack>
 
           <HStack spacing={4}>
-            {/* <Button
-              size="sm"
-              bg="#1C3A38"
-              color="white"
-              borderRadius="lg"
-              px={4}
-              fontSize="sm"
-              fontWeight="600"
-              onClick={() => navigate("/login")}
-              _hover={{
-                bg: "#2F6B68",
-                transform: "translateY(-1px)",
-                boxShadow: "md",
-              }}
-              transition="all 0.2s ease"
-              display={{ base: "none", md: "block" }}
-            >
-              Admin
-            </Button> */}
-
-            {/* Mobile Menu Button */}
             <IconButton
               icon={isOpen ? <X /> : <Menu />}
               aria-label="Toggle Navigation"
@@ -190,7 +167,6 @@ export const Header = () => {
         </Flex>
       </Container>
 
-      {/* Mobile Drawer */}
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="sm">
         <DrawerOverlay backdropFilter="blur(4px)" />
         <DrawerContent bg="#F3F1EB">

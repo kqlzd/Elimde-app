@@ -44,7 +44,7 @@ export const AdminHotelPage = () => {
           </FormControl>
 
           <FormControl>
-            <FormLabel>ortalama qiymet</FormLabel>
+            <FormLabel>Ortalama qiymet</FormLabel>
             <Input type="text" {...register("averageMarketPrice")} />
           </FormControl>
 

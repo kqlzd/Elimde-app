@@ -1,6 +1,7 @@
 import {
   Award,
   Clock,
+  Crown,
   Heart,
   Instagram,
   Mail,
@@ -8,7 +9,9 @@ import {
   MessageCircle,
   Phone,
   PhoneCallIcon,
+  Scissors,
   Shield,
+  Sparkles,
   Star,
   Users,
 } from "lucide-react";
@@ -348,4 +351,13 @@ export const medicalSpecialties = [
   { id: "vaccination", name: "Peyvənd", icon: "💉" },
   { id: "emergency", name: "Təcili yardım", icon: "🚑" },
   { id: "dermatology", name: "Dəri xəstəlikləri", icon: "🔬" },
+];
+
+export const groomingServices = [
+  { id: "haircut", label: "Saç kəsimi", icon: Scissors },
+  { id: "bath", label: "Çimmə", icon: Sparkles },
+  { id: "nail-trim", label: "Dırnaq kəsimi", icon: Clock },
+  { id: "teeth-cleaning", label: "Diş təmizliyi", icon: Sparkles },
+  { id: "ear-cleaning", label: "Qulaq təmizliyi", icon: Clock },
+  { id: "vip-service", label: "VIP xidmət", icon: Crown },
 ];

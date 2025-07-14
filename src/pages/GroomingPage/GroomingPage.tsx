@@ -18,23 +18,46 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Select,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+  RangeSlider,
+  RangeSliderTrack,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { GroomingCards } from "../components/GroomingCards/GroomingCards";
 import { useGetGroomsData } from "../../hooks/useGetGrooms";
-import { Search, Grid, List, Scissors } from "lucide-react";
+import {
+  Search,
+  Grid,
+  List,
+  Scissors,
+  SlidersHorizontal,
+  MapPin,
+} from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useDebounce } from "use-debounce";
 import { Loading } from "../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import { groomingServices } from "../../utils/constants/constants";
 
 export const GroomingPage = () => {
   const navigate = useNavigate();
   const { grooms, isLoading } = useGetGroomsData();
   const { register, watch } = useForm();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState("name");
+  const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [priceRange, setPriceRange] = useState([0, 200]);
 
   const area = watch("area-search");
   const [debouncedArea] = useDebounce(area, 500);
@@ -42,16 +65,52 @@ export const GroomingPage = () => {
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
 
+  const districts = ["Nəsimi", "Yasamal", "Nərimanov", "Binəqədi", "Sabunçu"];
+
+  const toggleDistrict = (district: string) => {
+    setSelectedDistricts((prev) =>
+      prev.includes(district)
+        ? prev.filter((d) => d !== district)
+        : [...prev, district]
+    );
+  };
+
+  const toggleService = (serviceId: string) => {
+    setSelectedServices((prev) =>
+      prev.includes(serviceId)
+        ? prev.filter((s) => s !== serviceId)
+        : [...prev, serviceId]
+    );
+  };
+
+  const clearFilters = () => {
+    setSelectedDistricts([]);
+    setSelectedServices([]);
+    setPriceRange([0, 200]);
+    setSortBy("name");
+  };
+
   const filteredCards = grooms
     .filter((item) => {
       const address = item.address?.toLowerCase() ?? "";
       const name = item.name?.toLowerCase() ?? "";
       const searchValue = debouncedArea?.toLowerCase() ?? "";
+      const price = parseFloat(item.price?.toString() || "0");
 
       const matchesSearch =
         address.includes(searchValue) || name.includes(searchValue);
 
-      return matchesSearch;
+      const matchesDistrict =
+        selectedDistricts.length === 0 ||
+        selectedDistricts.some((district) =>
+          address.includes(district.toLowerCase())
+        );
+
+      const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
+
+      const matchesService = selectedServices.length === 0;
+
+      return matchesSearch && matchesDistrict && matchesPrice && matchesService;
     })
     .sort((a, b) => {
       switch (sortBy) {
@@ -63,6 +122,8 @@ export const GroomingPage = () => {
           const priceHighA = a.price || 0;
           const priceHighB = b.price || 0;
           return priceHighB - priceHighA;
+        case "average-time":
+          return (a.averageTime || "").localeCompare(b.averageTime || "");
         default:
           return (a.name || "").localeCompare(b.name || "");
       }
@@ -144,6 +205,25 @@ export const GroomingPage = () => {
                     transition="all 0.3s ease"
                   />
                 </InputGroup>
+
+                <Flex
+                  w="100%"
+                  gap={4}
+                  align="center"
+                  justify="center"
+                  flexWrap="wrap"
+                >
+                  <Button
+                    leftIcon={<SlidersHorizontal size={16} />}
+                    variant="outline"
+                    size="md"
+                    borderRadius="lg"
+                    onClick={onOpen}
+                    _hover={{ bg: "gray.100" }}
+                  >
+                    Filterlər
+                  </Button>
+                </Flex>
               </VStack>
             </Box>
           </VStack>
@@ -159,16 +239,73 @@ export const GroomingPage = () => {
             flexWrap="wrap"
             gap={4}
           >
-            <HStack spacing={4}>
+            <HStack spacing={4} flexWrap="wrap">
               <HStack spacing={2}>
                 <Scissors size={16} color="#F6AD55" />
                 <Text fontSize="md" fontWeight="600" color="#1C3A38">
                   {filteredCards.length} salon tapıldı
                 </Text>
               </HStack>
+
+              {/* Active filters display */}
+              {selectedDistricts.length > 0 && (
+                <HStack spacing={2} flexWrap="wrap">
+                  {selectedDistricts.map((district) => (
+                    <Badge
+                      key={district}
+                      colorScheme="orange"
+                      variant="subtle"
+                      px={3}
+                      py={1}
+                      borderRadius="full"
+                      cursor="pointer"
+                      onClick={() => toggleDistrict(district)}
+                    >
+                      {district} ✕
+                    </Badge>
+                  ))}
+                </HStack>
+              )}
+
+              {selectedServices.length > 0 && (
+                <HStack spacing={2} flexWrap="wrap">
+                  {selectedServices.map((serviceId) => {
+                    const service = groomingServices.find(
+                      (s) => s.id === serviceId
+                    );
+                    return (
+                      <Badge
+                        key={serviceId}
+                        colorScheme="purple"
+                        variant="subtle"
+                        px={3}
+                        py={1}
+                        borderRadius="full"
+                        cursor="pointer"
+                        onClick={() => toggleService(serviceId)}
+                      >
+                        {service?.label} ✕
+                      </Badge>
+                    );
+                  })}
+                </HStack>
+              )}
+
+              {(priceRange[0] > 0 || priceRange[1] < 200) && (
+                <Badge
+                  colorScheme="green"
+                  variant="subtle"
+                  px={3}
+                  py={1}
+                  borderRadius="full"
+                >
+                  {priceRange[0]}₼ - {priceRange[1]}₼
+                </Badge>
+              )}
+
               {debouncedArea && (
                 <Badge
-                  colorScheme="orange"
+                  colorScheme="blue"
                   variant="subtle"
                   px={3}
                   py={1}
@@ -188,9 +325,12 @@ export const GroomingPage = () => {
                 onChange={(e) => setSortBy(e.target.value)}
                 bg={cardBg}
               >
-                <option value="">Seçin</option>
-                <option value="price-low">Qiymətə görə:Aşağıdan yuxarı</option>
-                <option value="price-high">Qiymətə görə:Yuxarıdan aşağı</option>
+                <option value="name">Seçin</option>
+                <option value="price-low">Qiymətə görə: Aşağıdan yuxarı</option>
+                <option value="price-high">
+                  Qiymətə görə: Yuxarıdan aşağı
+                </option>
+                <option value="average-time">Müddətə görə</option>
               </Select>
 
               <HStack spacing={2}>
@@ -242,11 +382,193 @@ export const GroomingPage = () => {
                     Axtarış kriteriyalarınızı dəyişərək yenidən cəhd edin
                   </Text>
                 </VStack>
+                <Button
+                  colorScheme="orange"
+                  variant="outline"
+                  onClick={clearFilters}
+                >
+                  Filterləri Sıfırla
+                </Button>
               </VStack>
             )}
           </Box>
         </VStack>
       </Container>
+
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader borderBottomWidth="1px">
+            <HStack spacing={2}>
+              <SlidersHorizontal size={20} />
+              <Text>Ətraflı Filterlər</Text>
+            </HStack>
+          </DrawerHeader>
+
+          <DrawerBody>
+            <VStack spacing={8} align="stretch" pt={6}>
+              <Box>
+                <Text fontSize="md" fontWeight="600" mb={4} color="#1C3A38">
+                  Qiymət Aralığı
+                </Text>
+                <VStack spacing={4}>
+                  <RangeSlider
+                    value={priceRange}
+                    onChange={setPriceRange}
+                    min={0}
+                    max={200}
+                    step={5}
+                    colorScheme="orange"
+                  >
+                    <RangeSliderTrack>
+                      <RangeSliderFilledTrack />
+                    </RangeSliderTrack>
+                    <RangeSliderThumb index={0} />
+                    <RangeSliderThumb index={1} />
+                  </RangeSlider>
+                  <HStack justify="space-between" w="full">
+                    <Text fontSize="sm" color="gray.600">
+                      {priceRange[0]} ₼
+                    </Text>
+                    <Text fontSize="sm" color="gray.600">
+                      {priceRange[1]} ₼
+                    </Text>
+                  </HStack>
+                </VStack>
+              </Box>
+
+              <Box>
+                <HStack justify="space-between" align="center" mb={4}>
+                  <Text fontSize="md" fontWeight="600" color="#1C3A38">
+                    Rayon ({selectedDistricts.length} seçildi)
+                  </Text>
+                  {selectedDistricts.length > 0 && (
+                    <Button
+                      size="xs"
+                      variant="ghost"
+                      colorScheme="red"
+                      onClick={() => setSelectedDistricts([])}
+                    >
+                      Təmizlə
+                    </Button>
+                  )}
+                </HStack>
+                <VStack spacing={2} align="stretch">
+                  {districts.map((district) => (
+                    <Button
+                      key={district}
+                      variant={
+                        selectedDistricts.includes(district)
+                          ? "solid"
+                          : "outline"
+                      }
+                      colorScheme={
+                        selectedDistricts.includes(district) ? "orange" : "gray"
+                      }
+                      justifyContent="space-between"
+                      size="md"
+                      borderRadius="lg"
+                      onClick={() => toggleDistrict(district)}
+                      _hover={{
+                        bg: selectedDistricts.includes(district)
+                          ? "orange.600"
+                          : "orange.50",
+                        borderColor: "orange.300",
+                      }}
+                    >
+                      <HStack>
+                        <MapPin size={16} />
+                        <Text>{district}</Text>
+                      </HStack>
+                      {selectedDistricts.includes(district) && (
+                        <Text fontSize="sm">✓</Text>
+                      )}
+                    </Button>
+                  ))}
+                </VStack>
+              </Box>
+
+              <Box>
+                <HStack justify="space-between" align="center" mb={4}>
+                  <Text fontSize="md" fontWeight="600" color="#1C3A38">
+                    Xidmətlər ({selectedServices.length} seçildi)
+                  </Text>
+                  {selectedServices.length > 0 && (
+                    <Button
+                      size="xs"
+                      variant="ghost"
+                      colorScheme="red"
+                      onClick={() => setSelectedServices([])}
+                    >
+                      Təmizlə
+                    </Button>
+                  )}
+                </HStack>
+                <SimpleGrid columns={2} spacing={3}>
+                  {groomingServices.map((service) => (
+                    <Button
+                      key={service.id}
+                      variant={
+                        selectedServices.includes(service.id)
+                          ? "solid"
+                          : "outline"
+                      }
+                      colorScheme={
+                        selectedServices.includes(service.id)
+                          ? "purple"
+                          : "gray"
+                      }
+                      size="md"
+                      borderRadius="lg"
+                      onClick={() => toggleService(service.id)}
+                      leftIcon={<service.icon size={16} />}
+                      _hover={{
+                        bg: selectedServices.includes(service.id)
+                          ? "purple.600"
+                          : "orange.50",
+                        borderColor: "orange.300",
+                      }}
+                    >
+                      <VStack spacing={0} align="start">
+                        <Text fontSize="sm">{service.label}</Text>
+                      </VStack>
+                      {selectedServices.includes(service.id) && (
+                        <Text ml={2} fontSize="sm">
+                          ✓
+                        </Text>
+                      )}
+                    </Button>
+                  ))}
+                </SimpleGrid>
+              </Box>
+
+              <VStack spacing={4}>
+                <Button
+                  colorScheme="orange"
+                  size="lg"
+                  borderRadius="xl"
+                  onClick={onClose}
+                  leftIcon={<Scissors size={18} />}
+                  w="full"
+                >
+                  Filterləri Tətbiq Et
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="md"
+                  borderRadius="xl"
+                  onClick={clearFilters}
+                  w="full"
+                >
+                  Bütün Filterləri Sıfırla
+                </Button>
+              </VStack>
+            </VStack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </Box>
   );
 };

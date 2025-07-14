@@ -18,11 +18,30 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Select,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+  RangeSlider,
+  RangeSliderTrack,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { PetTrainingCards } from "../components/PetTrainingCards/PetTrainingCards";
 import { useGetTrainingsData } from "../../hooks/useGetTrainingCenters";
-import { Search, Grid, List, GraduationCap } from "lucide-react";
+import {
+  Search,
+  Grid,
+  List,
+  GraduationCap,
+  SlidersHorizontal,
+  MapPin,
+  Award,
+} from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useDebounce } from "use-debounce";
 import { Loading } from "../components/Loading/Loading";
@@ -32,9 +51,15 @@ export const PetTrainings = () => {
   const navigate = useNavigate();
   const { trainingCenters, isLoading } = useGetTrainingsData();
   const { register, watch } = useForm();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState("name");
+  const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
+  const [priceRange, setPriceRange] = useState([0, 300]);
+
+  const [selectedDurations, setSelectedDurations] = useState<string[]>([]);
+  const [showCertifiedOnly, setShowCertifiedOnly] = useState(false);
 
   const area = watch("area-search");
   const [debouncedArea] = useDebounce(area, 500);
@@ -42,16 +67,63 @@ export const PetTrainings = () => {
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
 
+  const districts = ["Nəsimi", "Yasamal", "Nərimanov", "Binəqədi", "Sabunçu"];
+
+  const durations = [
+    { id: "1-2weeks", label: "1-2 həftə" },
+    { id: "1month", label: "1 ay" },
+    { id: "2-3months", label: "2-3 ay" },
+    { id: "6months", label: "6 ay" },
+    { id: "1year", label: "1 il və daha çox" },
+  ];
+
+  const toggleDistrict = (district: string) => {
+    setSelectedDistricts((prev) =>
+      prev.includes(district)
+        ? prev.filter((d) => d !== district)
+        : [...prev, district]
+    );
+  };
+
+  const toggleDuration = (durationId: string) => {
+    setSelectedDurations((prev) =>
+      prev.includes(durationId)
+        ? prev.filter((d) => d !== durationId)
+        : [...prev, durationId]
+    );
+  };
+
+  const clearFilters = () => {
+    setSelectedDistricts([]);
+    setPriceRange([0, 300]);
+    setSelectedDurations([]);
+    setShowCertifiedOnly(false);
+    setSortBy("name");
+  };
+
   const filteredCards = trainingCenters
     .filter((item) => {
       const address = item.address?.toLowerCase() ?? "";
       const name = item.name?.toLowerCase() ?? "";
       const searchValue = debouncedArea?.toLowerCase() ?? "";
+      const price = parseFloat(item.monthlySubscription?.toString() || "0");
 
       const matchesSearch =
         address.includes(searchValue) || name.includes(searchValue);
 
-      return matchesSearch;
+      const matchesDistrict =
+        selectedDistricts.length === 0 ||
+        selectedDistricts.some((district) =>
+          address.includes(district.toLowerCase())
+        );
+
+      const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
+
+      const matchesCertification = !showCertifiedOnly || item.isCertificated;
+
+      return (
+        matchesSearch && matchesDistrict && matchesPrice && matchesCertification
+      );
     })
     .sort((a, b) => {
       switch (sortBy) {
@@ -65,6 +137,10 @@ export const PetTrainings = () => {
           const priceB = parseFloat(b.monthlySubscription?.toString() || "0");
           return priceB - priceA;
         }
+        case "certified":
+          return (b.isCertificated ? 1 : 0) - (a.isCertificated ? 1 : 0);
+        case "duration":
+          return 0;
         default:
           return (a.name || "").localeCompare(b.name || "");
       }
@@ -146,6 +222,25 @@ export const PetTrainings = () => {
                     transition="all 0.3s ease"
                   />
                 </InputGroup>
+
+                <Flex
+                  w="100%"
+                  gap={4}
+                  align="center"
+                  justify="center"
+                  flexWrap="wrap"
+                >
+                  <Button
+                    leftIcon={<SlidersHorizontal size={16} />}
+                    variant="outline"
+                    size="md"
+                    borderRadius="lg"
+                    onClick={onOpen}
+                    _hover={{ bg: "gray.100" }}
+                  >
+                    Filterlər
+                  </Button>
+                </Flex>
               </VStack>
             </Box>
           </VStack>
@@ -161,16 +256,84 @@ export const PetTrainings = () => {
             flexWrap="wrap"
             gap={4}
           >
-            <HStack spacing={4}>
+            <HStack spacing={4} flexWrap="wrap">
               <HStack spacing={2}>
                 <GraduationCap size={16} color="#9F7AEA" />
                 <Text fontSize="md" fontWeight="600" color="#1C3A38">
                   {filteredCards.length} təlim mərkəzi tapıldı
                 </Text>
               </HStack>
+
+              {selectedDistricts.length > 0 && (
+                <HStack spacing={2} flexWrap="wrap">
+                  {selectedDistricts.map((district) => (
+                    <Badge
+                      key={district}
+                      colorScheme="purple"
+                      variant="subtle"
+                      px={3}
+                      py={1}
+                      borderRadius="full"
+                      cursor="pointer"
+                      onClick={() => toggleDistrict(district)}
+                    >
+                      {district} ✕
+                    </Badge>
+                  ))}
+                </HStack>
+              )}
+
+              {selectedDurations.length > 0 && (
+                <HStack spacing={2} flexWrap="wrap">
+                  {selectedDurations.map((durationId) => {
+                    const duration = durations.find((d) => d.id === durationId);
+                    return (
+                      <Badge
+                        key={durationId}
+                        colorScheme="green"
+                        variant="subtle"
+                        px={3}
+                        py={1}
+                        borderRadius="full"
+                        cursor="pointer"
+                        onClick={() => toggleDuration(durationId)}
+                      >
+                        {duration?.label} ✕
+                      </Badge>
+                    );
+                  })}
+                </HStack>
+              )}
+
+              {showCertifiedOnly && (
+                <Badge
+                  colorScheme="yellow"
+                  variant="subtle"
+                  px={3}
+                  py={1}
+                  borderRadius="full"
+                  cursor="pointer"
+                  onClick={() => setShowCertifiedOnly(false)}
+                >
+                  🏆 Sertifikatlı ✕
+                </Badge>
+              )}
+
+              {(priceRange[0] > 0 || priceRange[1] < 300) && (
+                <Badge
+                  colorScheme="orange"
+                  variant="subtle"
+                  px={3}
+                  py={1}
+                  borderRadius="full"
+                >
+                  {priceRange[0]}₼ - {priceRange[1]}₼
+                </Badge>
+              )}
+
               {debouncedArea && (
                 <Badge
-                  colorScheme="purple"
+                  colorScheme="cyan"
                   variant="subtle"
                   px={3}
                   py={1}
@@ -190,9 +353,11 @@ export const PetTrainings = () => {
                 onChange={(e) => setSortBy(e.target.value)}
                 bg={cardBg}
               >
-                <option value="price-low">Seçin</option>
+                <option value="name">Seçin</option>
                 <option value="price-low">Qiymət: Aşağıdan yuxarı</option>
                 <option value="price-high">Qiymət: Yuxarıdan aşağı</option>
+                <option value="certified">Sertifikatlı əvvəl</option>
+                <option value="duration">Müddətə görə</option>
               </Select>
 
               <HStack spacing={2}>
@@ -247,11 +412,164 @@ export const PetTrainings = () => {
                     Axtarış kriteriyalarınızı dəyişərək yenidən cəhd edin
                   </Text>
                 </VStack>
+                <Button
+                  colorScheme="purple"
+                  variant="outline"
+                  onClick={clearFilters}
+                >
+                  Filterləri Sıfırla
+                </Button>
               </VStack>
             )}
           </Box>
         </VStack>
       </Container>
+
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader borderBottomWidth="1px">
+            <HStack spacing={2}>
+              <SlidersHorizontal size={20} />
+              <Text>Ətraflı Filterlər</Text>
+            </HStack>
+          </DrawerHeader>
+
+          <DrawerBody>
+            <VStack spacing={8} align="stretch" pt={6}>
+              <Box>
+                <Text fontSize="md" fontWeight="600" mb={4} color="#1C3A38">
+                  Aylıq Abunə Qiyməti
+                </Text>
+                <VStack spacing={4}>
+                  <RangeSlider
+                    value={priceRange}
+                    onChange={setPriceRange}
+                    min={0}
+                    max={300}
+                    step={10}
+                    colorScheme="purple"
+                  >
+                    <RangeSliderTrack>
+                      <RangeSliderFilledTrack />
+                    </RangeSliderTrack>
+                    <RangeSliderThumb index={0} />
+                    <RangeSliderThumb index={1} />
+                  </RangeSlider>
+                  <HStack justify="space-between" w="full">
+                    <Text fontSize="sm" color="gray.600">
+                      {priceRange[0]} ₼
+                    </Text>
+                    <Text fontSize="sm" color="gray.600">
+                      {priceRange[1]} ₼
+                    </Text>
+                  </HStack>
+                </VStack>
+              </Box>
+
+              <Box>
+                <HStack justify="space-between" align="center" mb={4}>
+                  <Text fontSize="md" fontWeight="600" color="#1C3A38">
+                    Rayon ({selectedDistricts.length} seçildi)
+                  </Text>
+                  {selectedDistricts.length > 0 && (
+                    <Button
+                      size="xs"
+                      variant="ghost"
+                      colorScheme="red"
+                      onClick={() => setSelectedDistricts([])}
+                    >
+                      Təmizlə
+                    </Button>
+                  )}
+                </HStack>
+                <VStack spacing={2} align="stretch">
+                  {districts.map((district) => (
+                    <Button
+                      key={district}
+                      variant={
+                        selectedDistricts.includes(district)
+                          ? "solid"
+                          : "outline"
+                      }
+                      colorScheme={
+                        selectedDistricts.includes(district) ? "blue" : "gray"
+                      }
+                      justifyContent="space-between"
+                      size="md"
+                      borderRadius="lg"
+                      onClick={() => toggleDistrict(district)}
+                      _hover={{
+                        bg: selectedDistricts.includes(district)
+                          ? "blue.600"
+                          : "purple.50",
+                        borderColor: "purple.300",
+                      }}
+                    >
+                      <HStack>
+                        <MapPin size={16} />
+                        <Text>{district}</Text>
+                      </HStack>
+                      {selectedDistricts.includes(district) && (
+                        <Text fontSize="sm">✓</Text>
+                      )}
+                    </Button>
+                  ))}
+                </VStack>
+              </Box>
+
+              <Box>
+                <Text fontSize="md" fontWeight="600" mb={4} color="#1C3A38">
+                  Sertifikasiya
+                </Text>
+                <Button
+                  variant={showCertifiedOnly ? "solid" : "outline"}
+                  colorScheme={showCertifiedOnly ? "yellow" : "gray"}
+                  justifyContent="space-between"
+                  size="md"
+                  borderRadius="lg"
+                  onClick={() => setShowCertifiedOnly(!showCertifiedOnly)}
+                  w="full"
+                  _hover={{
+                    bg: showCertifiedOnly ? "yellow.600" : "purple.50",
+                    borderColor: "purple.300",
+                  }}
+                >
+                  <HStack>
+                    <Award size={16} />
+                    <Text>Yalnız sertifikatlı mərkəzlər</Text>
+                  </HStack>
+                  {showCertifiedOnly && <Text fontSize="sm">✓</Text>}
+                </Button>
+              </Box>
+
+              <VStack spacing={4}>
+                <Button
+                  colorScheme="purple"
+                  size="lg"
+                  borderRadius="xl"
+                  onClick={onClose}
+                  leftIcon={<GraduationCap size={18} />}
+                  w="full"
+                >
+                  Filterləri Tətbiq Et
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="md"
+                  borderRadius="xl"
+                  onClick={clearFilters}
+                  w="full"
+                >
+                  Bütün Filterləri Sıfırla
+                </Button>
+              </VStack>
+            </VStack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </Box>
   );
 };

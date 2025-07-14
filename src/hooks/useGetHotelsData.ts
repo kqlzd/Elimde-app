@@ -16,6 +16,7 @@ export const useGetHotelsData = () => {
           id: doc.id,
           ...(doc.data() as Omit<THotelData, "id">),
         }));
+        console.log("🚀 ~ hotelList ~ hotelList:", hotelList);
         setHotels(hotelList);
       } catch (error) {
         console.error("Xəta baş verdi:", error);

@@ -29,7 +29,6 @@ export const AppRouter: React.FC = () => {
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/services/grooming" element={<GroomingPage />} />
-        {/* <Route path="/detail/categories/:id" element={<PetDetailPage />} /> */}
         <Route path="/services/hotels" element={<HotelPage />} />
         <Route path="/services/doctors" element={<DoctorsPage />} />
         <Route path="/services/training" element={<PetTrainings />} />
