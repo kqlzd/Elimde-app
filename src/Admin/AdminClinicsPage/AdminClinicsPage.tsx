@@ -7,16 +7,17 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import React from "react";
-import { useForm } from "react-hook-form";
+
 import { AdminNavbar } from "../components/AdminNavbar/AdminNavbar";
+import { usePostDataToDbClinics } from "../../hooks/usePostDataToDbClinics";
 
 export const AdminClinicsPage = () => {
-  const { register } = useForm();
+  const { register, handleSubmit } = usePostDataToDbClinics();
 
   return (
     <Box>
       <AdminNavbar />
-      <form>
+      <form onSubmit={handleSubmit}>
         <Box width="50%" alignContent="center" margin="auto" mt={50}>
           <FormControl>
             <FormLabel>Klinikanin adi</FormLabel>
@@ -77,7 +78,7 @@ export const AdminClinicsPage = () => {
             <Input type="file" />
           </FormControl>
 
-          <Button>Elave et</Button>
+          <Button type="submit">Elave et</Button>
         </Box>
       </form>
     </Box>

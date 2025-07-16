@@ -65,6 +65,11 @@ export const AdminTrainingPage = () => {
           </FormControl>
 
           <FormControl>
+            <FormLabel>Telim muddeti</FormLabel>
+            <Input type="text" {...register("traningDuration")} />
+          </FormControl>
+
+          <FormControl>
             <FormLabel>Desc</FormLabel>
             <Textarea {...register("desc")} />
           </FormControl>

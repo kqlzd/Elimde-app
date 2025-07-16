@@ -11,6 +11,7 @@ export type TDoctorData = {
   relevantPerson: string;
   relevantPersonPhone: string;
   workHours: string;
+  isNowOpened: boolean;
 };
 
 export type TGroomsData = {

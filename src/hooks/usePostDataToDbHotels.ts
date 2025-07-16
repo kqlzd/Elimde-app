@@ -39,7 +39,10 @@ export const usePostDataToDbHotels = () => {
       let imageUrl = "";
 
       if (data.imageFile && data.imageFile.length > 0) {
-        imageUrl = await uploadImage(data.imageFile[0]);
+        const file = data.imageFile[0];
+        console.log("Yüklenen dosya:", file);
+        imageUrl = await uploadImage(file);
+        console.log("Yüklenen fotoğraf URL'si:", imageUrl);
       }
 
       await addDoc(collection(db, "hotels"), {

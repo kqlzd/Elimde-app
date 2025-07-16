@@ -42,7 +42,6 @@ import { useNavigate } from "react-router-dom";
 export const HotelPage = () => {
   const navigate = useNavigate();
   const { hotels, isLoading } = useGetHotelsData();
-  console.log("🚀 ~ HotelPage ~ hotels:", hotels);
   const { register, watch } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
 

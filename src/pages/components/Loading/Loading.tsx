@@ -28,7 +28,7 @@ export const Loading = () => {
     >
       <Center h="100vh">
         <SpinningImage
-          src="/assets/cat-logo.png"
+          src="/assets/cat-logo.webp"
           alt="Loading"
           w="50px"
           h="50px"
