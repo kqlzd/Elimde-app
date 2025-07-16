@@ -37,14 +37,12 @@ import {
   List,
   Stethoscope,
   Clock,
-  Shield,
   Zap,
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useDebounce } from "use-debounce";
 import { Loading } from "../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import { medicalSpecialties } from "../../utils/constants/constants";
 
 export const DoctorsPage = () => {
   const navigate = useNavigate();
@@ -67,19 +65,11 @@ export const DoctorsPage = () => {
   const borderColor = useColorModeValue("gray.200", "gray.600");
 
   const districts = ["Nəsimi", "Yasamal", "Nərimanov", "Binəqədi", "Sabunçu"];
-  const availabilityOptions = [
-    { id: "open-now", label: "İndi açıqdır", icon: Clock },
-    { id: "emergency", label: "24/7 Təcili Xidmət", icon: Zap },
-    { id: "insurance", label: "Sığorta qəbul edir", icon: Shield },
-  ];
 
-  const toggleSpecialty = (specialtyId: string) => {
-    setSelectedSpecialties((prev) =>
-      prev.includes(specialtyId)
-        ? prev.filter((s) => s !== specialtyId)
-        : [...prev, specialtyId]
-    );
-  };
+  const availabilityOptions = [
+    { id: "isNowOpened", label: "İndi açıqdır", icon: Clock },
+    { id: "emergency", label: "24/7 Təcili Xidmət", icon: Zap },
+  ];
 
   const toggleDistrict = (district: string) => {
     setSelectedDistricts((prev) =>
@@ -121,7 +111,17 @@ export const DoctorsPage = () => {
 
       const matchesSpecialty = selectedSpecialties.length === 0;
 
-      const matchesAvailability = selectedAvailability.length === 0;
+      const matchesAvailability =
+        selectedAvailability.length === 0 ||
+        selectedAvailability.every((availabilityId) => {
+          switch (availabilityId) {
+            case "isNowOpened":
+              return item.isNowOpened === true;
+
+            default:
+              return true;
+          }
+        });
 
       return (
         matchesSearch &&
@@ -281,30 +281,6 @@ export const DoctorsPage = () => {
                 </Text>
               </HStack>
 
-              {selectedSpecialties.length > 0 && (
-                <HStack spacing={2} flexWrap="wrap">
-                  {selectedSpecialties.map((specialtyId) => {
-                    const specialty = medicalSpecialties.find(
-                      (s) => s.id === specialtyId
-                    );
-                    return (
-                      <Badge
-                        key={specialtyId}
-                        colorScheme="blue"
-                        variant="subtle"
-                        px={3}
-                        py={1}
-                        borderRadius="full"
-                        cursor="pointer"
-                        onClick={() => toggleSpecialty(specialtyId)}
-                      >
-                        {specialty?.icon} {specialty?.name} ✕
-                      </Badge>
-                    );
-                  })}
-                </HStack>
-              )}
-
               {selectedDistricts.length > 0 && (
                 <HStack spacing={2} flexWrap="wrap">
                   {selectedDistricts.map((district) => (
@@ -457,9 +433,6 @@ export const DoctorsPage = () => {
             <VStack spacing={8} align="stretch" pt={6}>
               <Box>
                 <HStack justify="space-between" align="center" mb={4}>
-                  <Text fontSize="md" fontWeight="600" color="#1C3A38">
-                    İxtisas Sahələri ({selectedSpecialties.length} seçildi)
-                  </Text>
                   {selectedSpecialties.length > 0 && (
                     <Button
                       size="xs"
@@ -471,40 +444,6 @@ export const DoctorsPage = () => {
                     </Button>
                   )}
                 </HStack>
-                <SimpleGrid columns={2} spacing={3}>
-                  {medicalSpecialties.map((specialty) => (
-                    <Button
-                      key={specialty.id}
-                      variant={
-                        selectedSpecialties.includes(specialty.id)
-                          ? "solid"
-                          : "outline"
-                      }
-                      colorScheme={
-                        selectedSpecialties.includes(specialty.id)
-                          ? "blue"
-                          : "gray"
-                      }
-                      size="md"
-                      borderRadius="lg"
-                      onClick={() => toggleSpecialty(specialty.id)}
-                      leftIcon={<Text>{specialty.icon}</Text>}
-                      _hover={{
-                        bg: selectedSpecialties.includes(specialty.id)
-                          ? "blue.600"
-                          : "blue.50",
-                        borderColor: "blue.300",
-                      }}
-                    >
-                      {specialty.name}
-                      {selectedSpecialties.includes(specialty.id) && (
-                        <Text ml={2} fontSize="sm">
-                          ✓
-                        </Text>
-                      )}
-                    </Button>
-                  ))}
-                </SimpleGrid>
               </Box>
 
               <Box>

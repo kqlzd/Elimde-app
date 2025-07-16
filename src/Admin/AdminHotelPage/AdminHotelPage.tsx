@@ -29,6 +29,11 @@ export const AdminHotelPage = () => {
           </FormControl>
 
           <FormControl>
+            <FormLabel>Telefon</FormLabel>
+            <Input type="text" {...register("phone")} />
+          </FormControl>
+
+          <FormControl>
             <FormLabel>Qiymet</FormLabel>
             <Input type="text" {...register("price")} />
           </FormControl>
@@ -70,7 +75,7 @@ export const AdminHotelPage = () => {
 
           <FormControl>
             <FormLabel>Foto</FormLabel>
-            <Input type="file" accept="image/*" />
+            <Input type="file" accept="image/*" {...register("imageFile")} />
           </FormControl>
 
           <Button type="submit">Elave et</Button>

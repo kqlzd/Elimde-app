@@ -1,202 +1,4 @@
-/* eslint-disable react/jsx-no-duplicate-props */
-// import React from "react";
-// import {
-//   Box,
-//   Heading,
-//   Image,
-//   Container,
-//   Button,
-//   VStack,
-//   Grid,
-//   GridItem,
-// } from "@chakra-ui/react";
-// import { PopularServicesHeading } from "../components/PopularServicesHeading/PopularServicesHeading";
-// import { PetCards } from "../components/PetCards/PetCards";
-
-// export const MainPage = () => {
-//   return (
-//     <>
-//       <Box bg="gray.50">
-//         <Box bg="#f4f1ec" py={24} px={8}>
-//           <Container maxW="6xl" centerContent>
-//             <VStack spacing={8} textAlign="center">
-//               <Heading
-//                 fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
-//                 fontWeight="bold"
-//                 color="#1C3A38"
-//                 lineHeight="1.1"
-//                 textAlign="center"
-//               >
-//                 Ev heyvanınız üçün yaxınlıqdakı peşəkarları kəşf edin
-//               </Heading>
-
-//               <Heading
-//                 fontSize="2xl"
-//                 color="gray.700"
-//                 fontWeight="medium"
-//                 textAlign="center"
-//               >
-//                 Heyvan xidmətlərinizi pulsuz siyahıya əlavə edin, yeni
-//                 müştərilər sizi tapsın!
-//               </Heading>
-
-//               <Button
-//                 bg="teal.600"
-//                 color="white"
-//                 px={8}
-//                 py={6}
-//                 rounded="lg"
-//                 fontSize="lg"
-//                 isDisabled
-//                 fontWeight="semibold"
-//                 shadow="lg"
-//                 _hover={{ bg: "teal.700" }}
-//               >
-//                 Müştəri məmnuniyyəti
-//               </Button>
-//             </VStack>
-//           </Container>
-//         </Box>
-
-//         <Box py={16} px={8}>
-//           <Container maxW="6xl">
-//             <Grid
-//               templateColumns={{
-//                 base: "1fr",
-//                 md: "repeat(2, 1fr)",
-//                 lg: "repeat(4, 1fr)",
-//               }}
-//               gap={6}
-//             >
-//               <GridItem>
-//                 <Box
-//                   borderRadius={12}
-//                   bg="red.500"
-//                   overflow="hidden"
-//                   shadow="lg"
-//                   transform="scale(1)"
-//                   transition="transform 0.3s"
-//                   _hover={{ transform: "scale(1.05)" }}
-//                   cursor="pointer"
-//                 >
-//                   <Box
-//                     bgGradient="linear(to-br, teal.400, teal.600)"
-//                     display="flex"
-//                     alignItems="center"
-//                     justifyContent="center"
-//                   >
-//                     <Image
-//                       src="/assets/img01.jpg"
-//                       alt="Cat"
-//                       w="full"
-//                       h="full"
-//                       objectFit="cover"
-//                       rounded="xl"
-//                     />
-//                   </Box>
-//                 </Box>
-//               </GridItem>
-
-//               <GridItem>
-//                 <Box
-//                   mt={35}
-//                   borderRadius={12}
-//                   bg="red.500"
-//                   overflow="hidden"
-//                   shadow="lg"
-//                   transform="scale(1)"
-//                   transition="transform 0.3s"
-//                   _hover={{ transform: "scale(1.05)" }}
-//                   cursor="pointer"
-//                 >
-//                   <Box
-//                     bgGradient="linear(to-br, red.400, red.600)"
-//                     display="flex"
-//                     alignItems="center"
-//                     justifyContent="center"
-//                   >
-//                     <Image
-//                       src="/assets/img02.jpg"
-//                       alt="Dog"
-//                       w="full"
-//                       h="full"
-//                       objectFit="cover"
-//                       rounded="xl"
-//                     />
-//                   </Box>
-//                 </Box>
-//               </GridItem>
-
-//               <GridItem>
-//                 <Box
-//                   borderRadius={12}
-//                   bg="orange.500"
-//                   overflow="hidden"
-//                   shadow="lg"
-//                   transform="scale(1)"
-//                   transition="transform 0.3s"
-//                   _hover={{ transform: "scale(1.05)" }}
-//                   cursor="pointer"
-//                 >
-//                   <Box
-//                     bgGradient="linear(to-br, orange.400, orange.600)"
-//                     display="flex"
-//                     alignItems="center"
-//                     justifyContent="center"
-//                   >
-//                     <Image
-//                       src="/assets/img03.jpg"
-//                       alt="Bird"
-//                       w="full"
-//                       h="full"
-//                       objectFit="cover"
-//                       rounded="xl"
-//                     />
-//                   </Box>
-//                 </Box>
-//               </GridItem>
-
-//               <GridItem>
-//                 <Box
-//                   bg="teal.400"
-//                   rounded="2xl"
-//                   overflow="hidden"
-//                   shadow="lg"
-//                   transform="scale(1)"
-//                   transition="transform 0.3s"
-//                   _hover={{ transform: "scale(1.05)" }}
-//                   cursor="pointer"
-//                   mt={35}
-//                 >
-//                   <Box
-//                     bgGradient="linear(to-br, teal.300, teal.500)"
-//                     display="flex"
-//                     alignItems="center"
-//                     justifyContent="center"
-//                   >
-//                     <Image
-//                       src="/assets/img04.jpg"
-//                       alt="Rabbit"
-//                       w="full"
-//                       h="full"
-//                       objectFit="cover"
-//                       rounded="xl"
-//                     />
-//                   </Box>
-//                 </Box>
-//               </GridItem>
-//             </Grid>
-//           </Container>
-//         </Box>
-//       </Box>
-
-//       <PopularServicesHeading />
-//       <PetCards />
-//     </>
-//   );
-// };
-
-import React, { useRef } from "react";
+import React from "react";
 import {
   Box,
   Heading,
@@ -216,7 +18,8 @@ import {
 import { motion } from "framer-motion";
 import { PopularServicesHeading } from "../components/PopularServicesHeading/PopularServicesHeading";
 import { PetCards } from "../components/PetCards/PetCards";
-import { ArrowRight, Star, Users, Heart, Shield } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { stats } from "../../utils/constants/constants";
 
 const MotionBox = motion(Box);
 const MotionGridItem = motion(GridItem);
@@ -231,13 +34,6 @@ export const MainPage = () => {
     "rgba(255, 255, 255, 0.8)",
     "rgba(255, 255, 255, 0.1)"
   );
-
-  const stats = [
-    { icon: Users, value: "1,200+", label: "Məmnun müştəri" },
-    { icon: Star, value: "4.9", label: "Ortalama reytinq" },
-    { icon: Heart, value: "5,000+", label: "Xoşbəxt heyvan" },
-    { icon: Shield, value: "100%", label: "Təhlükəsiz xidmət" },
-  ];
 
   return (
     <Box bg="gray.50" overflow="hidden">
@@ -380,29 +176,9 @@ export const MainPage = () => {
                   >
                     Xidmətləri Kəşf Et
                   </Button>
-                  {/* <Button
-                    size="lg"
-                    variant="outline"
-                    borderColor="#3A7E7B"
-                    color="#3A7E7B"
-                    px={8}
-                    py={6}
-                    borderRadius="xl"
-                    fontSize="lg"
-                    fontWeight="600"
-                    _hover={{
-                      bg: "#3A7E7B",
-                      color: "white",
-                      transform: "translateY(-2px)",
-                    }}
-                    transition="all 0.3s ease"
-                  >
-                    Qeydiyyat
-                  </Button> */}
                 </HStack>
               </MotionBox>
 
-              {/* Stats Section */}
               <MotionBox
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -465,7 +241,7 @@ export const MainPage = () => {
                     animate="animate"
                   >
                     <Image
-                      src="/assets/img01.jpg"
+                      src="/assets/img01.webp"
                       alt="Cat"
                       w="full"
                       h="200px"
@@ -496,7 +272,7 @@ export const MainPage = () => {
                     }}
                   >
                     <Image
-                      src="/assets/img02.jpg"
+                      src="/assets/img02.webp"
                       alt="Dog"
                       w="full"
                       h="200px"
@@ -527,7 +303,7 @@ export const MainPage = () => {
                     }}
                   >
                     <Image
-                      src="/assets/img03.jpg"
+                      src="/assets/img03.webp"
                       alt="Bird"
                       w="full"
                       h="200px"
@@ -554,7 +330,7 @@ export const MainPage = () => {
                     }}
                   >
                     <Image
-                      src="/assets/img04.jpg"
+                      src="/assets/img04.webp"
                       alt="Rabbit"
                       w="full"
                       h="200px"

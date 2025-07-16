@@ -1,7 +1,6 @@
 import {
   Award,
   Clock,
-  Crown,
   Heart,
   Instagram,
   Mail,
@@ -9,9 +8,7 @@ import {
   MessageCircle,
   Phone,
   PhoneCallIcon,
-  Scissors,
   Shield,
-  Sparkles,
   Star,
   Users,
 } from "lucide-react";
@@ -71,7 +68,7 @@ export const cardData = [
     slug: "hotels",
     description:
       "Öz evinizin rahatlığında ev heyvanlarınıza qulluq edəcək peşəkar baxıcı ilə özünüzü rahat hiss edin.",
-    image: "/assets/cat1.png",
+    image: "/assets/cat1.webp",
     alt: "Green double couch with wooden legs",
   },
   {
@@ -80,7 +77,7 @@ export const cardData = [
     slug: "doctors",
     description:
       "Ev heyvanınızın yaxinliqdaki ən yaxşı qayğını almasını təmin etmək üçün ixtisaslı mütəxəssislərlə əlaqə saxlayın.",
-    image: "/assets/cat2.png",
+    image: "/assets/cat2.webp",
     alt: "Modern wooden coffee table",
   },
   {
@@ -89,7 +86,7 @@ export const cardData = [
     slug: "training",
     description:
       "Yeni ev dostunuzu tapmaq üçün peşəkar yetişdiricilərlə tanış olun. Onlar sevgi ilə böyüdür",
-    image: "/assets/cat4.png",
+    image: "/assets/cat3.webp",
     alt: "Comfortable fabric armchair",
   },
   {
@@ -98,7 +95,7 @@ export const cardData = [
     slug: "grooming",
     description:
       "Pet Care ilə heyvanınıza peşəkar qulluq göstərin – baxım, görünüş və sağlamlıq bir arada!",
-    image: "/assets/cat3.png",
+    image: "/assets/cat4.webp",
     alt: "Wooden dining table set",
   },
 ];
@@ -344,20 +341,9 @@ export const aboutUsstats = [
   { number: "100%", label: "Müştəri Məmnuniyyəti" },
 ];
 
-export const medicalSpecialties = [
-  { id: "general", name: "Ümumi Müayinə", icon: "🩺" },
-  { id: "surgery", name: "Cərrahi", icon: "🏥" },
-  { id: "dentistry", name: "Diş həkimliği", icon: "🦷" },
-  { id: "vaccination", name: "Peyvənd", icon: "💉" },
-  { id: "emergency", name: "Təcili yardım", icon: "🚑" },
-  { id: "dermatology", name: "Dəri xəstəlikləri", icon: "🔬" },
-];
-
-export const groomingServices = [
-  { id: "haircut", label: "Saç kəsimi", icon: Scissors },
-  { id: "bath", label: "Çimmə", icon: Sparkles },
-  { id: "nail-trim", label: "Dırnaq kəsimi", icon: Clock },
-  { id: "teeth-cleaning", label: "Diş təmizliyi", icon: Sparkles },
-  { id: "ear-cleaning", label: "Qulaq təmizliyi", icon: Clock },
-  { id: "vip-service", label: "VIP xidmət", icon: Crown },
+export const statsMainPage = [
+  { icon: Star, value: "4.9", label: "Ortalama reytinq" },
+  { icon: Users, value: "1,200+", label: "Məmnun müştəri" },
+  { icon: Heart, value: "5,000+", label: "Xoşbəxt heyvan" },
+  { icon: Shield, value: "100%", label: "Təhlükəsiz xidmət" },
 ];

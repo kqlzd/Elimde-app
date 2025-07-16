@@ -18,7 +18,7 @@ export const PopularServicesHeading = () => {
               color="#1C3A38"
               mt={10}
             >
-              Məşhur Xidmətlərimiz
+              Məşhur Xidmətlər
             </Text>
             <Text fontSize="20px" color="#1C3A38" lineHeight="1.6">
               Siz harada olursunuz olun, heyvan dostunuz üçün lazım olan bütün

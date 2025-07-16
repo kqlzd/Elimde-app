@@ -5,6 +5,7 @@ import { db } from "../lib/firebaseConfig";
 import { useForm } from "react-hook-form";
 
 interface ClinicsData {
+  experience: string;
   name: string;
   consultation: number;
   address: string;
@@ -12,7 +13,6 @@ interface ClinicsData {
   latitude: string;
   imageFile: FileList;
   phone: string;
-  experience: string;
   workHours: string;
   relevantPerson: string;
   relevantPersonPhone: string;
@@ -45,7 +45,8 @@ export const usePostDataToDbClinics = () => {
         name: data.name,
         address: data.address,
         phone: data.phone,
-        price: data.consultation,
+        consultation: data.consultation,
+        experience: data.experience,
         desc: data.desc,
         relevantPerson: data.relevantPerson,
         relevantPersonPhone: data.relevantPersonPhone,

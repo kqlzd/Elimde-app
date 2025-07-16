@@ -22,9 +22,8 @@ interface TrainingCenterData {
 export const usePostDataToDbTrainingCenter = () => {
   const toast = useToast();
 
-  const { register, handleSubmit, watch, reset } = useForm<TrainingCenterData>(
-    {}
-  );
+  const { register, handleSubmit, watch, reset } =
+    useForm<TrainingCenterData>();
 
   const watchedValues = watch();
 

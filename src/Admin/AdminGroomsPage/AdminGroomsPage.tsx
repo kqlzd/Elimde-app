@@ -11,11 +11,12 @@ import { usePostDataToDbGrooms } from "../../hooks/usePostDataToDbGrooms";
 import { AdminNavbar } from "../components/AdminNavbar/AdminNavbar";
 
 export default function AdminGroomsPage() {
-  const { register } = usePostDataToDbGrooms();
+  const { register, handleSubmit } = usePostDataToDbGrooms();
   return (
     <Box>
       <AdminNavbar />
-      <form>
+
+      <form onSubmit={handleSubmit}>
         <Box width="50%" alignContent="center" margin="auto" mt={50}>
           <FormControl>
             <FormLabel>Groom Salon adi</FormLabel>
@@ -77,7 +78,7 @@ export default function AdminGroomsPage() {
             <Input type="file" />
           </FormControl>
 
-          <Button>Elave et</Button>
+          <Button type="submit">Elave et</Button>
         </Box>
       </form>
     </Box>

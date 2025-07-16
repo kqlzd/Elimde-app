@@ -45,7 +45,6 @@ import { useForm } from "react-hook-form";
 import { useDebounce } from "use-debounce";
 import { Loading } from "../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import { groomingServices } from "../../utils/constants/constants";
 
 export const GroomingPage = () => {
   const navigate = useNavigate();
@@ -72,14 +71,6 @@ export const GroomingPage = () => {
       prev.includes(district)
         ? prev.filter((d) => d !== district)
         : [...prev, district]
-    );
-  };
-
-  const toggleService = (serviceId: string) => {
-    setSelectedServices((prev) =>
-      prev.includes(serviceId)
-        ? prev.filter((s) => s !== serviceId)
-        : [...prev, serviceId]
     );
   };
 
@@ -247,7 +238,6 @@ export const GroomingPage = () => {
                 </Text>
               </HStack>
 
-              {/* Active filters display */}
               {selectedDistricts.length > 0 && (
                 <HStack spacing={2} flexWrap="wrap">
                   {selectedDistricts.map((district) => (
@@ -264,30 +254,6 @@ export const GroomingPage = () => {
                       {district} ✕
                     </Badge>
                   ))}
-                </HStack>
-              )}
-
-              {selectedServices.length > 0 && (
-                <HStack spacing={2} flexWrap="wrap">
-                  {selectedServices.map((serviceId) => {
-                    const service = groomingServices.find(
-                      (s) => s.id === serviceId
-                    );
-                    return (
-                      <Badge
-                        key={serviceId}
-                        colorScheme="purple"
-                        variant="subtle"
-                        px={3}
-                        py={1}
-                        borderRadius="full"
-                        cursor="pointer"
-                        onClick={() => toggleService(serviceId)}
-                      >
-                        {service?.label} ✕
-                      </Badge>
-                    );
-                  })}
                 </HStack>
               )}
 
@@ -505,42 +471,6 @@ export const GroomingPage = () => {
                     </Button>
                   )}
                 </HStack>
-                <SimpleGrid columns={2} spacing={3}>
-                  {groomingServices.map((service) => (
-                    <Button
-                      key={service.id}
-                      variant={
-                        selectedServices.includes(service.id)
-                          ? "solid"
-                          : "outline"
-                      }
-                      colorScheme={
-                        selectedServices.includes(service.id)
-                          ? "purple"
-                          : "gray"
-                      }
-                      size="md"
-                      borderRadius="lg"
-                      onClick={() => toggleService(service.id)}
-                      leftIcon={<service.icon size={16} />}
-                      _hover={{
-                        bg: selectedServices.includes(service.id)
-                          ? "purple.600"
-                          : "orange.50",
-                        borderColor: "orange.300",
-                      }}
-                    >
-                      <VStack spacing={0} align="start">
-                        <Text fontSize="sm">{service.label}</Text>
-                      </VStack>
-                      {selectedServices.includes(service.id) && (
-                        <Text ml={2} fontSize="sm">
-                          ✓
-                        </Text>
-                      )}
-                    </Button>
-                  ))}
-                </SimpleGrid>
               </Box>
 
               <VStack spacing={4}>

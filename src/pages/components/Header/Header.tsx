@@ -200,7 +200,6 @@ export const Header = () => {
 
           <DrawerBody p={6}>
             <VStack spacing={6} align="stretch">
-              {/* Navigation Links */}
               {navItems.map((item, index) => (
                 <MotionBox
                   key={item.path}
@@ -230,7 +229,6 @@ export const Header = () => {
                 </MotionBox>
               ))}
 
-              {/* Contact Section */}
               <Box
                 mt={8}
                 p={4}
@@ -257,7 +255,6 @@ export const Header = () => {
                 </VStack>
               </Box>
 
-              {/* Admin Button */}
               <Button
                 bg="#1C3A38"
                 color="white"
