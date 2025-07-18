@@ -10,7 +10,13 @@ const SpinningImage = styled(Image)`
       transform: rotate(0deg);
     }
     to {
-      transform: rotate(360deg); // Fix: Complete rotation
+      transform: rotate(360deg);
+    }
+    transition {
+      ease: 'linear',
+      duration: 4,
+      repeat: infinity,
+      delay: 0.1
     }
   }
 `;

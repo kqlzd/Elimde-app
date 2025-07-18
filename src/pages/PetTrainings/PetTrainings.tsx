@@ -30,8 +30,8 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { PetTrainingCards } from "../components/PetTrainingCards/PetTrainingCards";
+import React, { useCallback, useMemo, useState } from "react";
+import { PetTrainingCards } from "../../components/PetTrainingCards/PetTrainingCards";
 import { useGetTrainingsData } from "../../hooks/useGetTrainingCenters";
 import {
   Search,
@@ -44,10 +44,11 @@ import {
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useDebounce } from "use-debounce";
-import { Loading } from "../components/Loading/Loading";
+import { Loading } from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import { bakuDistricts } from "../../utils/constants/constants";
 
-export const PetTrainings = () => {
+export const PetTrainings = React.memo(() => {
   const navigate = useNavigate();
   const { trainingCenters, isLoading } = useGetTrainingsData();
   const { register, watch } = useForm();
@@ -67,7 +68,7 @@ export const PetTrainings = () => {
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
 
-  const districts = ["Nəsimi", "Yasamal", "Nərimanov", "Binəqədi", "Sabunçu"];
+  const districts = bakuDistricts;
 
   const durations = [
     { id: "1-2weeks", label: "1-2 həftə" },
@@ -77,74 +78,84 @@ export const PetTrainings = () => {
     { id: "1year", label: "1 il və daha çox" },
   ];
 
-  const toggleDistrict = (district: string) => {
+  const toggleDistrict = useCallback((district: string) => {
     setSelectedDistricts((prev) =>
       prev.includes(district)
         ? prev.filter((d) => d !== district)
         : [...prev, district]
     );
-  };
+  }, []);
 
-  const toggleDuration = (durationId: string) => {
+  const toggleDuration = useCallback((durationId: string) => {
     setSelectedDurations((prev) =>
       prev.includes(durationId)
         ? prev.filter((d) => d !== durationId)
         : [...prev, durationId]
     );
-  };
+  }, []);
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     setSelectedDistricts([]);
     setPriceRange([0, 300]);
     setSelectedDurations([]);
     setShowCertifiedOnly(false);
     setSortBy("name");
-  };
+  }, []);
 
-  const filteredCards = trainingCenters
-    .filter((item) => {
-      const address = item.address?.toLowerCase() ?? "";
-      const name = item.name?.toLowerCase() ?? "";
-      const searchValue = debouncedArea?.toLowerCase() ?? "";
-      const price = parseFloat(item.monthlySubscription?.toString() || "0");
+  const filteredCards = useMemo(() => {
+    return trainingCenters
+      .filter((item) => {
+        const address = item.address?.toLowerCase() ?? "";
+        const name = item.name?.toLowerCase() ?? "";
+        const searchValue = debouncedArea?.toLowerCase() ?? "";
+        const price = parseFloat(item.monthlySubscription?.toString() || "0");
 
-      const matchesSearch =
-        address.includes(searchValue) || name.includes(searchValue);
+        const matchesSearch =
+          address.includes(searchValue) || name.includes(searchValue);
 
-      const matchesDistrict =
-        selectedDistricts.length === 0 ||
-        selectedDistricts.some((district) =>
-          address.includes(district.toLowerCase())
+        const matchesDistrict =
+          selectedDistricts.length === 0 ||
+          selectedDistricts.some((district) =>
+            address.includes(district.toLowerCase())
+          );
+
+        const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
+        const matchesCertification = !showCertifiedOnly || item.isCertificated;
+        return (
+          matchesSearch &&
+          matchesDistrict &&
+          matchesPrice &&
+          matchesCertification
         );
-
-      const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
-
-      const matchesCertification = !showCertifiedOnly || item.isCertificated;
-
-      return (
-        matchesSearch && matchesDistrict && matchesPrice && matchesCertification
-      );
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "price-low": {
-          const priceA = parseFloat(a.monthlySubscription?.toString() || "0");
-          const priceB = parseFloat(b.monthlySubscription?.toString() || "0");
-          return priceA - priceB;
+      })
+      .sort((a, b) => {
+        switch (sortBy) {
+          case "price-low": {
+            const priceA = parseFloat(a.monthlySubscription?.toString() || "0");
+            const priceB = parseFloat(b.monthlySubscription?.toString() || "0");
+            return priceA - priceB;
+          }
+          case "price-high": {
+            const priceA = parseFloat(a.monthlySubscription?.toString() || "0");
+            const priceB = parseFloat(b.monthlySubscription?.toString() || "0");
+            return priceB - priceA;
+          }
+          case "certified":
+            return (b.isCertificated ? 1 : 0) - (a.isCertificated ? 1 : 0);
+          case "duration":
+            return 0;
+          default:
+            return (a.name || "").localeCompare(b.name || "");
         }
-        case "price-high": {
-          const priceA = parseFloat(a.monthlySubscription?.toString() || "0");
-          const priceB = parseFloat(b.monthlySubscription?.toString() || "0");
-          return priceB - priceA;
-        }
-        case "certified":
-          return (b.isCertificated ? 1 : 0) - (a.isCertificated ? 1 : 0);
-        case "duration":
-          return 0;
-        default:
-          return (a.name || "").localeCompare(b.name || "");
-      }
-    });
+      });
+  }, [
+    debouncedArea,
+    priceRange,
+    selectedDistricts,
+    showCertifiedOnly,
+    sortBy,
+    trainingCenters,
+  ]);
 
   if (isLoading) return <Loading />;
 
@@ -572,4 +583,4 @@ export const PetTrainings = () => {
       </Drawer>
     </Box>
   );
-};
+});

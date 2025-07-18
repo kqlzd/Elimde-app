@@ -15,7 +15,7 @@ import {
 import { HeadphonesIcon } from "lucide-react";
 import { contactMethods } from "../../utils/constants/constants";
 
-export const ContactPage = () => {
+export const ContactPage = React.memo(() => {
   return (
     <Box bg="gray.50" minH="100vh">
       <Box bg="linear-gradient(135deg, #1C3A38 0%, #2F6B68 100%)" py={20}>
@@ -112,4 +112,4 @@ export const ContactPage = () => {
       </Container>
     </Box>
   );
-};
+});

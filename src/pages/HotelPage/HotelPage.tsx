@@ -30,17 +30,19 @@ import {
   useDisclosure,
   Badge,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { HotelCards } from "../components/HotelCards/HotelCards";
+import React, { useCallback, useMemo, useState } from "react";
+import { HotelCards } from "../../components/HotelCards/HotelCards";
 import { useGetHotelsData } from "../../hooks/useGetHotelsData";
 import { Search, MapPin, SlidersHorizontal, Grid, List } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useDebounce } from "use-debounce";
-import { Loading } from "../components/Loading/Loading";
+import { Loading } from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import { bakuDistricts } from "../../utils/constants/constants";
 
-export const HotelPage = () => {
+export const HotelPage = React.memo(() => {
   const navigate = useNavigate();
+
   const { hotels, isLoading } = useGetHotelsData();
   const { register, watch } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -55,58 +57,72 @@ export const HotelPage = () => {
 
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
+  const districts = bakuDistricts;
 
-  const districts = ["Nəsimi", "Yasamal", "Nərimanov", "Binəqədi", "Sabunçu"];
-
-  const toggleDistrict = (district: string) => {
+  const toggleDistrict = useCallback((district: string) => {
     setSelectedDistricts((prev) =>
       prev.includes(district)
         ? prev.filter((d) => d !== district)
         : [...prev, district]
     );
-  };
+  }, []);
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     setPriceRange([0, 500]);
     setSortBy("name");
     setSelectedDistricts([]);
-  };
+  }, []);
 
-  const filteredCards = hotels
-    .filter((item) => {
-      const address = item.address?.toLowerCase() ?? "";
-      const name = item.name?.toLowerCase() ?? "";
-      const searchValue = debouncedArea?.toLowerCase() ?? "";
-      const price = parseFloat(item.price?.toString() || "0");
+  const sortOptions = [
+    { value: "name", label: "Seçin" },
+    { value: "price-low", label: "Qiymət: Aşağıdan yuxarı" },
+    { value: "price-high", label: "Qiymət: Yuxarıdan aşağı" },
+  ];
 
-      const matchesSearch =
-        address.includes(searchValue) || name.includes(searchValue);
-      const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
+  const handleSortChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setSortBy(e.target.value);
+    },
+    []
+  );
 
-      const matchesDistrict =
-        selectedDistricts.length === 0 ||
-        selectedDistricts.some((district) =>
-          address.includes(district.toLowerCase())
-        );
+  const filteredCards = useMemo(() => {
+    return hotels
+      .filter((item) => {
+        const address = item.address?.toLowerCase() ?? "";
+        const name = item.name?.toLowerCase() ?? "";
+        const searchValue = debouncedArea?.toLowerCase() ?? "";
+        const price = parseFloat(item.price?.toString() || "0");
 
-      return matchesSearch && matchesPrice && matchesDistrict;
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "price-low": {
-          const priceA = parseFloat(a.price?.toString() || "0");
-          const priceB = parseFloat(b.price?.toString() || "0");
-          return priceA - priceB;
+        const matchesSearch =
+          address.includes(searchValue) || name.includes(searchValue);
+        const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
+
+        const matchesDistrict =
+          selectedDistricts.length === 0 ||
+          selectedDistricts.some((district) =>
+            address.includes(district.toLowerCase())
+          );
+
+        return matchesSearch && matchesPrice && matchesDistrict;
+      })
+      .sort((a, b) => {
+        switch (sortBy) {
+          case "price-low": {
+            const priceA = parseFloat(a.price?.toString() || "0");
+            const priceB = parseFloat(b.price?.toString() || "0");
+            return priceA - priceB;
+          }
+          case "price-high": {
+            const priceA = parseFloat(a.price?.toString() || "0");
+            const priceB = parseFloat(b.price?.toString() || "0");
+            return priceB - priceA;
+          }
+          default:
+            return (a.name || "").localeCompare(b.name || "");
         }
-        case "price-high": {
-          const priceA = parseFloat(a.price?.toString() || "0");
-          const priceB = parseFloat(b.price?.toString() || "0");
-          return priceB - priceA;
-        }
-        default:
-          return (a.name || "").localeCompare(b.name || "");
-      }
-    });
+      });
+  }, [hotels, debouncedArea, priceRange, selectedDistricts, sortBy]);
 
   if (isLoading) return <Loading />;
 
@@ -254,12 +270,14 @@ export const HotelPage = () => {
                 width="200px"
                 borderRadius="lg"
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
+                onChange={handleSortChange}
                 bg={cardBg}
               >
-                <option value="name">Seçin</option>
-                <option value="price-low">Qiymət: Aşağıdan yuxarı</option>
-                <option value="price-high">Qiymət: Yuxarıdan aşağı</option>
+                {sortOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
               </Select>
 
               <HStack spacing={2}>
@@ -445,4 +463,4 @@ export const HotelPage = () => {
       </Drawer>
     </Box>
   );
-};
+});

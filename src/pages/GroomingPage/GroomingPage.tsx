@@ -30,8 +30,8 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { GroomingCards } from "../components/GroomingCards/GroomingCards";
+import React, { useCallback, useMemo, useState } from "react";
+import { GroomingCards } from "../../components/GroomingCards/GroomingCards";
 import { useGetGroomsData } from "../../hooks/useGetGrooms";
 import {
   Search,
@@ -43,11 +43,13 @@ import {
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useDebounce } from "use-debounce";
-import { Loading } from "../components/Loading/Loading";
+import { Loading } from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import { bakuDistricts } from "../../utils/constants/constants";
 
-export const GroomingPage = () => {
+export const GroomingPage = React.memo(() => {
   const navigate = useNavigate();
+
   const { grooms, isLoading } = useGetGroomsData();
   const { register, watch } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -64,61 +66,72 @@ export const GroomingPage = () => {
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
 
-  const districts = ["Nəsimi", "Yasamal", "Nərimanov", "Binəqədi", "Sabunçu"];
+  const districts = bakuDistricts;
 
-  const toggleDistrict = (district: string) => {
+  const toggleDistrict = useCallback((district: string) => {
     setSelectedDistricts((prev) =>
       prev.includes(district)
         ? prev.filter((d) => d !== district)
         : [...prev, district]
     );
-  };
+  }, []);
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     setSelectedDistricts([]);
     setSelectedServices([]);
     setPriceRange([0, 200]);
     setSortBy("name");
-  };
+  }, []);
 
-  const filteredCards = grooms
-    .filter((item) => {
-      const address = item.address?.toLowerCase() ?? "";
-      const name = item.name?.toLowerCase() ?? "";
-      const searchValue = debouncedArea?.toLowerCase() ?? "";
-      const price = parseFloat(item.price?.toString() || "0");
+  const filteredCards = useMemo(() => {
+    return grooms
+      .filter((item) => {
+        const address = item.address?.toLowerCase() ?? "";
+        const name = item.name?.toLowerCase() ?? "";
+        const searchValue = debouncedArea?.toLowerCase() ?? "";
+        const price = parseFloat(item.price?.toString() || "0");
 
-      const matchesSearch =
-        address.includes(searchValue) || name.includes(searchValue);
+        const matchesSearch =
+          address.includes(searchValue) || name.includes(searchValue);
 
-      const matchesDistrict =
-        selectedDistricts.length === 0 ||
-        selectedDistricts.some((district) =>
-          address.includes(district.toLowerCase())
+        const matchesDistrict =
+          selectedDistricts.length === 0 ||
+          selectedDistricts.some((district) =>
+            address.includes(district.toLowerCase())
+          );
+
+        const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
+
+        const matchesService = selectedServices.length === 0;
+
+        return (
+          matchesSearch && matchesDistrict && matchesPrice && matchesService
         );
-
-      const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
-
-      const matchesService = selectedServices.length === 0;
-
-      return matchesSearch && matchesDistrict && matchesPrice && matchesService;
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "price-low":
-          const priceLowA = a.price || 0;
-          const priceLowB = b.price || 0;
-          return priceLowA - priceLowB;
-        case "price-high":
-          const priceHighA = a.price || 0;
-          const priceHighB = b.price || 0;
-          return priceHighB - priceHighA;
-        case "average-time":
-          return (a.averageTime || "").localeCompare(b.averageTime || "");
-        default:
-          return (a.name || "").localeCompare(b.name || "");
-      }
-    });
+      })
+      .sort((a, b) => {
+        switch (sortBy) {
+          case "price-low":
+            const priceLowA = a.price || 0;
+            const priceLowB = b.price || 0;
+            return priceLowA - priceLowB;
+          case "price-high":
+            const priceHighA = a.price || 0;
+            const priceHighB = b.price || 0;
+            return priceHighB - priceHighA;
+          case "average-time":
+            return (a.averageTime || "").localeCompare(b.averageTime || "");
+          default:
+            return (a.name || "").localeCompare(b.name || "");
+        }
+      });
+  }, [
+    debouncedArea,
+    grooms,
+    priceRange,
+    selectedDistricts,
+    selectedServices.length,
+    sortBy,
+  ]);
 
   if (isLoading) return <Loading />;
 
@@ -501,4 +514,4 @@ export const GroomingPage = () => {
       </Drawer>
     </Box>
   );
-};
+});

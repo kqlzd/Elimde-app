@@ -16,15 +16,15 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { PopularServicesHeading } from "../components/PopularServicesHeading/PopularServicesHeading";
-import { PetCards } from "../components/PetCards/PetCards";
+import { PopularServicesHeading } from "../../components/PopularServicesHeading/PopularServicesHeading";
+import { PetCards } from "../../components/PetCards/PetCards";
 import { ArrowRight } from "lucide-react";
 import { stats } from "../../utils/constants/constants";
 
 const MotionBox = motion(Box);
 const MotionGridItem = motion(GridItem);
 
-export const MainPage = () => {
+export const MainPage = React.memo(() => {
   const bgGradient = useColorModeValue(
     "linear(45deg, #f4f1ec 0%, #e8f4f3 50%, #f0f8f5 100%)",
     "linear(45deg, #1a202c 0%, #2d3748 50%, #4a5568 100%)"
@@ -349,4 +349,4 @@ export const MainPage = () => {
       <PetCards />
     </Box>
   );
-};
+});

@@ -11,6 +11,7 @@ import {
   Shield,
   Star,
   Users,
+  Zap,
 } from "lucide-react";
 
 interface Categories {
@@ -346,4 +347,24 @@ export const statsMainPage = [
   { icon: Users, value: "1,200+", label: "Məmnun müştəri" },
   { icon: Heart, value: "5,000+", label: "Xoşbəxt heyvan" },
   { icon: Shield, value: "100%", label: "Təhlükəsiz xidmət" },
+];
+
+export const bakuDistricts = [
+  "Nəsimi",
+  "Səbail",
+  "Yasamal",
+  "Nərimanov",
+  "Binəqədi",
+  "Qaradağ",
+  "Suraxanı",
+  "Xətai",
+  "Sabunçu",
+  "Nizami",
+  "Xəzər",
+  "Pirallahı",
+];
+
+export const availabilityOptions = [
+  { id: "isNowOpened", label: "İndi açıqdır", icon: Clock },
+  { id: "emergency", label: "24/7 Təcili Xidmət", icon: Zap },
 ];

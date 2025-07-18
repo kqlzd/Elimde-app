@@ -10,8 +10,8 @@ import {
   StatNumber,
 } from "@chakra-ui/react";
 import { AdminNavbar } from "../components/AdminNavbar/AdminNavbar";
-import { Loading } from "../../pages/components/Loading/Loading";
 import { useAdminAuth } from "../../hooks/useAdmin";
+import { Loading } from "../../components/Loading/Loading";
 
 export const AdminPage = () => {
   const { user, loading } = useAdminAuth();

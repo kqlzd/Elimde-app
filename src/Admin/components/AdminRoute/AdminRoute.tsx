@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { Loading } from "../../../pages/components/Loading/Loading";
 import { useAdminAuth } from "../../../hooks/useAdmin";
+import { Loading } from "../../../components/Loading/Loading";
 
 interface AdminRouteProps {
   children: React.ReactNode;
