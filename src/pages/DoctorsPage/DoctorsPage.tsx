@@ -26,8 +26,8 @@ import {
   DrawerCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { DoctorCards } from "../components/DoctorsCards/DoctorCards";
+import React, { useCallback, useMemo, useState } from "react";
+import { DoctorCards } from "../../components/DoctorsCards/DoctorCards";
 import { useGetDoctorsData } from "../../hooks/useGetDoctors";
 import {
   Search,
@@ -36,15 +36,17 @@ import {
   Grid,
   List,
   Stethoscope,
-  Clock,
-  Zap,
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useDebounce } from "use-debounce";
-import { Loading } from "../components/Loading/Loading";
+import { Loading } from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import {
+  availabilityOptions,
+  bakuDistricts,
+} from "../../utils/constants/constants";
 
-export const DoctorsPage = () => {
+export const DoctorsPage = React.memo(() => {
   const navigate = useNavigate();
   const { doctors, isLoading } = useGetDoctorsData();
   const { register, watch } = useForm();
@@ -64,104 +66,108 @@ export const DoctorsPage = () => {
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
 
-  const districts = ["Nəsimi", "Yasamal", "Nərimanov", "Binəqədi", "Sabunçu"];
+  const districts = bakuDistricts;
 
-  const availabilityOptions = [
-    { id: "isNowOpened", label: "İndi açıqdır", icon: Clock },
-    { id: "emergency", label: "24/7 Təcili Xidmət", icon: Zap },
-  ];
-
-  const toggleDistrict = (district: string) => {
+  const toggleDistrict = useCallback((district: string) => {
     setSelectedDistricts((prev) =>
       prev.includes(district)
         ? prev.filter((d) => d !== district)
         : [...prev, district]
     );
-  };
+  }, []);
 
-  const toggleAvailability = (availabilityId: string) => {
+  const toggleAvailability = useCallback((availabilityId: string) => {
     setSelectedAvailability((prev) =>
       prev.includes(availabilityId)
         ? prev.filter((a) => a !== availabilityId)
         : [...prev, availabilityId]
     );
-  };
+  }, []);
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     setSelectedSpecialties([]);
     setSelectedDistricts([]);
     setSelectedAvailability([]);
     setSortBy("name");
-  };
+  }, []);
 
-  const filteredCards = doctors
-    .filter((item) => {
-      const address = item.address?.toLowerCase() ?? "";
-      const name = item.name?.toLowerCase() ?? "";
-      const searchValue = debouncedArea?.toLowerCase() ?? "";
+  const filteredCards = useMemo(() => {
+    return doctors
+      .filter((item) => {
+        const address = item.address?.toLowerCase() ?? "";
+        const name = item.name?.toLowerCase() ?? "";
+        const searchValue = debouncedArea?.toLowerCase() ?? "";
 
-      const matchesSearch =
-        address.includes(searchValue) || name.includes(searchValue);
+        const matchesSearch =
+          address.includes(searchValue) || name.includes(searchValue);
 
-      const matchesDistrict =
-        selectedDistricts.length === 0 ||
-        selectedDistricts.some((district) =>
-          address.includes(district.toLowerCase())
+        const matchesDistrict =
+          selectedDistricts.length === 0 ||
+          selectedDistricts.some((district) =>
+            address.includes(district.toLowerCase())
+          );
+
+        const matchesSpecialty = selectedSpecialties.length === 0;
+
+        const matchesAvailability =
+          selectedAvailability.length === 0 ||
+          selectedAvailability.every((availabilityId) => {
+            switch (availabilityId) {
+              case "isNowOpened":
+                return item.isNowOpened === true;
+
+              default:
+                return true;
+            }
+          });
+
+        return (
+          matchesSearch &&
+          matchesDistrict &&
+          matchesSpecialty &&
+          matchesAvailability
         );
+      })
+      .sort((a, b) => {
+        switch (sortBy) {
+          case "price-low":
+            const priceLowA = a?.consultation || 0;
+            const priceLowB = b?.consultation || 0;
+            return priceLowA - priceLowB;
 
-      const matchesSpecialty = selectedSpecialties.length === 0;
+          case "price-high":
+            const priceHighA = a?.consultation || 0;
+            const priceHighB = b?.consultation || 0;
+            return priceHighB - priceHighA;
 
-      const matchesAvailability =
-        selectedAvailability.length === 0 ||
-        selectedAvailability.every((availabilityId) => {
-          switch (availabilityId) {
-            case "isNowOpened":
-              return item.isNowOpened === true;
+          case "experience-low":
+            const experienceLowA = a?.experience || 0;
+            const experienceLowB = b?.experience || 0;
+            return experienceLowA - experienceLowB;
 
-            default:
-              return true;
-          }
-        });
+          case "experience-high":
+            const experiencHighA = a?.experience || 0;
+            const experiencHighB = b?.experience || 0;
+            return experiencHighB - experiencHighA;
 
-      return (
-        matchesSearch &&
-        matchesDistrict &&
-        matchesSpecialty &&
-        matchesAvailability
-      );
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "price-low":
-          const priceLowA = a?.consultation || 0;
-          const priceLowB = b?.consultation || 0;
-          return priceLowA - priceLowB;
+          case "consultation":
+            const consultationA = a?.consultation || 0;
+            const consultationB = b?.consultation || 0;
+            return consultationA - consultationB;
 
-        case "price-high":
-          const priceHighA = a?.consultation || 0;
-          const priceHighB = b?.consultation || 0;
-          return priceHighB - priceHighA;
-
-        case "experience-low":
-          const experienceLowA = a?.experience || 0;
-          const experienceLowB = b?.experience || 0;
-          return experienceLowA - experienceLowB;
-
-        case "experience-high":
-          const experiencHighA = a?.experience || 0;
-          const experiencHighB = b?.experience || 0;
-          return experiencHighB - experiencHighA;
-
-        case "consultation":
-          const consultationA = a?.consultation || 0;
-          const consultationB = b?.consultation || 0;
-          return consultationA - consultationB;
-
-        case "name":
-        default:
-          return (a.name || "").localeCompare(b.name || "");
-      }
-    });
+          case "name":
+          default:
+            return (a.name || "").localeCompare(b.name || "");
+        }
+      });
+  }, [
+    doctors,
+    debouncedArea,
+    selectedDistricts,
+    selectedSpecialties.length,
+    selectedAvailability,
+    sortBy,
+  ]);
 
   if (isLoading) return <Loading />;
 
@@ -578,4 +584,4 @@ export const DoctorsPage = () => {
       </Drawer>
     </Box>
   );
-};
+});

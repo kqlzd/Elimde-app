@@ -16,7 +16,7 @@ import {
 import { Target, Eye } from "lucide-react";
 import { aboutUsstats, values } from "../../utils/constants/constants";
 
-export const AboutUsPage = () => {
+export const AboutUsPage = React.memo(() => {
   return (
     <Box bg="gray.50" minH="100vh">
       <Box bg="linear-gradient(135deg, #1C3A38 0%, #2F6B68 100%)" py={20}>
@@ -174,4 +174,4 @@ export const AboutUsPage = () => {
       </Box>
     </Box>
   );
-};
+});

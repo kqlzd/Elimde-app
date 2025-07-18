@@ -21,12 +21,11 @@ import {
   BreadcrumbLink,
   Heading,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../lib/firebaseConfig";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import {
   Phone,
   ArrowLeft,
@@ -41,12 +40,13 @@ import {
   Shield,
 } from "lucide-react";
 import { useGetDoctorsData } from "../../hooks/useGetDoctors";
-import { Loading } from "../components/Loading/Loading";
-import { MapComponent } from "../components/Map/Map";
+
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRangePicker } from "react-date-range";
 import { differenceInDays } from "date-fns";
+import { Loading } from "../../components/Loading/Loading";
+import { MapComponent } from "../../components/Map/Map";
 
 interface Hotel {
   workHours?: string;
@@ -67,11 +67,12 @@ interface Hotel {
   };
 }
 
-dayjs.extend(relativeTime);
-
-export const DetailPage = () => {
-  const { id, type } = useParams();
+export const DetailPage = React.memo(() => {
   const navigate = useNavigate();
+
+  const { id, type } = useParams();
+  const { isLoading } = useGetDoctorsData();
+
   const [data, setData] = useState<Hotel>({});
   const [showPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -79,18 +80,17 @@ export const DetailPage = () => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
 
-  const isHotelType = type === "hotels";
-  const cardBg = useColorModeValue("white", "gray.800");
-  const borderColor = useColorModeValue("gray.200", "gray.600");
-  const textColor = useColorModeValue("gray.600", "gray.300");
-
   const [selectionRange, setSelectionRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
     key: "selection",
   });
 
-  const { isLoading } = useGetDoctorsData();
+  const isHotelType = useMemo(() => type === "hotels", [type]);
+
+  const cardBg = useColorModeValue("white", "gray.800");
+  const borderColor = useColorModeValue("gray.200", "gray.600");
+  const textColor = useColorModeValue("gray.600", "gray.300");
 
   const getServiceTypeName = (type: string) => {
     const typeNames = {
@@ -124,7 +124,6 @@ export const DetailPage = () => {
             desc: rawData.desc ?? "",
             address: rawData.address ?? "",
             workHours: rawData.workHours ?? "",
-
             locations: rawData.locations
               ? {
                   latitude: Number(rawData?.locations?.latitude),
@@ -158,9 +157,7 @@ export const DetailPage = () => {
     const endDate = selectionRange.endDate;
 
     const days = differenceInDays(endDate, startDate);
-
     const dailyPrice = parseFloat(data?.price ?? "0");
-
     const total = days * dailyPrice;
 
     setNumberOfDays(days);
@@ -219,7 +216,6 @@ export const DetailPage = () => {
             </BreadcrumbItem>
           </Breadcrumb>
 
-          {/* Header with Back Button and Actions */}
           <Flex justify="space-between" align="center" w="full">
             <HStack spacing={4}>
               <IconButton
@@ -506,7 +502,6 @@ export const DetailPage = () => {
             >
               <CardBody p={6}>
                 <VStack spacing={6}>
-                  {/* Price Section */}
                   {isHotelType && data?.price && (
                     <Box w="full">
                       <HStack justify="space-between" align="baseline">
@@ -705,4 +700,4 @@ export const DetailPage = () => {
       </Container>
     </Box>
   );
-};
+});

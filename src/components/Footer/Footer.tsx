@@ -17,12 +17,7 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import { Heart, Mail, Phone, MapPin, Send } from "lucide-react";
-import {
-  quickLinks,
-  services,
-  socialLinks,
-  stats,
-} from "../../../utils/constants/constants";
+import { quickLinks, services, stats } from "../../utils/constants/constants";
 
 export const Footer = () => {
   const bgColor = useColorModeValue("#F3F1EB", "gray.900");
@@ -234,40 +229,6 @@ export const Footer = () => {
                   </VStack>
                 </HStack>
               </VStack>
-
-              <Box>
-                <Text
-                  fontSize="sm"
-                  fontWeight="600"
-                  color={headingColor}
-                  mb={3}
-                >
-                  Sosial Mediada Bizi İzləyin
-                </Text>
-                <HStack spacing={3}>
-                  {socialLinks.map((social, index) => (
-                    <IconButton
-                      key={index}
-                      icon={<social.icon size={18} />}
-                      aria-label={social.name}
-                      size="md"
-                      variant="ghost"
-                      color={textColor}
-                      borderRadius="lg"
-                      _hover={{
-                        bg: "rgba(58, 126, 123, 0.1)",
-                        color: social.hoverColor,
-                        transform: "translateY(-2px)",
-                      }}
-                      transition="all 0.2s ease"
-                      as="a"
-                      href={social.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    />
-                  ))}
-                </HStack>
-              </Box>
             </VStack>
           </SimpleGrid>
         </Container>

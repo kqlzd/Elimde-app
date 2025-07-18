@@ -14,9 +14,9 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { cardData, colorSchemes } from "../../../utils/constants/constants";
+import { cardData, colorSchemes } from "../../utils/constants/constants";
 
-export const PetCards = () => {
+export const PetCards = React.memo(() => {
   const navigate = useNavigate();
   const cardBg = useColorModeValue("white", "gray.800");
   const shadowColor = useColorModeValue("rgba(0,0,0,0.08)", "rgba(0,0,0,0.3)");
@@ -203,4 +203,4 @@ export const PetCards = () => {
       </Container>
     </Box>
   );
-};
+});

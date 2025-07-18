@@ -1,7 +1,7 @@
 import { Box, Container, Text } from "@chakra-ui/react";
 import React from "react";
 
-export const PopularServicesHeading = () => {
+export const PopularServicesHeading = React.memo(() => {
   return (
     <Box bg="gray.50">
       <Container maxW="6xl">
@@ -29,4 +29,4 @@ export const PopularServicesHeading = () => {
       </Container>
     </Box>
   );
-};
+});

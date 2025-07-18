@@ -35,7 +35,7 @@ interface IFAQItem {
   category?: string;
 }
 
-export const FAQPage: React.FC<IFAQItem> = () => {
+export const FAQPage: React.FC<IFAQItem> = React.memo(() => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("Ümumi");
 
@@ -184,7 +184,7 @@ export const FAQPage: React.FC<IFAQItem> = () => {
       </Container>
     </Box>
   );
-};
+});
 
 const FAQItem = ({ faq }: any) => {
   const { isOpen, onToggle } = useDisclosure();
