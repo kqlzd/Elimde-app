@@ -20,6 +20,7 @@ import { PopularServicesHeading } from "../../components/PopularServicesHeading/
 import { PetCards } from "../../components/PetCards/PetCards";
 import { ArrowRight } from "lucide-react";
 import { stats } from "../../utils/constants/constants";
+import { SEOHead } from "../../components/Seo/SeoHead";
 
 const MotionBox = motion(Box);
 const MotionGridItem = motion(GridItem);
@@ -37,6 +38,10 @@ export const MainPage = React.memo(() => {
 
   return (
     <Box bg="gray.50" overflow="hidden">
+      <SEOHead
+        title="Ana Səhifə | Miyav.az"
+        description="Azərbaycanda ev heyvanları üçün ən yaxşı xidmətlər. Hotel, klinika, grooming və təlim."
+      />
       <Box
         minH="100vh"
         bgGradient={bgGradient}
