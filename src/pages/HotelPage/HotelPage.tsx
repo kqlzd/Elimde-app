@@ -40,6 +40,7 @@ import { Loading } from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import { bakuDistricts } from "../../utils/constants/constants";
 import { ErrorTryAgain } from "../../components/ErrorTryAgain/ErrorTryAgain";
+import { SEOHead } from "../../components/Seo/SeoHead";
 
 export const HotelPage = React.memo(() => {
   const navigate = useNavigate();
@@ -130,6 +131,10 @@ export const HotelPage = React.memo(() => {
 
   return (
     <Box bg="gray.50" minH="100vh" pt={24} pb={8}>
+      <SEOHead
+        title="Pet Otelləri - Ev Heyvanınız üçün Rahat Qalma"
+        description="Bakıda ev heyvanınız üçün ən yaxşı pet otellərini tapın. Təhlükəsiz, rahat və peşəkar qulluq."
+      />
       <Container maxW="7xl">
         <VStack spacing={8} align="stretch">
           <Breadcrumb fontSize="sm" color="gray.600">

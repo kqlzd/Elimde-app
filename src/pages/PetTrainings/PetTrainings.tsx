@@ -48,6 +48,7 @@ import { Loading } from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import { bakuDistricts } from "../../utils/constants/constants";
 import { ErrorTryAgain } from "../../components/ErrorTryAgain/ErrorTryAgain";
+import { SEOHead } from "../../components/Seo/SeoHead";
 
 export const PetTrainings = React.memo(() => {
   const navigate = useNavigate();
@@ -159,10 +160,15 @@ export const PetTrainings = React.memo(() => {
   ]);
 
   if (error) return <ErrorTryAgain error={error} />;
+
   if (isLoading) return <Loading />;
 
   return (
     <Box bg="gray.50" minH="100vh" pt={24} pb={8}>
+      <SEOHead
+        title="Təlim Mərkəzləri - Pet Təlimi "
+        description="Ev heyvanınızın davranışını yaxşılaşdırmaq üçün peşəkar təlim mərkəzləri. İtaət təlimi, sosiallaşma və davranış düzəltmə."
+      />
       <Container maxW="7xl">
         <VStack spacing={8} align="stretch">
           <Breadcrumb fontSize="sm" color="gray.600">
