@@ -40,7 +40,7 @@ export const MainPage = React.memo(() => {
     <Box bg="gray.50" overflow="hidden">
       <SEOHead
         title="Ana Səhifə | Miyav.az"
-        description="Azərbaycanda ev heyvanları üçün ən yaxşı xidmətlər. Hotel, klinika, grooming və təlim."
+        description="Azərbaycanda ev heyvanları üçün ən yaxşı xidmətlər. Hotel, klinika, grooming və təlim"
       />
       <Box
         minH="100vh"
@@ -148,7 +148,7 @@ export const MainPage = React.memo(() => {
                   maxW="500px"
                 >
                   Heyvan xidmətlərinizi pulsuz siyahıya əlavə edin və yeni
-                  müştərilər sizi tapsın. Peşəkar qulluq, etibarlı xidmət.
+                  müştərilər sizi tapsın. Peşəkar qulluq, etibarlı xidmət.2
                 </Text>
               </MotionBox>
 
