@@ -45,10 +45,12 @@ import {
   availabilityOptions,
   bakuDistricts,
 } from "../../utils/constants/constants";
+import { ErrorTryAgain } from "../../components/ErrorTryAgain/ErrorTryAgain";
 
 export const DoctorsPage = React.memo(() => {
   const navigate = useNavigate();
-  const { doctors, isLoading } = useGetDoctorsData();
+
+  const { doctors, isLoading, error } = useGetDoctorsData();
   const { register, watch } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -169,6 +171,7 @@ export const DoctorsPage = React.memo(() => {
     sortBy,
   ]);
 
+  if (error) return <ErrorTryAgain error={error} />;
   if (isLoading) return <Loading />;
 
   return (

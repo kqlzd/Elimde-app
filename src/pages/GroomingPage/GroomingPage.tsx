@@ -46,11 +46,12 @@ import { useDebounce } from "use-debounce";
 import { Loading } from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import { bakuDistricts } from "../../utils/constants/constants";
+import { ErrorTryAgain } from "../../components/ErrorTryAgain/ErrorTryAgain";
 
 export const GroomingPage = React.memo(() => {
   const navigate = useNavigate();
 
-  const { grooms, isLoading } = useGetGroomsData();
+  const { grooms, isLoading, error } = useGetGroomsData();
   const { register, watch } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -132,6 +133,8 @@ export const GroomingPage = React.memo(() => {
     selectedServices.length,
     sortBy,
   ]);
+
+  if (error) return <ErrorTryAgain error={error} />;
 
   if (isLoading) return <Loading />;
 

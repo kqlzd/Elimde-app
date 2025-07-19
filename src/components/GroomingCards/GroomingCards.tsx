@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   Card,
   CardBody,
@@ -14,15 +14,9 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  MapPin,
-  Calendar,
-  Scissors,
-  Sparkles,
-  Heart,
-  Crown,
-} from "lucide-react";
+import { MapPin, Calendar, Heart } from "lucide-react";
 import { TGroomsData } from "../../models/api";
+import { groomServices } from "../../utils/constants/constants";
 
 const MotionCard = motion(Card);
 
@@ -36,20 +30,24 @@ export const GroomingCards: React.FC<GroomingCardsProps> = React.memo(
     const cardBg = useColorModeValue("white", "gray.800");
     const shadowColor = useColorModeValue("rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)");
 
-    const handleNavigateGroomDetail = () => navigate(`/grooms/${groom.id}`);
-
-    const services = [
-      { icon: Scissors, label: "Saç kəsimi" },
-      { icon: Sparkles, label: "Saqqal" },
-      { icon: Crown, label: "VIP xidmət" },
-    ];
+    const clickSelectedGroom = useCallback(() => {
+      try {
+        if (!groom?.id) {
+          console.error("Hotel ID tapılmadı");
+          return;
+        }
+        navigate(`/grooms/${groom.id}`);
+      } catch (error) {
+        console.log("navigation xetasi", error);
+      }
+    }, [navigate, groom.id]);
 
     return (
       <MotionCard
         shadow="none"
         borderRadius="2xl"
         cursor="pointer"
-        onClick={handleNavigateGroomDetail}
+        onClick={clickSelectedGroom}
         bg={cardBg}
         border="1px solid"
         borderColor="rgba(255,255,255,0.2)"
@@ -135,7 +133,7 @@ export const GroomingCards: React.FC<GroomingCardsProps> = React.memo(
             </Box>
 
             <HStack spacing={2} w="full" justify="space-around">
-              {services.map((service, index) => (
+              {groomServices.map((service, index) => (
                 <VStack key={index} spacing={1} flex="1" align="center">
                   <Box
                     w="36px"

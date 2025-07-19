@@ -6,6 +6,7 @@ import { TGroomsData } from "../models/api";
 export const useGetGroomsData = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [grooms, setGrooms] = useState<TGroomsData[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchGrooms = async () => {
@@ -18,6 +19,7 @@ export const useGetGroomsData = () => {
         }));
         setGrooms(groomList);
       } catch (error) {
+        setError("Groomlar yüklənərkən xəta baş verdi");
         console.error("Xəta baş verdi:", error);
       } finally {
         setIsLoading(false);
@@ -26,5 +28,5 @@ export const useGetGroomsData = () => {
     fetchGrooms();
   }, []);
 
-  return { isLoading, grooms };
+  return { isLoading, grooms, error };
 };

@@ -93,7 +93,15 @@ export const AboutUsPage = React.memo(() => {
 
             <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
               {values.map((value, index) => (
-                <Card key={index} variant="outline" borderColor="gray.200">
+                <Card
+                  key={index}
+                  variant="outline"
+                  borderColor="gray.200"
+                  _hover={{
+                    transform: "scale(1.05)",
+                    boxShadow: "lg",
+                  }}
+                >
                   <CardBody textAlign="center" p={8}>
                     <Box
                       w={16}

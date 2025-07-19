@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import {
   Card,
   CardBody,
@@ -15,8 +15,9 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MapPin, Calendar, Clock, Wifi, Coffee, Heart } from "lucide-react";
+import { MapPin, Calendar, Heart } from "lucide-react";
 import { THotelData } from "../../models/api";
+import { amenities } from "../../utils/constants/constants";
 
 const MotionCard = motion(Card);
 
@@ -30,17 +31,16 @@ export const HotelCards: React.FC<HotelCardsProps> = React.memo(({ hotel }) => {
   const shadowColor = useColorModeValue("rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)");
 
   const clickSelectedHotel = useCallback(() => {
-    navigate(`/hotels/${hotel.id}`);
+    try {
+      if (!hotel?.id) {
+        console.error("Hotel ID tapılmadı");
+        return;
+      }
+      navigate(`/hotels/${hotel.id}`);
+    } catch (error) {
+      console.log("navigation xetasi", error);
+    }
   }, [navigate, hotel.id]);
-
-  const amenities = useMemo(
-    () => [
-      { icon: Wifi, label: "Video zəng" },
-      { icon: Coffee, label: "Qidalar" },
-      { icon: Clock, label: "24/7" },
-    ],
-    []
-  );
 
   return (
     <MotionCard

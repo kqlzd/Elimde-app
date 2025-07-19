@@ -6,7 +6,6 @@ export type TDoctorData = {
   phone: string;
   image: string;
   consultation: number;
-  desc: string;
   experience: number;
   relevantPerson: string;
   relevantPersonPhone: string;
