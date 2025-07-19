@@ -6,6 +6,7 @@ import { TDoctorData } from "../models/api";
 export const useGetDoctorsData = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [doctors, setDoctors] = useState<TDoctorData[]>([]);
+  const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -18,6 +19,7 @@ export const useGetDoctorsData = () => {
         }));
         setDoctors(doctorList);
       } catch (error) {
+        setError("Klinikalar yuklenerken xeta bas verdi");
         console.error("Xəta baş verdi:", error);
       } finally {
         setIsLoading(false);
@@ -26,5 +28,5 @@ export const useGetDoctorsData = () => {
     fetchDoctors();
   }, []);
 
-  return { isLoading, doctors };
+  return { isLoading, doctors, error };
 };

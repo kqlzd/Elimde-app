@@ -6,6 +6,7 @@ import { THotelData } from "../models/api";
 export const useGetHotelsData = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hotels, setHotels] = useState<THotelData[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchHotels = async () => {
@@ -18,6 +19,7 @@ export const useGetHotelsData = () => {
         }));
         setHotels(hotelList);
       } catch (error) {
+        setError("Otellər yüklənərkən xəta baş verdi");
         console.error("Xəta baş verdi:", error);
       } finally {
         setIsLoading(false);
@@ -26,5 +28,5 @@ export const useGetHotelsData = () => {
     fetchHotels();
   }, []);
 
-  return { isLoading, hotels };
+  return { isLoading, hotels, error };
 };

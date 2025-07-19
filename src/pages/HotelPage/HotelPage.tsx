@@ -39,11 +39,12 @@ import { useDebounce } from "use-debounce";
 import { Loading } from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import { bakuDistricts } from "../../utils/constants/constants";
+import { ErrorTryAgain } from "../../components/ErrorTryAgain/ErrorTryAgain";
 
 export const HotelPage = React.memo(() => {
   const navigate = useNavigate();
 
-  const { hotels, isLoading } = useGetHotelsData();
+  const { hotels, isLoading, error } = useGetHotelsData();
   const { register, watch } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -124,6 +125,7 @@ export const HotelPage = React.memo(() => {
       });
   }, [hotels, debouncedArea, priceRange, selectedDistricts, sortBy]);
 
+  if (error) return <ErrorTryAgain error={error} />;
   if (isLoading) return <Loading />;
 
   return (

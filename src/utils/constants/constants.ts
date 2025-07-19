@@ -1,16 +1,24 @@
 import {
   Award,
   Clock,
+  Coffee,
+  Crown,
   Heart,
   Instagram,
   Mail,
   MapPin,
   MessageCircle,
+  PawPrint,
   Phone,
   PhoneCallIcon,
+  Scissors,
   Shield,
+  Sparkles,
   Star,
+  Target,
+  Trophy,
   Users,
+  Wifi,
   Zap,
 } from "lucide-react";
 
@@ -367,4 +375,22 @@ export const bakuDistricts = [
 export const availabilityOptions = [
   { id: "isNowOpened", label: "İndi açıqdır", icon: Clock },
   { id: "emergency", label: "24/7 Təcili Xidmət", icon: Zap },
+];
+
+export const groomServices = [
+  { icon: Scissors, label: "Saç kəsimi" },
+  { icon: Sparkles, label: "Saqqal" },
+  { icon: Crown, label: "VIP xidmət" },
+];
+
+export const petTrainingServices = [
+  { icon: Target, label: "Təlim" },
+  { icon: PawPrint, label: "Davranış" },
+  { icon: Trophy, label: "Yarış" },
+];
+
+export const amenities = [
+  { icon: Wifi, label: "Video zəng" },
+  { icon: Coffee, label: "Qidalar" },
+  { icon: Clock, label: "24/7" },
 ];

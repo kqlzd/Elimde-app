@@ -5,6 +5,7 @@ import { db } from "../lib/firebaseConfig";
 export const useGetTrainingsData = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [trainingCenters, setTrainingCenters] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchTrainingsData = async () => {
@@ -17,6 +18,7 @@ export const useGetTrainingsData = () => {
         }));
         setTrainingCenters(trainingCenters);
       } catch (error) {
+        setError("Merkezler yuklenerken xeta bash verdi");
         console.error("Xəta baş verdi:", error);
       } finally {
         setIsLoading(false);
@@ -25,5 +27,5 @@ export const useGetTrainingsData = () => {
     fetchTrainingsData();
   }, []);
 
-  return { isLoading, trainingCenters };
+  return { isLoading, trainingCenters, error };
 };

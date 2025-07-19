@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   Card,
   CardBody,
@@ -15,15 +15,9 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  MapPin,
-  Calendar,
-  Trophy,
-  Heart,
-  PawPrint,
-  Target,
-} from "lucide-react";
+import { MapPin, Calendar, Heart } from "lucide-react";
 import { TTrainingData } from "../../models/api";
+import { petTrainingServices } from "../../utils/constants/constants";
 
 const MotionCard = motion(Card);
 
@@ -38,14 +32,17 @@ export const PetTrainingCards: React.FC<PetTrainingCardsProps> = React.memo(
     const cardBg = useColorModeValue("white", "gray.800");
     const shadowColor = useColorModeValue("rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)");
 
-    const handleNavigateTrainingDetailPage = () =>
+    const handleNavigateTrainingDetailPage = useCallback(() => {
+      try {
+        if (!trainings.id) {
+          console.log("training id tapilmadi");
+          return;
+        }
+      } catch (error) {
+        console.log("navigation xetasi", error);
+      }
       navigate(`/trainingcenters/${trainings.id}`);
-
-    const services = [
-      { icon: Target, label: "Təlim" },
-      { icon: PawPrint, label: "Davranış" },
-      { icon: Trophy, label: "Yarış" },
-    ];
+    }, [navigate, trainings.id]);
 
     return (
       <MotionCard
@@ -148,7 +145,7 @@ export const PetTrainingCards: React.FC<PetTrainingCardsProps> = React.memo(
             </Box>
 
             <HStack>
-              {services.slice(0, 4).map((service, index) => (
+              {petTrainingServices.slice(0, 4).map((service, index) => (
                 <VStack key={index} spacing={1}>
                   <Box
                     p={2}

@@ -47,10 +47,12 @@ import { useDebounce } from "use-debounce";
 import { Loading } from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import { bakuDistricts } from "../../utils/constants/constants";
+import { ErrorTryAgain } from "../../components/ErrorTryAgain/ErrorTryAgain";
 
 export const PetTrainings = React.memo(() => {
   const navigate = useNavigate();
-  const { trainingCenters, isLoading } = useGetTrainingsData();
+
+  const { trainingCenters, isLoading, error } = useGetTrainingsData();
   const { register, watch } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -58,7 +60,6 @@ export const PetTrainings = React.memo(() => {
   const [sortBy, setSortBy] = useState("name");
   const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState([0, 300]);
-
   const [selectedDurations, setSelectedDurations] = useState<string[]>([]);
   const [showCertifiedOnly, setShowCertifiedOnly] = useState(false);
 
@@ -157,6 +158,7 @@ export const PetTrainings = React.memo(() => {
     trainingCenters,
   ]);
 
+  if (error) return <ErrorTryAgain error={error} />;
   if (isLoading) return <Loading />;
 
   return (
