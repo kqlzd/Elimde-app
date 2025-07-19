@@ -40,7 +40,7 @@ export const MainPage = React.memo(() => {
     <Box bg="gray.50" overflow="hidden">
       <SEOHead
         title="Ana Səhifə | Miyav.az"
-        description="Azərbaycanda ev heyvanları üçün ən yaxşı xidmətlər. Hotel, klinika, grooming və təlim."
+        description="Azərbaycanda ev heyvanları üçün ən yaxşı xidmətlər. Hotel, klinika, grooming və təlim.v2"
       />
       <Box
         minH="100vh"
