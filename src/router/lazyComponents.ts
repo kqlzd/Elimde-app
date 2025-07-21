@@ -6,6 +6,12 @@ export const MainPage = lazy(() =>
   }))
 );
 
+export const NotFoundPage = lazy(() =>
+  import("../pages/NotFound/NotFound").then((module) => ({
+    default: module.NotFoundPage,
+  }))
+);
+
 export const AboutUsPage = lazy(() =>
   import("../pages/AboutUsPage/AboutUsPage").then((module) => ({
     default: module.AboutUsPage,

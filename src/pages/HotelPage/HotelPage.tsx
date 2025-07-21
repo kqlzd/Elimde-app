@@ -41,11 +41,13 @@ import { useNavigate } from "react-router-dom";
 import { bakuDistricts } from "../../utils/constants/constants";
 import { ErrorTryAgain } from "../../components/ErrorTryAgain/ErrorTryAgain";
 import { SEOHead } from "../../components/Seo/SeoHead";
+// import { useFavorites } from "../../hooks/useFavoritesHooks";π
 
 export const HotelPage = React.memo(() => {
   const navigate = useNavigate();
 
   const { hotels, isLoading, error } = useGetHotelsData();
+  // const { isFavorite, toggleFavorite } = useFavorites();
   const { register, watch } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
 

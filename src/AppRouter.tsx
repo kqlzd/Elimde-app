@@ -17,6 +17,7 @@ import {
   HotelPage,
   MainPage,
   PetTrainings,
+  NotFoundPage,
 } from "./router/lazyComponents";
 import { Header } from "./components/Header/Header";
 import { Loading } from "./components/Loading/Loading";
@@ -157,6 +158,14 @@ export const AppRouter: React.FC = () => {
                     <AdminClinicsPage />
                   </ErrorBoundary>
                 </AdminRoute>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <ErrorBoundary>
+                  <NotFoundPage />
+                </ErrorBoundary>
               }
             />
           </Routes>

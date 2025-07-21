@@ -10,13 +10,9 @@ import {
   Text,
   SimpleGrid,
   useColorModeValue,
-  Input,
-  InputGroup,
-  InputRightElement,
-  IconButton,
   Badge,
 } from "@chakra-ui/react";
-import { Heart, Mail, Phone, MapPin, Send } from "lucide-react";
+import { Heart, Mail, Phone, MapPin } from "lucide-react";
 import { quickLinks, services, stats } from "../../utils/constants/constants";
 
 export const Footer = () => {
@@ -24,10 +20,6 @@ export const Footer = () => {
   const borderColor = useColorModeValue("gray.200", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.400");
   const headingColor = useColorModeValue("#1C3A38", "white");
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
 
   return (
     <Box
@@ -93,46 +85,8 @@ export const Footer = () => {
                   py={1}
                   borderRadius="full"
                 >
-                  🏆 #1 Pet Care Platform
+                  🏆 #1 Pet Hub Platform
                 </Badge>
-              </Box>
-
-              <Box w="full">
-                <Text
-                  fontSize="sm"
-                  fontWeight="600"
-                  color={headingColor}
-                  mb={3}
-                >
-                  Xəbərlərdən xəbərdar olun
-                </Text>
-                <form onSubmit={handleNewsletterSubmit}>
-                  <InputGroup size="md">
-                    <Input
-                      placeholder="E-mail ünvanınız"
-                      borderRadius="lg"
-                      bg="white"
-                      border="1px solid"
-                      borderColor="gray.300"
-                      _focus={{
-                        borderColor: "#3A7E7B",
-                        boxShadow: "0 0 0 1px #3A7E7B",
-                      }}
-                    />
-                    <InputRightElement>
-                      <IconButton
-                        icon={<Send size={16} />}
-                        aria-label="Göndər"
-                        size="sm"
-                        bg="#3A7E7B"
-                        color="white"
-                        borderRadius="md"
-                        _hover={{ bg: "#2F6B68" }}
-                        type="submit"
-                      />
-                    </InputRightElement>
-                  </InputGroup>
-                </form>
               </Box>
             </VStack>
 

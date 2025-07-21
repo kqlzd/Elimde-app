@@ -20,6 +20,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Heading,
+  Tooltip,
 } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -34,7 +35,6 @@ import {
   Calendar,
   Clock,
   Share2,
-  Heart,
   CheckCircle,
   Award,
   Shield,
@@ -77,8 +77,8 @@ export const DetailPage = React.memo(() => {
   const [showPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [numberOfDays, setNumberOfDays] = useState<number>(0);
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
+  const [showCopiedTooltip, setShowCopiedTooltip] = useState(false);
 
   const [selectionRange, setSelectionRange] = useState({
     startDate: new Date(),
@@ -100,6 +100,23 @@ export const DetailPage = React.memo(() => {
       trainingcenters: "Təlim Mərkəzləri",
     };
     return typeNames[type as keyof typeof typeNames] || type;
+  };
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setShowCopiedTooltip(true);
+
+      setTimeout(() => {
+        setShowCopiedTooltip(false);
+      }, 2000);
+    } catch (error) {
+      console.error("Kopyalama xətası:", error);
+      setShowCopiedTooltip(true);
+      setTimeout(() => {
+        setShowCopiedTooltip(false);
+      }, 2000);
+    }
   };
 
   useEffect(() => {
@@ -173,16 +190,6 @@ export const DetailPage = React.memo(() => {
 
   const handleClickPhoneNumber = () => setShowPhoneNumber(true);
 
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: data.name,
-        text: `${data.name} - ${data.desc}`,
-        url: window.location.href,
-      });
-    }
-  };
-
   const validPosition: [number, number] | null =
     data.locations &&
     !isNaN(data.locations.latitude) &&
@@ -254,25 +261,30 @@ export const DetailPage = React.memo(() => {
             </HStack>
 
             <HStack spacing={2}>
-              <IconButton
-                isDisabled
-                icon={<Share2 />}
-                aria-label="Paylaş"
-                variant="outline"
-                size="md"
-                onClick={handleShare}
-                _hover={{ bg: "gray.100" }}
-              />
-              <IconButton
-                isDisabled
-                icon={<Heart />}
-                aria-label="Bəyən"
-                variant="outline"
-                size="md"
-                colorScheme={isFavorite ? "red" : "gray"}
-                onClick={() => setIsFavorite(!isFavorite)}
-                _hover={{ bg: isFavorite ? "red.50" : "gray.100" }}
-              />
+              <Tooltip
+                label={
+                  <Box p={2} bg="green.500" borderRadius="md" color="white">
+                    <Text fontSize="sm" fontWeight="600">
+                      📋 Link kopyalandı!
+                    </Text>
+                  </Box>
+                }
+                isOpen={showCopiedTooltip}
+                placement="top"
+                hasArrow
+                bg="transparent"
+                borderRadius="md"
+              >
+                <IconButton
+                  icon={<Share2 />}
+                  aria-label="Paylaş"
+                  variant="outline"
+                  size="md"
+                  onClick={handleShare}
+                  _hover={{ bg: "gray.100" }}
+                  position="relative"
+                />
+              </Tooltip>
             </HStack>
           </Flex>
         </VStack>

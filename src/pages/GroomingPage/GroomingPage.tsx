@@ -103,7 +103,6 @@ export const GroomingPage = React.memo(() => {
           );
 
         const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
-
         const matchesService = selectedServices.length === 0;
 
         return (

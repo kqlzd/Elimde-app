@@ -19,7 +19,7 @@ export const useGetDoctorsData = () => {
         }));
         setDoctors(doctorList);
       } catch (error) {
-        setError("Klinikalar yuklenerken xeta bas verdi");
+        setError("Klinikalar yüklənərkən xəta baş verdi");
         console.error("Xəta baş verdi:", error);
       } finally {
         setIsLoading(false);

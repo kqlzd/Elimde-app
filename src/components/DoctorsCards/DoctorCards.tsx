@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import {
   Card,
   CardBody,
@@ -15,14 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  MapPin,
-  Calendar,
-  Clock,
-  Heart,
-  Stethoscope,
-  Video,
-} from "lucide-react";
+import { MapPin, Calendar, Clock, Stethoscope, Video } from "lucide-react";
 import { TDoctorData } from "../../models/api";
 
 const MotionCard = motion(Card);
@@ -41,14 +34,11 @@ export const DoctorCards: React.FC<DoctorCardsProps> = React.memo(
       navigate(`/hospitals/${doctor.id}`);
     }, [navigate, doctor.id]);
 
-    const services = useMemo(
-      () => [
-        { icon: Video, label: "Video zəng" },
-        { icon: Stethoscope, label: "Müayinə" },
-        { icon: Clock, label: "24/7" },
-      ],
-      []
-    );
+    const services = [
+      { icon: Video, label: "Video zəng" },
+      { icon: Stethoscope, label: "Müayinə" },
+      { icon: Clock, label: "24/7" },
+    ];
 
     return (
       <MotionCard
@@ -96,31 +86,6 @@ export const DoctorCards: React.FC<DoctorCardsProps> = React.memo(
             bottom={0}
             bgGradient="linear(to-b, transparent 0%, transparent 60%, rgba(0,0,0,0.3) 100%)"
           />
-
-          <Box
-            position="absolute"
-            top={4}
-            right={4}
-            w="40px"
-            h="40px"
-            bg="rgba(255,255,255,0.9)"
-            borderRadius="full"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            backdropFilter="blur(10px)"
-            cursor="pointer"
-            transition="all 0.2s ease"
-            _hover={{
-              bg: "rgba(255,255,255,1)",
-              transform: "scale(1.1)",
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <Heart size={18} color="#666" />
-          </Box>
         </Box>
 
         <CardBody p={6}>
@@ -215,7 +180,7 @@ export const DoctorCards: React.FC<DoctorCardsProps> = React.memo(
                   transform: "translateY(-1px)",
                 }}
               >
-                Görüş Təyin Et
+                Görüş məlumatları
               </Button>
             </Box>
           </VStack>
