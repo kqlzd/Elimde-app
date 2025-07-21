@@ -103,7 +103,7 @@ export const cardData = [
     title: "Baxım",
     slug: "grooming",
     description:
-      "Pet Care ilə heyvanınıza peşəkar qulluq göstərin – baxım, görünüş və sağlamlıq bir arada!",
+      "Pet Hub ilə heyvanınıza peşəkar qulluq göstərin – baxım, görünüş və sağlamlıq bir arada!",
     image: "/assets/cat4.webp",
     alt: "Wooden dining table set",
   },

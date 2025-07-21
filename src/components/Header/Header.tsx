@@ -48,10 +48,26 @@ export const Header = () => {
 
   const navItems = [
     { label: "Ana Səhifə", path: "/", isActive: location.pathname === "/" },
-    { label: "Otellər", path: "/services/hotels" },
-    { label: "Klinikalar", path: "/services/doctors" },
-    { label: "Grooming", path: "/services/grooming" },
-    { label: "Təlim", path: "/services/training" },
+    {
+      label: "Otellər",
+      path: "/services/hotels",
+      isActive: location.pathname === "/services/hotels",
+    },
+    {
+      label: "Klinikalar",
+      path: "/services/doctors",
+      isActive: location.pathname === "/services/doctors",
+    },
+    {
+      label: "Grooming",
+      path: "/services/grooming",
+      isActive: location.pathname === "/services/grooming",
+    },
+    {
+      label: "Təlim",
+      path: "/services/training",
+      isActive: location.pathname === "/services/training",
+    },
   ];
 
   const handleNavigation = (path: string) => {
@@ -133,7 +149,10 @@ export const Header = () => {
                 }}
                 transition="all 0.2s ease"
               >
-                {item.label}
+                <HStack spacing={2}>
+                  <Text>{item.label}</Text>
+                </HStack>
+
                 {item.isActive && (
                   <Box
                     position="absolute"
@@ -209,7 +228,7 @@ export const Header = () => {
                 >
                   <Button
                     variant="ghost"
-                    justifyContent="flex-start"
+                    justifyContent="space-between"
                     color={item.isActive ? "#3A7E7B" : "#4A5568"}
                     fontWeight={item.isActive ? "600" : "500"}
                     size="lg"

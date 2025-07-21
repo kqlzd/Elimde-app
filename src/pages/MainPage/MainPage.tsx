@@ -36,6 +36,16 @@ export const MainPage = React.memo(() => {
     "rgba(255, 255, 255, 0.1)"
   );
 
+  const scrollToServices = () => {
+    const servicesSection = document.getElementById("services-section");
+    if (servicesSection) {
+      servicesSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <Box bg="gray.50" overflow="hidden">
       <SEOHead
@@ -122,7 +132,7 @@ export const MainPage = React.memo(() => {
                   mb={4}
                   letterSpacing="wider"
                 >
-                  PET CARE PLATFORMASI
+                  PET HUB PLATFORMASI
                 </Text>
                 <Heading
                   fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
@@ -148,7 +158,7 @@ export const MainPage = React.memo(() => {
                   maxW="500px"
                 >
                   Heyvan xidmətlərinizi pulsuz siyahıya əlavə edin və yeni
-                  müştərilər sizi tapsın. Peşəkar qulluq, etibarlı xidmət.2
+                  müştərilər sizi tapsın. Peşəkar qulluq, etibarlı xidmət.
                 </Text>
               </MotionBox>
 
@@ -172,6 +182,7 @@ export const MainPage = React.memo(() => {
                     fontSize="lg"
                     fontWeight="600"
                     rightIcon={<ArrowRight size={20} />}
+                    onClick={scrollToServices}
                     _hover={{
                       bg: "#2F6B68",
                       transform: "translateY(-2px)",
@@ -349,9 +360,10 @@ export const MainPage = React.memo(() => {
           </Flex>
         </Container>
       </Box>
-
-      <PopularServicesHeading />
-      <PetCards />
+      <Box id="services-section">
+        <PopularServicesHeading />
+        <PetCards />
+      </Box>
     </Box>
   );
 });

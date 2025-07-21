@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MapPin, Calendar, Heart } from "lucide-react";
+import { MapPin, Calendar } from "lucide-react";
 import { THotelData } from "../../models/api";
 import { amenities } from "../../utils/constants/constants";
 
@@ -79,7 +79,6 @@ export const HotelCards: React.FC<HotelCardsProps> = React.memo(({ hotel }) => {
           transition="transform 0.4s ease"
           _hover={{ transform: "scale(1.1)" }}
         />
-
         <Box
           position="absolute"
           top={0}
@@ -88,31 +87,6 @@ export const HotelCards: React.FC<HotelCardsProps> = React.memo(({ hotel }) => {
           bottom={0}
           bgGradient="linear(to-b, transparent 0%, transparent 60%, rgba(0,0,0,0.3) 100%)"
         />
-
-        <Box
-          position="absolute"
-          top={4}
-          right={4}
-          w="40px"
-          h="40px"
-          bg="rgba(255,255,255,0.9)"
-          borderRadius="full"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          backdropFilter="blur(10px)"
-          cursor="pointer"
-          transition="all 0.2s ease"
-          _hover={{
-            bg: "rgba(255,255,255,1)",
-            transform: "scale(1.1)",
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <Heart size={18} color="#666" />
-        </Box>
       </Box>
 
       <CardBody p={6}>
@@ -207,7 +181,7 @@ export const HotelCards: React.FC<HotelCardsProps> = React.memo(({ hotel }) => {
                 transform: "translateY(-1px)",
               }}
             >
-              Rezerv Et
+              Rezerv məlumatları
             </Button>
           </Box>
         </VStack>

@@ -1,25 +1,6 @@
-import { Center, Image, Box } from "@chakra-ui/react";
+import { Center, Box } from "@chakra-ui/react";
 import React from "react";
-import styled from "@emotion/styled";
-
-const SpinningImage = styled(Image)`
-  animation: spin 2s linear infinite;
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-    transition {
-      ease: 'linear',
-      duration: 4,
-      repeat: infinity,
-      delay: 0.1
-    }
-  }
-`;
+import { SpinningImage } from "../../utils/helpers/helpers";
 
 export const Loading = () => {
   return (
@@ -34,10 +15,10 @@ export const Loading = () => {
     >
       <Center h="100vh">
         <SpinningImage
-          src="/assets/cat-logo.webp"
+          src="/assets/cat-logo.png"
           alt="Loading"
-          w="50px"
-          h="50px"
+          w="60px"
+          h="60px"
         />
       </Center>
     </Box>

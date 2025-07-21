@@ -18,7 +18,7 @@ export const useGetTrainingsData = () => {
         }));
         setTrainingCenters(trainingCenters);
       } catch (error) {
-        setError("Merkezler yuklenerken xeta bash verdi");
+        setError("Təlim mərkəzləri yüklənərkən xəta baş verdi");
         console.error("Xəta baş verdi:", error);
       } finally {
         setIsLoading(false);
