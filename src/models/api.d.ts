@@ -53,3 +53,21 @@ export type TTrainingData = {
   trainingDuration: string;
   isCertificated: boolean;
 };
+
+export interface IDetailPageData {
+  id?: string;
+  name?: string;
+  price?: string;
+  relevantPerson?: string;
+  relevantPersonPhone?: string;
+  image?: string;
+  phone?: string;
+  desc?: string;
+  address?: string;
+  workHours?: string;
+  locations?: {
+    latitude: number;
+    longitude: number;
+  };
+  createdAt?: any;
+}

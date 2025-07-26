@@ -27,6 +27,7 @@ interface DoctorCardsProps {
 export const DoctorCards: React.FC<DoctorCardsProps> = React.memo(
   ({ doctor }) => {
     const navigate = useNavigate();
+
     const cardBg = useColorModeValue("white", "gray.800");
     const shadowColor = useColorModeValue("rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)");
 
@@ -69,7 +70,7 @@ export const DoctorCards: React.FC<DoctorCardsProps> = React.memo(
       >
         <Box position="relative" overflow="hidden">
           <Image
-            src={doctor.image || "/assets/default-doctor.jpg"}
+            src={doctor.image}
             alt={doctor.name}
             h="220px"
             w="full"
@@ -93,7 +94,7 @@ export const DoctorCards: React.FC<DoctorCardsProps> = React.memo(
             <Box w="full">
               <HStack justify="space-between" align="start" mb={2}>
                 <Heading size="md" color="#1C3A38" noOfLines={1}>
-                  Dr. {doctor.name}
+                  {doctor.name}
                 </Heading>
                 <Badge
                   colorScheme="green"
