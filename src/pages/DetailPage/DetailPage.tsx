@@ -22,10 +22,8 @@ import {
   Heading,
   Tooltip,
 } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../lib/firebaseConfig";
 import dayjs from "dayjs";
 import {
   Phone,
@@ -39,169 +37,47 @@ import {
   Award,
   Shield,
 } from "lucide-react";
-import { useGetDoctorsData } from "../../hooks/useGetDoctors";
-
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRangePicker } from "react-date-range";
-import { differenceInDays } from "date-fns";
 import { Loading } from "../../components/Loading/Loading";
 import { MapComponent } from "../../components/Map/Map";
-
-interface Hotel {
-  workHours?: string;
-  id?: string;
-  name?: string;
-  price?: string;
-  relevantPerson?: string;
-  relevantPersonPhone?: string;
-  image?: string;
-  imageUrl?: string;
-  phone?: string;
-  desc?: string;
-  address?: string;
-  createdAt?: any;
-  locations?: {
-    latitude: number;
-    longitude: number;
-  };
-}
+import { getServiceTypeName } from "../../utils/helpers/helpers";
+import { useDetailData } from "../../hooks/useDetailPage";
+import { useLinkShare } from "../../hooks/useLinkShare";
+import { useDateRange } from "../../hooks/useDateRange";
+import { useValidPositon } from "../../hooks/useValidPositon";
 
 export const DetailPage = React.memo(() => {
   const navigate = useNavigate();
-
-  const { id, type } = useParams();
-  const { isLoading } = useGetDoctorsData();
-
-  const [data, setData] = useState<Hotel>({});
-  const [showPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [numberOfDays, setNumberOfDays] = useState<number>(0);
-  const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
-  const [showCopiedTooltip, setShowCopiedTooltip] = useState(false);
-
-  const [selectionRange, setSelectionRange] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: "selection",
-  });
-
-  const isHotelType = useMemo(() => type === "hotels", [type]);
 
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
   const textColor = useColorModeValue("gray.600", "gray.300");
 
-  const getServiceTypeName = (type: string) => {
-    const typeNames = {
-      hotels: "Otellər",
-      doctors: "Klinikalar",
-      grooming: "Grooming",
-      trainingcenters: "Təlim Mərkəzləri",
-    };
-    return typeNames[type as keyof typeof typeNames] || type;
-  };
+  const { id, type } = useParams();
+  const isHotelType = type === "hotels";
 
-  const handleShare = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setShowCopiedTooltip(true);
+  const { showCopiedTooltip, handleShare } = useLinkShare();
+  const { data, isLoading: dataLoading, fetchData } = useDetailData(id, type);
+  const { totalPrice, numberOfDays, selectionRange, handleSelect } =
+    useDateRange(isHotelType ? data?.price : null);
+  const { validPosition } = useValidPositon(data);
 
-      setTimeout(() => {
-        setShowCopiedTooltip(false);
-      }, 2000);
-    } catch (error) {
-      console.error("Kopyalama xətası:", error);
-      setShowCopiedTooltip(true);
-      setTimeout(() => {
-        setShowCopiedTooltip(false);
-      }, 2000);
-    }
-  };
+  const [showPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
+  const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!id || !type) return;
-
-      try {
-        const docRef = doc(db, type, id);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          const rawData = docSnap.data();
-
-          const formattedData: Hotel = {
-            id: docSnap.id,
-            name: rawData.name ?? "",
-            price: rawData.price ?? "",
-            relevantPerson: rawData.relevantPerson ?? "",
-            relevantPersonPhone: rawData.relevantPersonPhone ?? "",
-            image: rawData.image ?? rawData.imageUrl ?? "",
-            phone: rawData.phone ?? "",
-            desc: rawData.desc ?? "",
-            address: rawData.address ?? "",
-            workHours: rawData.workHours ?? "",
-            locations: rawData.locations
-              ? {
-                  latitude: Number(rawData?.locations?.latitude),
-                  longitude: Number(rawData?.locations?.longitude),
-                }
-              : undefined,
-
-            createdAt: rawData.createdAt ?? null,
-          };
-
-          setData(formattedData);
-        } else {
-          console.log("Məlumat tapılmadı");
-        }
-      } catch (error) {
-        console.error("Xəta baş verdi:", error);
-      }
-    };
-
-    fetchData();
+    try {
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
   }, [id, type]);
 
-  useEffect(() => {
-    if (data?.price) {
-      calculateTotalPrice();
-    }
-  }, [data, selectionRange]);
+  const getPhoneNumber = () => setShowPhoneNumber(true);
 
-  const calculateTotalPrice = () => {
-    const startDate = selectionRange.startDate;
-    const endDate = selectionRange.endDate;
-
-    const days = differenceInDays(endDate, startDate);
-    const dailyPrice = parseFloat(data?.price ?? "0");
-    const total = days * dailyPrice;
-
-    setNumberOfDays(days);
-    setTotalPrice(total);
-
-    return { days, total };
-  };
-
-  const handleSelect = (ranges: any) => {
-    setSelectionRange(ranges.selection);
-    calculateTotalPrice();
-  };
-
-  const handleClickPhoneNumber = () => setShowPhoneNumber(true);
-
-  const validPosition: [number, number] | null =
-    data.locations &&
-    !isNaN(data.locations.latitude) &&
-    !isNaN(data.locations.longitude) &&
-    data.locations.latitude >= -90 &&
-    data.locations.latitude <= 90 &&
-    data.locations.longitude >= -180 &&
-    data.locations.longitude <= 180
-      ? [data.locations.latitude, data.locations.longitude]
-      : null;
-
-  if (isLoading) return <Loading />;
+  if (dataLoading) return <Loading />;
 
   return (
     <Box bg="gray.50" minH="100vh" pt={20}>
@@ -265,7 +141,7 @@ export const DetailPage = React.memo(() => {
                 label={
                   <Box p={2} bg="green.500" borderRadius="md" color="white">
                     <Text fontSize="sm" fontWeight="600">
-                      📋 Link kopyalandı!
+                      Kopyalandı!
                     </Text>
                   </Box>
                 }
@@ -403,10 +279,10 @@ export const DetailPage = React.memo(() => {
                               fontWeight="600"
                               color="#1C3A38"
                             >
-                              Adres
+                              Ünvan
                             </Text>
                             <Text fontSize="sm" color={textColor}>
-                              {data?.address ?? "Adres məlumatı yoxdur"}
+                              {data?.address ?? "Ünvan məlumatları yoxdur"}
                             </Text>
                           </VStack>
                         </HStack>
@@ -624,7 +500,7 @@ export const DetailPage = React.memo(() => {
                       borderRadius="xl"
                       fontSize="md"
                       fontWeight="600"
-                      onClick={handleClickPhoneNumber}
+                      onClick={getPhoneNumber}
                       _hover={{ bg: "#2F6B68", transform: "translateY(-1px)" }}
                       transition="all 0.2s ease"
                       leftIcon={<Phone size={18} />}

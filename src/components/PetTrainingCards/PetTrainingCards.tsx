@@ -173,7 +173,7 @@ export const PetTrainingCards: React.FC<PetTrainingCardsProps> = React.memo(
                     transform: "translateY(-1px)",
                   }}
                 >
-                  Kursa Yazıl
+                  Kurs məlumatları
                 </Button>
               </VStack>
             </Box>

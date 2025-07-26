@@ -262,7 +262,7 @@ export const Header = () => {
                   <HStack>
                     <Phone size={16} color="#3A7E7B" />
                     <Text fontSize="sm" color="#4A5568">
-                      +994 XX XXX XX XX
+                      +994 55 806 66 16
                     </Text>
                   </HStack>
                   <HStack>
@@ -273,23 +273,6 @@ export const Header = () => {
                   </HStack>
                 </VStack>
               </Box>
-
-              <Button
-                bg="#1C3A38"
-                color="white"
-                size="lg"
-                borderRadius="lg"
-                onClick={() => {
-                  navigate("/login");
-                  onClose();
-                }}
-                _hover={{
-                  bg: "#2F6B68",
-                }}
-                mt={4}
-              >
-                Admin Girişi
-              </Button>
             </VStack>
           </DrawerBody>
         </DrawerContent>

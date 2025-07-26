@@ -25,6 +25,10 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
+  RangeSlider,
+  RangeSliderTrack,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
 } from "@chakra-ui/react";
 import React, { useCallback, useMemo, useState } from "react";
 import { DoctorCards } from "../../components/DoctorsCards/DoctorCards";
@@ -57,6 +61,7 @@ export const DoctorsPage = React.memo(() => {
 
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState("name");
+  const [priceRange, setPriceRange] = useState([0, 500]);
   const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>([]);
   const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
   const [selectedAvailability, setSelectedAvailability] = useState<string[]>(
@@ -91,6 +96,7 @@ export const DoctorsPage = React.memo(() => {
     setSelectedSpecialties([]);
     setSelectedDistricts([]);
     setSelectedAvailability([]);
+    setPriceRange([0, 500]);
     setSortBy("name");
   }, []);
 
@@ -100,9 +106,11 @@ export const DoctorsPage = React.memo(() => {
         const address = item.address?.toLowerCase() ?? "";
         const name = item.name?.toLowerCase() ?? "";
         const searchValue = debouncedArea?.toLowerCase() ?? "";
+        const price = parseFloat(item.consultation?.toString() || "0");
 
         const matchesSearch =
           address.includes(searchValue) || name.includes(searchValue);
+        const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
 
         const matchesDistrict =
           selectedDistricts.length === 0 ||
@@ -128,7 +136,8 @@ export const DoctorsPage = React.memo(() => {
           matchesSearch &&
           matchesDistrict &&
           matchesSpecialty &&
-          matchesAvailability
+          matchesAvailability &&
+          matchesPrice
         );
       })
       .sort((a, b) => {
@@ -169,6 +178,7 @@ export const DoctorsPage = React.memo(() => {
     selectedDistricts,
     selectedSpecialties.length,
     selectedAvailability,
+    priceRange,
     sortBy,
   ]);
 
@@ -441,6 +451,113 @@ export const DoctorsPage = React.memo(() => {
               <SlidersHorizontal size={20} />
               <Text>Ətraflı Filterlər</Text>
             </HStack>
+
+            <DrawerBody>
+              <VStack spacing={8} align="stretch" pt={6}>
+                <Box>
+                  <Text fontSize="md" fontWeight="600" mb={4} color="#1C3A38">
+                    Qiymət Aralığı
+                  </Text>
+                  <VStack spacing={4}>
+                    <RangeSlider
+                      value={priceRange}
+                      onChange={setPriceRange}
+                      min={0}
+                      max={500}
+                      step={10}
+                      colorScheme="teal"
+                    >
+                      <RangeSliderTrack>
+                        <RangeSliderFilledTrack />
+                      </RangeSliderTrack>
+                      <RangeSliderThumb index={0} />
+                      <RangeSliderThumb index={1} />
+                    </RangeSlider>
+                    <HStack justify="space-between" w="full">
+                      <Text fontSize="sm" color="gray.600">
+                        {priceRange[0]} ₼
+                      </Text>
+                      <Text fontSize="sm" color="gray.600">
+                        {priceRange[1]} ₼
+                      </Text>
+                    </HStack>
+                  </VStack>
+                </Box>
+
+                <Box>
+                  <HStack justify="space-between" align="center" mb={4}>
+                    <Text fontSize="md" fontWeight="600" color="#1C3A38">
+                      Rayon ({selectedDistricts.length} seçildi)
+                    </Text>
+                    {selectedDistricts.length > 0 && (
+                      <Button
+                        size="xs"
+                        variant="ghost"
+                        colorScheme="red"
+                        onClick={() => setSelectedDistricts([])}
+                      >
+                        Təmizlə
+                      </Button>
+                    )}
+                  </HStack>
+                  <VStack spacing={2} align="stretch">
+                    {districts.map((district) => (
+                      <Button
+                        key={district}
+                        variant={
+                          selectedDistricts.includes(district)
+                            ? "solid"
+                            : "outline"
+                        }
+                        colorScheme={
+                          selectedDistricts.includes(district) ? "teal" : "gray"
+                        }
+                        justifyContent="space-between"
+                        size="md"
+                        borderRadius="lg"
+                        onClick={() => toggleDistrict(district)}
+                        _hover={{
+                          bg: selectedDistricts.includes(district)
+                            ? "teal.600"
+                            : "teal.50",
+                          borderColor: "teal.300",
+                        }}
+                      >
+                        <HStack>
+                          <MapPin size={16} />
+                          <Text>{district}</Text>
+                        </HStack>
+                        {selectedDistricts.includes(district) && (
+                          <Text fontSize="sm">✓</Text>
+                        )}
+                      </Button>
+                    ))}
+                  </VStack>
+                </Box>
+
+                <VStack spacing={4}>
+                  <Button
+                    colorScheme="teal"
+                    size="lg"
+                    borderRadius="xl"
+                    onClick={onClose}
+                    w="full"
+                  >
+                    Filterləri Tətbiq Et
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    size="md"
+                    borderRadius="xl"
+                    onClick={clearFilters}
+                    w="full"
+                  >
+                    Bütün Filterləri Sıfırla
+                  </Button>
+                </VStack>
+              </VStack>
+            </DrawerBody>
           </DrawerHeader>
 
           <DrawerBody>
@@ -477,7 +594,7 @@ export const DoctorsPage = React.memo(() => {
                   )}
                 </HStack>
                 <VStack spacing={2} align="stretch">
-                  {districts.map((district) => (
+                  {districts?.map((district) => (
                     <Button
                       key={district}
                       variant={

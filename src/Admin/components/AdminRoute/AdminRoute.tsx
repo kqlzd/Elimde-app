@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAdminAuth } from "../../../hooks/useAdmin";
+import { useAdminAuth } from "../../../hooks/useAdminAuth";
 import { Loading } from "../../../components/Loading/Loading";
 
 interface AdminRouteProps {

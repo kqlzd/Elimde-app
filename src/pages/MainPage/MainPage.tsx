@@ -132,7 +132,7 @@ export const MainPage = React.memo(() => {
                   mb={4}
                   letterSpacing="wider"
                 >
-                  PET HUB PLATFORMASI
+                  PET PLATFORMASI
                 </Text>
                 <Heading
                   fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}

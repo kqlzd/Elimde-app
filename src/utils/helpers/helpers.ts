@@ -19,3 +19,13 @@ export const SpinningImage = styled(Image)`
     }
   }
 `;
+
+export const getServiceTypeName = (type: string) => {
+  const typeNames = {
+    hotels: "Otellər",
+    doctors: "Klinikalar",
+    grooming: "Grooming",
+    trainingcenters: "Təlim Mərkəzləri",
+  };
+  return typeNames[type as keyof typeof typeNames] || type;
+};

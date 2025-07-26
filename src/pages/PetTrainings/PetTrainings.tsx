@@ -221,7 +221,7 @@ export const PetTrainings = React.memo(() => {
                   </InputLeftElement>
                   <Input
                     {...register("area-search")}
-                    placeholder="Təlim mərkəzi adı, təlimçi adı və ya ərazi üzrə axtarın..."
+                    placeholder="Təlim mərkəzi adı və ya ərazi üzrə axtarın..."
                     bg={cardBg}
                     border="2px solid"
                     borderColor={borderColor}
