@@ -17,7 +17,7 @@ export const useDateRange = (price: any) => {
     );
     const dailyPrice = parseFloat(price ?? "0");
     const total = days * dailyPrice;
-
+    console.log("ss");
     setNumberOfDays(days);
     setTotalPrice(total);
     return { days, total };

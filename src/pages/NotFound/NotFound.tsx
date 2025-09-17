@@ -21,7 +21,7 @@ export const NotFoundPage = React.memo(() => {
   return (
     <Box bg="gray.50" minH="100vh" pt={24}>
       <SEOHead
-        title="404 - Səhifə Tapılmadı | Miyav.az"
+        title="404 - Səhifə Tapılmadı | Meow.az"
         description="Axtardığınız səhifə tapılmadı. Ana səhifəyə qayıdın və digər xidmətlərimizi kəşf edin."
       />
 
@@ -81,7 +81,7 @@ export const NotFoundPage = React.memo(() => {
                 color="#1C3A38"
                 fontWeight="700"
               >
-                Miyav! Bu səhifə tapılmadı🐾
+                Meow! Bu səhifə tapılmadı🐾
               </Heading>
 
               <Text

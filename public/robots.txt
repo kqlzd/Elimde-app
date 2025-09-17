@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /login
 
-Sitemap: https://miyav.az/sitemap.xml
+Sitemap: https://meow.az/sitemap.xml
