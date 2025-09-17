@@ -33,7 +33,7 @@ export const AboutUsPage = React.memo(() => {
               2025-ci İldən bərİ xİdmətİnİzdə
             </Badge>
             <Heading size="2xl" fontWeight="bold">
-              Miyav.az - Heyvan Dostlarınızın Evi
+              Meow.az - Heyvan Dostlarınızın Evi
             </Heading>
             <Text fontSize="xl" maxW="800px" lineHeight="1.6">
               Biz heyvan sevgisini və peşəkar qayğını birləşdirərək, ev
@@ -162,7 +162,7 @@ export const AboutUsPage = React.memo(() => {
                 <Text fontWeight="bold" color="#1C3A38">
                   E-mail
                 </Text>
-                <Text color="gray.600">info@miyav.az</Text>
+                <Text color="gray.600">info@meow.az</Text>
               </VStack>
               <VStack spacing={2}>
                 <Text fontWeight="bold" color="#1C3A38">

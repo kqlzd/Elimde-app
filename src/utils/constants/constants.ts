@@ -140,7 +140,7 @@ export const socialLinks = [
   {
     name: "Instagram",
     icon: Instagram,
-    link: "https://instagram.com/miyav.az",
+    link: "https://instagram.com/meow.az",
     color: "#E4405F",
     hoverColor: "pink.500",
   },
@@ -169,19 +169,19 @@ export const contactMethods = [
     icon: Mail,
     title: "E-mail Dəstəyi",
     description: "Ətraflı suallar üçün",
-    contact: "info@miyav.az",
+    contact: "info@meow.az",
     availability: "24 saat ərzində cavab",
     color: "#EA4335",
-    action: "mailto:info@miyav.az",
+    action: "mailto:info@meow.az",
   },
   {
     icon: Instagram,
     title: "Instagram",
     description: "Sosial mediada izləyin",
-    contact: "@miyav.az",
+    contact: "@meow.az",
     availability: "Gündəlik yeniliklər",
     color: "#E4405F",
-    action: "https://instagram.com/miyav.az",
+    action: "https://instagram.com/meow.az",
   },
 ];
 
@@ -231,9 +231,9 @@ export const faqCategories = [
 export const faqData = [
   {
     id: "1",
-    question: "Miyav.az nədir və necə işləyir?",
+    question: "Meow.az nədir və necə işləyir?",
     answer:
-      "Miyav.az Azərbaycanda ev heyvanları üçün müxtəlif xidmətləri bir platformada birləşdirən rəqəmsal həlldir. Siz burada hotel, klinika, grooming və təlim xidmətlərini tapa, müqayisə edə və rezerv edə bilərsiniz.",
+      "Meow.az Azərbaycanda ev heyvanları üçün müxtəlif xidmətləri bir platformada birləşdirən rəqəmsal həlldir. Siz burada hotel, klinika, grooming və təlim xidmətlərini tapa, müqayisə edə və rezerv edə bilərsiniz.",
     category: "Ümumİ",
   },
 

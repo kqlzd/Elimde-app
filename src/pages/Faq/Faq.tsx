@@ -60,7 +60,7 @@ export const FAQPage: React.FC<IFAQItem> = React.memo(() => {
               Tez-tez Verilən Suallar
             </Heading>
             <Text fontSize="xl" maxW="600px" lineHeight="1.6">
-              Miyav.az platforması haqqında ən çox soruşulan sualların cavabları
+              Meow.az platforması haqqında ən çox soruşulan sualların cavabları
             </Text>
           </VStack>
         </Container>
@@ -159,7 +159,7 @@ export const FAQPage: React.FC<IFAQItem> = React.memo(() => {
                       E-mail Dəstəyi
                     </Text>
                     <Text color="gray.600" textAlign="center">
-                      support@miyav.az
+                      support@meow.az
                       <br />
                       <Text fontSize="sm">24 saat ərzində cavab</Text>
                     </Text>

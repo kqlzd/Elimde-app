@@ -7,7 +7,7 @@ interface SEOHeadProps {
 }
 
 export const SEOHead: React.FC<SEOHeadProps> = ({
-  title = "Miyav.az - Ev Heyvanları üçün Peşəkar Xidmətlər",
+  title = "Meow.az - Ev Heyvanları üçün Peşəkar Xidmətlər",
   description = "Azərbaycanda ev heyvanları üçün hotel, klinika, grooming və təlim xidmətləri.",
 }) => {
   return (

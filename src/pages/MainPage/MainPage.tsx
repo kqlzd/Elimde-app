@@ -49,7 +49,7 @@ export const MainPage = React.memo(() => {
   return (
     <Box bg="gray.50" overflow="hidden">
       <SEOHead
-        title="Ana Səhifə | Miyav.az"
+        title="Ana Səhifə | Meow.az"
         description="Azərbaycanda ev heyvanları üçün ən yaxşı xidmətlər. Hotel, klinika, grooming və təlim"
       />
       <Box

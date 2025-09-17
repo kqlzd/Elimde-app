@@ -71,7 +71,7 @@ export const Footer = () => {
                     <Heart color="white" size={20} />
                   </Box>
                   <Text fontSize="2xl" fontWeight="800" color={headingColor}>
-                    Miyav.az
+                    Meow.az
                   </Text>
                 </HStack>
                 <Text color={textColor} lineHeight="1.6" mb={4}>
@@ -164,7 +164,7 @@ export const Footer = () => {
                   </Box>
                   <VStack align="start" spacing={0}>
                     <Text fontSize="sm" fontWeight="600" color={headingColor}>
-                      info@miyav.az
+                      info@meow.az
                     </Text>
                     <Text fontSize="xs" color={textColor}>
                       Ümumi sorğular
@@ -201,7 +201,7 @@ export const Footer = () => {
               color={textColor}
               textAlign={{ base: "center", md: "left" }}
             >
-              © 2024 Miyav.az. Bütün hüquqlar qorunur.
+              © 2024 Meow.az
               <Text as="span" color="#3A7E7B" ml={1}>
                 🐾 Made with ❤️ for pets
               </Text>

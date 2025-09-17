@@ -127,7 +127,7 @@ export const Header = () => {
                   fontWeight="800"
                   letterSpacing="-0.5px"
                 >
-                  Miyav.az
+                  Meow.az
                 </Text>
               </HStack>
             </MotionBox>
@@ -212,7 +212,7 @@ export const Header = () => {
                 <Heart color="white" size={16} />
               </Box>
               <Text color="#1C3A38" fontSize="xl" fontWeight="700">
-                Miyav.az
+                Meow.az
               </Text>
             </HStack>
           </DrawerHeader>
