@@ -14,7 +14,7 @@ export const AdminNavbar = () => {
 
   return (
     <Flex
-      height={400}
+      height="auto"
       bg="#1C3A38"
       p="4"
       color="white"
@@ -22,6 +22,7 @@ export const AdminNavbar = () => {
       align="center"
     >
       <Flex gap="4">
+        <Link to="/admin">Dashboard</Link>
         <Link to="/admin/add-hotels">Oteller</Link>
         <Link to="/admin/add-doctor">Klinikalar</Link>
         <Link to="/admin/add-groom">Grooming Salonlar </Link>

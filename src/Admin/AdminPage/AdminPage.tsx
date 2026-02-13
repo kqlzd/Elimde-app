@@ -9,7 +9,6 @@ import {
   StatLabel,
   StatNumber,
 } from "@chakra-ui/react";
-import { AdminNavbar } from "../components/AdminNavbar/AdminNavbar";
 import { useAdminAuth } from "../../hooks/useAdminAuth";
 import { Loading } from "../../components/Loading/Loading";
 
@@ -22,8 +21,6 @@ export const AdminPage = () => {
 
   return (
     <Box>
-      <AdminNavbar />
-
       <Box p={8}>
         <VStack spacing={8} align="start">
           <Box>

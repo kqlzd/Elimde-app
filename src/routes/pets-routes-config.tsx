@@ -1,23 +1,24 @@
 import { RouteObject } from "react-router-dom";
 import {
+  MainPage,
   AboutUsPage,
-  ContactPage,
-  DetailPage,
-  DoctorsPage,
   FAQPage,
+  ContactPage,
   GroomingPage,
   HotelPage,
-  MainPage,
-  NotFoundPage,
+  DoctorsPage,
   PetTrainings,
-} from "../router/lazyComponents";
-import { Login } from "../pages/Login/Login";
-import { AdminPage } from "../Admin/AdminPage/AdminPage";
-import { AdminHotelPage } from "../Admin/AdminHotelPage/AdminHotelPage";
-import AdminGroomsPage from "../Admin/AdminGroomsPage/AdminGroomsPage";
-import { AdminTrainingPage } from "../Admin/AdminTrainingPage/AdminTraningPage";
-import { AdminClinicsPage } from "../Admin/AdminClinicsPage/AdminClinicsPage";
-import { MainLayout } from "../layouts/MainLayout";
+  DetailPage,
+  Login,
+  AdminPage,
+  AdminHotelPage,
+  AdminGroomsPage,
+  AdminTrainingPage,
+  AdminClinicsPage,
+  NotFoundPage,
+} from "../pages";
+import { AdminLayout, MainLayout } from "../layouts";
+import { AdminRoute } from "../Admin/components/AdminRoute/AdminRoute";
 
 export const petRoutesConfig: RouteObject[] = [
   {
@@ -62,34 +63,43 @@ export const petRoutesConfig: RouteObject[] = [
       },
     ],
   },
+
   {
     path: "/login",
     element: <Login />,
   },
+
   {
     path: "/admin",
-    element: <AdminPage />,
+    element: (
+      <AdminRoute>
+        <AdminLayout />
+      </AdminRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <AdminPage />,
+      },
+      {
+        path: "add-hotels",
+        element: <AdminHotelPage />,
+      },
+      {
+        path: "add-groom",
+        element: <AdminGroomsPage />,
+      },
+      {
+        path: "add-training-centers",
+        element: <AdminTrainingPage />,
+      },
+      {
+        path: "add-doctor",
+        element: <AdminClinicsPage />,
+      },
+    ],
   },
-  {
-    path: "/admin/add-hotels",
-    element: <AdminHotelPage />,
-  },
-  {
-    path: "/admin/add-groom",
-    element: <AdminGroomsPage />,
-  },
-  {
-    path: "/admin/add-training-centers",
-    element: <AdminTrainingPage />,
-  },
-  {
-    path: "/admin/add-doctor",
-    element: <AdminClinicsPage />,
-  },
-  {
-    path: "/admin/add-training-centers",
-    element: <AdminTrainingPage />,
-  },
+
   {
     path: "*",
     element: <NotFoundPage />,

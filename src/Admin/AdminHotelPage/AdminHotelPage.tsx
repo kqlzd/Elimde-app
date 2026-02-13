@@ -1,5 +1,4 @@
 import React from "react";
-import { AdminNavbar } from "../components/AdminNavbar/AdminNavbar";
 import {
   FormControl,
   FormLabel,
@@ -14,8 +13,6 @@ export const AdminHotelPage = () => {
   const { handleSubmit, register } = usePostDataToDbHotels();
   return (
     <Box>
-      <AdminNavbar />
-
       <form onSubmit={handleSubmit}>
         <Box width="50%" alignContent="center" margin="auto" mt={50}>
           <FormControl>

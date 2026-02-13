@@ -8,14 +8,11 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { usePostDataToDbGrooms } from "../../hooks/usePostDataToDbGrooms";
-import { AdminNavbar } from "../components/AdminNavbar/AdminNavbar";
 
-export default function AdminGroomsPage() {
+export const AdminGroomsPage = () => {
   const { register, handleSubmit } = usePostDataToDbGrooms();
   return (
     <Box>
-      <AdminNavbar />
-
       <form onSubmit={handleSubmit}>
         <Box width="50%" alignContent="center" margin="auto" mt={50}>
           <FormControl>
@@ -83,4 +80,4 @@ export default function AdminGroomsPage() {
       </form>
     </Box>
   );
-}
+};
