@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-import { AdminNavbar } from "../components/AdminNavbar/AdminNavbar";
+
 import { usePostDataToDbClinics } from "../../hooks/usePostDataToDbClinics";
 
 export const AdminClinicsPage = () => {
@@ -16,7 +16,7 @@ export const AdminClinicsPage = () => {
 
   return (
     <Box>
-      <AdminNavbar />
+
       <form onSubmit={handleSubmit}>
         <Box width="50%" alignContent="center" margin="auto" mt={50}>
           <FormControl>
