@@ -1,137 +1,202 @@
-# Elimde - Pet Services Platform
+# 🐾 Meow.az — Pet Services Platform
 
-A modern, full-stack pet services marketplace connecting pet owners with professional care providers in Azerbaijan. Built with React, TypeScript, and Firebase.
+Azərbaycanda ev heyvanları üçün ən böyük xidmət platforması. Hotel, klinika, grooming salon və təlim mərkəzlərini bir yerdə tapın.
 
-## Features
-
-### For Pet Owners
-- **Browse Services** - Explore veterinary clinics, grooming salons, pet hotels, and training centers
-- **Advanced Filtering** - Search by location, price range, and service type
-- **Interactive Maps** - View service locations with Leaflet integration
-- **Service Details** - Comprehensive information including galleries, contact details, and availability
-- **Responsive Design** - Optimized experience across all devices
-
-### For Administrators
-- **Service Management** - Full CRUD operations for all service categories
-- **Image Uploads** - Firebase Storage integration for service galleries
-- **Dashboard** - Overview statistics and management tools
-- **Authentication** - Secure admin access with Firebase Auth
-
-## Tech Stack
-
-| Category | Technologies |
-|----------|-------------|
-| **Frontend** | React 18, TypeScript, Chakra UI |
-| **Routing** | React Router DOM v6 |
-| **State & Forms** | React Hook Form |
-| **Backend** | Firebase (Firestore, Auth, Storage) |
-| **Maps** | Leaflet, React Leaflet |
-| **Animations** | Framer Motion |
-| **Styling** | Emotion, Chakra UI |
-| **Icons** | Lucide React, React Icons |
-| **Date Handling** | Day.js, date-fns |
-| **SEO** | React Helmet Async |
-
-## Project Structure
-
-```
-src/
-├── pages/              # Main page components
-│   ├── MainPage/       # Homepage
-│   ├── HotelPage/      # Pet hotels listing
-│   ├── DoctorsPage/    # Veterinary clinics
-│   ├── GroomingPage/   # Grooming services
-│   ├── PetTrainings/   # Training centers
-│   └── DetailPage/     # Dynamic service details
-├── Admin/              # Admin dashboard & management
-│   ├── AdminPage/      # Dashboard
-│   └── Admin*Page/     # Service management pages
-├── components/         # Reusable UI components
-├── hooks/              # Custom React hooks
-├── layouts/            # Page layouts
-├── routes/             # Route configuration
-├── lib/                # Firebase configuration
-├── models/             # TypeScript type definitions
-└── utils/              # Constants & helper functions
-```
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 14+
-- npm or yarn
-- Firebase project with Firestore, Auth, and Storage enabled
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/elimde-app.git
-   cd elimde-app
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Configure environment variables**
-
-   Create a `.env.local` file in the root directory:
-   ```env
-   REACT_APP_FIREBASE_API_KEY=your_api_key
-   REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
-   REACT_APP_FIREBASE_PROJECT_ID=your_project_id
-   REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-   REACT_APP_FIREBASE_APP_ID=your_app_id
-   ```
-
-4. **Start the development server**
-   ```bash
-   npm start
-   ```
-
-   The app will be available at `http://localhost:3000`
-
-## Available Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm start` | Start development server |
-| `npm build` | Create production build |
-| `npm test` | Run tests in watch mode |
-| `npm run lint` | Check code with ESLint |
-| `npm run lint:fix` | Auto-fix linting issues |
-
-## Routes
-
-| Path | Description |
-|------|-------------|
-| `/` | Homepage |
-| `/services/hotels` | Pet hotels listing |
-| `/services/doctors` | Veterinary clinics |
-| `/services/grooming` | Grooming services |
-| `/services/training` | Training centers |
-| `/:type/:id` | Service detail page |
-| `/about` | About us |
-| `/contact` | Contact page |
-| `/faq` | FAQ |
-| `/admin` | Admin dashboard (protected) |
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is private and proprietary.
+![React](https://img.shields.io/badge/React-18-blue?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
+![Firebase](https://img.shields.io/badge/Firebase-Firestore-orange?logo=firebase)
+![Chakra UI](https://img.shields.io/badge/Chakra_UI-v2-teal?logo=chakraui)
 
 ---
 
-Built with care for pet lovers in Azerbaijan
+## ✨ Features
+
+- 🏨 **Pet Otelləri** — Rezerv məlumatları, tarix seçimi, xəritə
+- 🩺 **Veterinar Klinikalar** — Həkim axtarışı, konsultasiya qiyməti, təcrübə
+- ✂️ **Grooming Salonları** — Qiymət, ortalama müddət, rayon filtri
+- 🎓 **Təlim Mərkəzləri** — Aylıq abunə, sertifikasiya, kurs müddəti
+- 🗺️ **Leaflet Xəritə** — Hər xidmətin əsas lokasiyası
+- 🔍 **Axtarış & Filter** — Ad, rayon, qiymət aralığı, debounced search
+- 📱 **Responsive Design** — Mobil, tablet, desktop
+- 🔐 **Admin Panel** — Firebase auth ilə qorunur, CRUD əməliyyatları
+- ⚡ **Lazy Loading** — React.lazy ilə route-based code splitting
+- 🛡️ **Error Boundary** — Xəta idarəetməsi
+- 🔎 **SEO** — React Helmet ilə hər səhifə üçün meta teqlər
+
+---
+
+## 🛠️ Tech Stack
+
+| Texnologiya | İstifadə |
+|---|---|
+| [React 18](https://react.dev) | UI framework |
+| [TypeScript](https://www.typescriptlang.org) | Type safety |
+| [Firebase Firestore](https://firebase.google.com) | Database |
+| [Firebase Auth](https://firebase.google.com) | Admin authentication |
+| [Firebase Storage](https://firebase.google.com) | Şəkil yükləmə |
+| [Chakra UI v2](https://chakra-ui.com) | UI komponentləri |
+| [React Router v6](https://reactrouter.com) | Routing |
+| [React Hook Form](https://react-hook-form.com) | Form idarəetməsi |
+| [Framer Motion](https://www.framer-motion.com) | Animasiyalar |
+| [React Leaflet](https://react-leaflet.js.org) | Xəritə |
+| [Lucide React](https://lucide.dev) | İkonlar |
+| [React Helmet Async](https://github.com/staylor/react-helmet-async) | SEO |
+| [use-debounce](https://github.com/xnimorz/use-debounce) | Axtarış optimizasiyası |
+| [date-fns](https://date-fns.org) | Tarix hesablamaları |
+
+---
+
+## 🚀 Başlamaq
+
+### Tələblər
+
+- Node.js 18+
+
+### Quraşdırma
+
+```bash
+git clone https://github.com/username/meow-az.git
+cd meow-az
+npm install
+```
+
+### Ətraf mühit dəyişənləri
+
+`.env` faylı yaradın:
+
+```env
+REACT_APP_FIREBASE_API_KEY=your_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+REACT_APP_FIREBASE_APP_ID=your_app_id
+REACT_APP_FIREBASE_MEASUREMENT_ID=your_measurement_id
+```
+
+### Başlatmaq
+
+```bash
+npm start
+```
+
+---
+
+## 🗂️ Layihə Strukturu
+
+```
+src/
+├── Admin/                  # Admin panel səhifələri
+│   ├── AdminClinicsPage/
+│   ├── AdminGroomsPage/
+│   ├── AdminHotelPage/
+│   ├── AdminTrainingPage/
+│   ├── AdminPage/
+│   └── components/
+│       ├── AdminNavbar/
+│       └── AdminRoute/     # Admin route qoruması
+├── components/
+│   ├── DoctorsCards/
+│   ├── ErrorBoundary/
+│   ├── GroomingCards/
+│   ├── Header/
+│   ├── HotelCards/
+│   ├── Loading/
+│   ├── Map/                # Leaflet xəritə
+│   ├── PetCards/
+│   ├── PetTrainingCards/
+│   └── Seo/
+├── hooks/
+│   ├── useAdminAuth.ts
+│   ├── useDateRange.ts
+│   ├── useDetailPage.ts
+│   ├── useGetDoctors.ts
+│   ├── useGetGrooms.ts
+│   ├── useGetHotelsData.ts
+│   ├── useGetTrainingCenters.ts
+│   ├── useLinkShare.ts
+│   └── usePostDataToDb*.ts # Firebase CRUD hookları
+├── layouts/
+│   ├── MainLayout.tsx
+│   └── AdminLayout.tsx
+├── lib/
+│   └── firebaseConfig.ts
+├── models/
+│   └── api.d.ts
+├── pages/
+│   ├── AboutUsPage/
+│   ├── Contact/
+│   ├── DetailPage/         # Universal detail səhifəsi
+│   ├── DoctorsPage/
+│   ├── Faq/
+│   ├── GroomingPage/
+│   ├── HotelPage/
+│   ├── Login/
+│   ├── MainPage/
+│   ├── NotFound/
+│   └── PetTrainings/
+├── router/
+│   └── lazyComponents.ts   # Lazy loading
+├── routes/
+│   └── pets-routes-config.tsx
+└── utils/
+    ├── constants/
+    └── helpers/
+```
+
+---
+
+## 🛤️ Routelar
+
+| Yol | Səhifə |
+|---|---|
+| `/` | Ana Səhifə |
+| `/services/hotels` | Pet Otelləri |
+| `/services/doctors` | Veterinar Klinikalar |
+| `/services/grooming` | Grooming Salonları |
+| `/services/training` | Təlim Mərkəzləri |
+| `/:type/:id` | Detail Səhifəsi |
+| `/about` | Haqqımızda |
+| `/contact` | Əlaqə |
+| `/faq` | Tez-tez Verilən Suallar |
+| `/login` | Admin Giriş |
+| `/admin` | Admin Dashboard |
+| `/admin/add-hotels` | Otel Əlavə Et |
+| `/admin/add-doctor` | Klinika Əlavə Et |
+| `/admin/add-groom` | Grooming Salon Əlavə Et |
+| `/admin/add-training-centers` | Təlim Mərkəzi Əlavə Et |
+
+---
+
+## 🔒 Admin Panel
+
+Firebase Authentication istifadə edir. Admin rolu Firestore-da `users/{uid}` sənədindəki `role: "admin"` sahəsi ilə müəyyənləşir.
+
+---
+
+## 📦 Firebase Kolleksiyalar
+
+| Kolleksiya | Məzmun |
+|---|---|
+| `hotels` | Pet otelləri |
+| `hospitals` | Veterinar klinikalar |
+| `grooms` | Grooming salonları |
+| `trainingcenters` | Təlim mərkəzləri |
+| `users` | Admin istifadəçilər |
+
+---
+
+## 🔮 Roadmap
+
+- [ ] Rezervasiya sistemi (real-time)
+- [ ] İstifadəçi qeydiyyatı
+- [ ] Rəy və reytinq sistemi
+- [ ] Push bildirişlər
+- [ ] Multi-dil dəstəyi (AZ/EN/RU)
+- [ ] PWA dəstəyi
+
+---
+
+## 📄 Lisenziya
+
+MIT
